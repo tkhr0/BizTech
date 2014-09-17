@@ -95,7 +95,7 @@ return array(
 	 */
 	// 'server_gmt_offset'  => 0,
 	// 'default_timezone'   => null,
-        'default_timezone'   => 'Asia/Tokyo',
+
 	/**
 	 * Logging Threshold.  Can be set to any of the following:
 	 *
@@ -258,12 +258,8 @@ return array(
 	/**************************************************************************/
 	/* Always Load                                                            */
 	/**************************************************************************/
-	// 'always_load'  => array(
-	   'always_load'  => array(
-           	'packages'  => array(
-        	'parser',
-    		),
-	    ),
+	'always_load'  => array(
+
 		/**
 		 * These packages are loaded on Fuel's startup.
 		 * You can specify them in the following manner:
@@ -275,9 +271,10 @@ return array(
 		 *     array('auth'	=> PKGPATH.'auth/')
 		 * );
 		 */
-		// 'packages'  => array(
-		// 	//'orm',
-		// ),
+		'packages'  => array(
+			//'orm',
+			'parser',
+		),
 
 		/**
 		 * These modules are always loaded on Fuel's startup. You can specify them
@@ -313,6 +310,6 @@ return array(
 		 * If you don't want the lang in a group use null as groupname.
 		 */
 		// 'language'  => array(),
-	// ),
+	),
 
 );
