@@ -1,0 +1,2 @@
+SetEnv FUEL_ENV development
+deny from all
