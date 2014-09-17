@@ -9,7 +9,8 @@ class Controller_Sukima extends Controller
         // for model method test
         public function action_test()
         {
-                $datas = array(
+                $data = array(
+                        'datas' => array(
                                 'prev' => array(
                                         'goal_cheered' => null,
                                         'container_cheered' => null,
@@ -21,25 +22,26 @@ class Controller_Sukima extends Controller
                                         'container_cheered' => null,
                                         'users_cheered' => null,
                                         'users_cheering' => null,
-                        ),
+                                        ),
+                                ),
                 );
 
-                $datas['prev']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
-                $datas['prev']['container_cheered'] = Cheer::get_cheered_num(1, 1);
-                $datas['prev']['users_cheered'] = Cheer::get_cheered_num(1);
-                $datas['prev']['users_cheering'] = Cheer::get_cheered_num(1);
+                $data['datas']['prev']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
+                $data['datas']['prev']['container_cheered'] = Cheer::get_cheered_num(1, 1);
+                $data['datas']['prev']['users_cheered'] = Cheer::get_users_cheered_num(1);
+                $data['datas']['prev']['users_cheering'] = Cheer::get_users_cheering_num(1);
 
-                Cheer::set_cheered_num(1, 1, $datas['prev']['goal_cheered']+1);
-                Cheer::set_cheered_num(1, 1, $datas['prev']['container_cheered']+1);
-                Cheer::set_cheered_num(1, $datas['prev']['users_cheered']+1);
-                Cheer::set_cheered_num(1, $datas['prev']['users_cheering']+1);
+                Cheer::set_cheered_num(1, 1, $data['datas']['prev']['goal_cheered']+1);
+                Cheer::set_cheered_num(1, 1, $data['datas']['prev']['container_cheered']+1);
+                Cheer::set_users_cheered_num(1, $data['datas']['prev']['users_cheered']+1);
+                Cheer::set_users_cheering_num(1, $data['datas']['prev']['users_cheering']+1);
 
-                $datas['next']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
-                $datas['next']['container_cheered'] = Cheer::get_cheered_num(1, 1);
-                $datas['next']['users_cheered'] = Cheer::get_cheered_num(1);
-                $datas['next']['users_cheering'] = Cheer::get_cheered_num(1);
+                $data['datas']['next']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
+                $data['datas']['next']['container_cheered'] = Cheer::get_cheered_num(1, 1);
+                $data['datas']['next']['users_cheered'] = Cheer::get_users_cheered_num(1);
+                $data['datas']['next']['users_cheering'] = Cheer::get_users_cheering_num(1);
 
-		return Response::forge(View::forge('sukima/testframe', $datas));
+		return Response::forge(View::forge('sukima/testframe', $data));
         }
 
 
