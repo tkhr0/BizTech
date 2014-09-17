@@ -6,6 +6,7 @@ use \Model\Cheer;
 class Controller_Sukima extends Controller
 {
 
+        /*
         // for model method test
         public function action_test()
         {
@@ -43,6 +44,7 @@ class Controller_Sukima extends Controller
 
 		return Response::forge(View::forge('sukima/testframe', $data));
         }
+        */
 
 
         public function action_index()
