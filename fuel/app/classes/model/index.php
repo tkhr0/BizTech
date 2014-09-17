@@ -1,6 +1,8 @@
 <?php
 
-class Index()
+namespace Model;
+
+class Index extends \Model()
 {
 
 }

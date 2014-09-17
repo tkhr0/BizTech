@@ -1,6 +1,8 @@
 <?php
 
-class Mypage()
+namespace Model;
+
+class Mypage extends \Model()
 {
 
 }

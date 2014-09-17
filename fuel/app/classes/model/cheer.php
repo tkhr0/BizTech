@@ -1,6 +1,8 @@
 <?php
 
-class Cheer()
+namespace Model;
+
+class Cheer extends \Model()
 {
 
 }

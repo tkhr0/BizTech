@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Achieve()
+class Achieve extends \Model)
 {
 
 }

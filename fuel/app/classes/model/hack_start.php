@@ -1,6 +1,8 @@
 <?php
 
-class Hack_start()
+namespace Model;
+
+class Hack_start extends \Model()
 {
 
 }
