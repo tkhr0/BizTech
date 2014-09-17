@@ -44,7 +44,7 @@ return array(
 	 */
 	// 'index_file' => false,
 
-	// 'profiling'  => false,
+	'profiling'  => true,
 
 	/**
 	 * Default location for the file cache
@@ -259,7 +259,6 @@ return array(
 	/* Always Load                                                            */
 	/**************************************************************************/
 	'always_load'  => array(
-
 		/**
 		 * These packages are loaded on Fuel's startup.
 		 * You can specify them in the following manner:
@@ -311,5 +310,4 @@ return array(
 		 */
 		// 'language'  => array(),
 	),
-
 );
