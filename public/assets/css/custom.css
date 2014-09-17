@@ -1,0 +1,41 @@
+@charset "UTF-8";
+/*やりたいことリスト*/
+/*応援してくれた人リスト*/
+/*コンテナ*/
+/*タイムライン*/
+.yaritai_list {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 0 15px;
+}
+
+.yaritai_list,
+.cheerer_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cheerer_list > li {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.yaritai_list > li {
+  border-bottom: 1px solid #eee;
+}
+
+.activity {
+  margin: 0;
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.activity:first-child {
+  border-top: 1px solid #eee;
+}
+
