@@ -16,6 +16,7 @@ desktop.ini
 
 # the composer package lock file and install directory
 /composer.lock
+/composer.phar
 /fuel/vendor
 
 # any of the fuel packages installed by default
@@ -34,3 +35,6 @@ desktop.ini
 
 # takahiro add
 composer.phar
+
+# morimori add
+/fuel/app/config/config.php
