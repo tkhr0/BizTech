@@ -6,7 +6,7 @@
   </head>
   <body>
     {include file='./page_header.tpl'}
-    
+    {*
     {assign var=containers value =[
                                   [ 
                                     "id"=>"33",
@@ -44,7 +44,7 @@
                                    ]
                                   ]
     }
-      
+    *}  
    <ul style="display:none;">
 　　　　{foreach from=$containers item=container}
           
@@ -80,7 +80,7 @@
           </div>
           <!--いいねボタン-->
           <form action="#" class="cheer-form">
-            <input type="hidden" name="target-id" value="{$cheer_user.id}" />
+            <input type="hidden" name="target-id" value="2" />
             <input type="hidden" name="type-id" value="2" />
             <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" >
           </form>
