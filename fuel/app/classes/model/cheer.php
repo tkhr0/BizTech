@@ -33,6 +33,9 @@ class Cheer extends \Model
                 return $query->as_array()[0]['cheered'];
         }
 
+        /*
+                ユーザがcheerされた数を得る
+        */
         public static function get_users_cheered_num($user_id)
         {
                 $query = \DB::select('cheered')->from('users')
@@ -42,6 +45,9 @@ class Cheer extends \Model
                 return $query->as_array()[0]['cheered'];
         }
 
+        /*
+                ユーザがcheerした数を得る
+        */
         public static function get_users_cheering_num($user_id)
         {
                 $query = \DB::select('cheering')->from('users')
@@ -60,6 +66,13 @@ class Cheer extends \Model
                 return $query->as_array()[0];
         }
 
+        /*
+                $target_id      : 
+                $type_id        :
+                $cheered_num    :
+
+                return 更新した行数
+        */
         public static function set_cheered_num($target_id, $type_id, $cheered_num)
         {
                 // table name

@@ -99,17 +99,13 @@ class Controller_Sukima extends Controller
                 $container_id = Input::post('container_id');
                 $cheered_num = Cheer::get_cheered_num($container_id, TYPE_CONTAINER);
 
-                /*
-                $datas = array(
-                        'data' => $cheered_num,
-                );
-                return Response::forge(View_Smarty::forge('sukima/postcheer', $datas));
-                */
-
                 if($cheered_num === null){
                         Response::redirect($redirect);
                 }else{
-                        Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1);
+                        if(0 < Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1)){
+                                $user_cheered_num = Cheer::get_users_cheered_num($user_id);
+                                Cheer::set_users_cheering_num($user_id, $user_cheered_num+1);
+                        }
                         Cookie::delete('from_uri');
                         Response::redirect($redirect);
                 }
