@@ -7,8 +7,6 @@
     <title>すきまハック</title>
 
     <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
     {Asset::css('custom.css')}
     {Asset::css('bootstrap.min.css')}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elstrongents and media queries -->
