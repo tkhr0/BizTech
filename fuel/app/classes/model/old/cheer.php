@@ -10,6 +10,7 @@ define('TYPE_CONTAINER', 2);
 
 class Cheer extends \Model
 {
+
         public static function get_cheered_num($target_id, $type_id)
         {
                 // table name
@@ -32,7 +33,6 @@ class Cheer extends \Model
 
                 return $query->as_array()[0]['cheered'];
         }
-
         /*
                 ユーザがcheerされた数を得る
         */
