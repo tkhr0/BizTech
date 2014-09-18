@@ -5,6 +5,6 @@
                 <title>TEST</title>
         </head>
         <body>
-                <?php var_dump($datas) ?>
+                <a href=""></a>
         </body>
 </html>

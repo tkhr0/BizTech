@@ -3,8 +3,10 @@
 namespace Model;
 use DB;
 
+/*
 define('TYPE_GOAL', 1);
-define('TYPE_CONTAINER', '2');
+define('TYPE_CONTAINER', 2);
+*/
 
 class Cheer extends \Model
 {
@@ -25,8 +27,8 @@ class Cheer extends \Model
                         return null;
                 }
                 $query = \DB::select('cheered')->from($table)
-                                                ->where('id', '=', $target_id)
-                                                ->execute();
+                                               ->where('id', '=', $target_id)
+                                               ->execute();
 
                 return $query->as_array()[0]['cheered'];
         }
@@ -34,8 +36,8 @@ class Cheer extends \Model
         public static function get_users_cheered_num($user_id)
         {
                 $query = \DB::select('cheered')->from('users')
-                                                ->where('id', '=', $user_id)
-                                                ->execute();
+                                               ->where('id', '=', $user_id)
+                                               ->execute();
 
                 return $query->as_array()[0]['cheered'];
         }

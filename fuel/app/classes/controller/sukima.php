@@ -3,6 +3,9 @@
 use \Model\Hackend;
 use \Model\Cheer;
 
+define('TYPE_GOAL', 1);
+define('TYPE_CONTAINER', 2);
+
 class Controller_Sukima extends Controller
 {
 
@@ -12,35 +15,8 @@ class Controller_Sukima extends Controller
         {
                 $data = array(
                         'datas' => array(
-                                'prev' => array(
-                                        'goal_cheered' => null,
-                                        'container_cheered' => null,
-                                        'users_cheered' => null,
-                                        'users_cheering' => null,
-                                        ),
-                                'next' => array(
-                                        'goal_cheered' => null,
-                                        'container_cheered' => null,
-                                        'users_cheered' => null,
-                                        'users_cheering' => null,
-                                        ),
                                 ),
                 );
-
-                $data['datas']['prev']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
-                $data['datas']['prev']['container_cheered'] = Cheer::get_cheered_num(1, 1);
-                $data['datas']['prev']['users_cheered'] = Cheer::get_users_cheered_num(1);
-                $data['datas']['prev']['users_cheering'] = Cheer::get_users_cheering_num(1);
-
-                Cheer::set_cheered_num(1, 1, $data['datas']['prev']['goal_cheered']+1);
-                Cheer::set_cheered_num(1, 1, $data['datas']['prev']['container_cheered']+1);
-                Cheer::set_users_cheered_num(1, $data['datas']['prev']['users_cheered']+1);
-                Cheer::set_users_cheering_num(1, $data['datas']['prev']['users_cheering']+1);
-
-                $data['datas']['next']['goal_cheered'] = Cheer::get_cheered_num(1, 1);
-                $data['datas']['next']['container_cheered'] = Cheer::get_cheered_num(1, 1);
-                $data['datas']['next']['users_cheered'] = Cheer::get_users_cheered_num(1);
-                $data['datas']['next']['users_cheering'] = Cheer::get_users_cheering_num(1);
 
 		return Response::forge(View::forge('sukima/testframe', $data));
         }
@@ -49,18 +25,42 @@ class Controller_Sukima extends Controller
 
         public function action_index()
         {
+                // クッキーに仮のユーザIDを登録する
+                // ここにアクセスするたびにIDが順に1~3にかわる
+                $user_id = Cookie::get('user_id', null);
+                if($user_id == null){
+                        $user_id = 1;
+                }else{
+                        $user_id = floor($user_id) % 3 + 1;
+                }
+                Cookie::set('user_id', $user_id);
 
+                $datas = array();
+                $datas['data'] = Model_Mypage::action_select($user_id);
+                $datas['id'] = $user_id;
 
+                return Response::forge(View_Smarty::forge('sukima/index', $datas));
         }
 
         public function action_mypage()
         {
+                // cheerボタンのリダイレクト用
+                Cookie::set('from_uri', 'sukima/mypage');
 
         }
 
+        /*
+                タイムラインの動作
+        */
         public function action_timeline()
         {
+                $datas = array(
+                        'user_id' => Cookie::get('user_id'),
+                );
+                // cheerボタンのリダイレクト用
+                Cookie::set('from_uri', 'sukima/timeline');
 
+                return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
         }
 
         public function post_new()
@@ -68,12 +68,12 @@ class Controller_Sukima extends Controller
 
         }
 
-        public function post_hack_start()
+        public function post_hackstart()
         {
 
         }
 
-        public function post_hack_end()
+        public function post_hackend()
         {
 
         }
@@ -90,7 +90,25 @@ class Controller_Sukima extends Controller
 
         public function post_cheer()
         {
+                $redirect = Cookie::get('from_uri');
+                $user_id = Cookie::get('user_id');
+                $container_id = Input::post('container_id');
+                $cheered_num = Cheer::get_cheered_num($container_id, TYPE_CONTAINER);
 
+                /*
+                $datas = array(
+                        'data' => $cheered_num,
+                );
+                return Response::forge(View_Smarty::forge('sukima/postcheer', $datas));
+                */
+
+                if($cheered_num === null){
+                        Response::redirect($redirect);
+                }else{
+                        Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1);
+                        Cookie::delete('from_uri');
+                        Response::redirect($redirect);
+                }
         }
 
         /**
