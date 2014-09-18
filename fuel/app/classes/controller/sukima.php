@@ -1,8 +1,5 @@
 <?php
 
-//use \Model\Hackend;
-use \Model\Cheer;
-
 class Controller_Sukima extends Controller
 {
 
