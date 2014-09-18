@@ -1,5 +1,4 @@
 <?php
-use \Model\Users;
 /**
  * The Welcome Controller.
  *
@@ -11,7 +10,6 @@ use \Model\Users;
  */
 class Controller_Test extends Controller
 {
-
 	/**
 	 * The basic welcome message
 	 *
@@ -20,8 +18,7 @@ class Controller_Test extends Controller
 	 */
 	public function action_index()
 	{
-		$data['test'] = Users::get_profile(1);
-    Users::set_profile("er001", "test_name002", "aaaa@example.com");
+		$data['test'] = Model_Goals::set_achieve(16);
 		return Response::forge(View::forge('testview', $data));
 	}
 }
