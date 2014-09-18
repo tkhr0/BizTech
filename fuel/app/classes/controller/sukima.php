@@ -53,6 +53,7 @@ class Controller_Sukima extends Controller
         {
             Asset::add_path('assets/css/', 'css');
             Asset::add_path('assets/js/', 'js');
+            Asset::add_path('assets/img/', 'img');
 
 
                 $datas = array(
