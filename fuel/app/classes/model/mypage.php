@@ -1,16 +1,10 @@
 <?php
 
-namespace Model;
-
-class Mypage extends \Model()
-{
-	public function action_select(){
+Class Model_Mypage extends \Model{	
+	public static function action_select($user_id){
 		 //データベース接続
-   		$query = DB::select()->from('users')->execute()->as_array();
-   		$data = array("query" => $query);
-   		//データベース情報の引き渡し
-   		//return Response::forge(View_Smarty::forge('sample1/content.tpl', $data));
-	
-		
+		$data = DB::query("SELECT * FROM users WHERE id = $user_id  ")-> execute() -> as_array();
+   		//var_dump($data);
+		return $data[0];
 	}
 }
