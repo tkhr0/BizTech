@@ -1,10 +1,7 @@
 <?php
 
-use \Model\Hackend;
+//use \Model\Hackend;
 use \Model\Cheer;
-
-define('TYPE_GOAL', 1);
-define('TYPE_CONTAINER', 2);
 
 class Controller_Sukima extends Controller
 {
@@ -61,8 +58,6 @@ class Controller_Sukima extends Controller
                 $datas = array(
                         'user_id' => Cookie::get('user_id'),
                 );
-                // cheerボタンのリダイレクト用
-                Cookie::set('from_uri', 'sukima/timeline');
 
                 return Response::forge(View::forge('sukima/timeline', $datas));
         }
@@ -92,27 +87,15 @@ class Controller_Sukima extends Controller
 
         }
 
-        public function post_cheer()
+        public function action_cheer($target_id, $type_id)
         {
-                $redirect = Cookie::get('from_uri');
-                $user_id = Cookie::get('user_id');
-                $container_id = Input::post('container_id');
-                $cheered_num = Cheer::get_cheered_num($container_id, TYPE_CONTAINER);
-
-                /*
-                $datas = array(
-                        'data' => $cheered_num,
-                );
-                return Response::forge(View_Smarty::forge('sukima/postcheer', $datas));
-                */
+                $cheered_num = Cheer::get_cheered_num($target_id, $type_id);
 
                 if($cheered_num === null){
-                        Response::redirect($redirect);
-                }else{
-                        Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1);
-                        Cookie::delete('from_uri');
-                        Response::redirect($redirect);
+                  return -1;
                 }
+                Cheer::set_cheered_num($target_id, $type_id, $cheered_num+1);
+                return Cheer::get_cheered_num($target_id, $type_id);
         }
 
         /**
