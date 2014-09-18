@@ -46,12 +46,3 @@ class Model_Markcheers extends \Model
 }
 
 
-
-
-
-
-
-
-
-
-
