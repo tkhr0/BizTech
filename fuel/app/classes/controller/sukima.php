@@ -1,10 +1,7 @@
 <?php
 
-use \Model\Hackend;
+//use \Model\Hackend;
 use \Model\Cheer;
-
-define('TYPE_GOAL', 1);
-define('TYPE_CONTAINER', 2);
 
 class Controller_Sukima extends Controller
 {
@@ -25,8 +22,8 @@ class Controller_Sukima extends Controller
 
         public function action_index()
         {
-                // クッキーに仮のユーザIDを登録する
-                // ここにアクセスするたびにIDが順に1~3にかわる
+                // クッキーに仮のユーザIDを登録する
+                // ここにアクセスするたびにIDが順に1~3にかわる
                 $user_id = Cookie::get('user_id', null);
                 if($user_id == null){
                         $user_id = 1;
@@ -44,7 +41,7 @@ class Controller_Sukima extends Controller
 
         public function action_mypage()
         {
-                // cheerボタンのリダイレクト用
+                // cheerボタンのリダイレクト用
                 Cookie::set('from_uri', 'sukima/mypage');
 
         }
@@ -54,19 +51,13 @@ class Controller_Sukima extends Controller
         */
         public function action_timeline()
         {
-            // iranai ?
             //Asset::add_path('assets/css/', 'css');
             //Asset::add_path('assets/js/', 'js');
-
-            $user_id = Cookie::get('user_id');
-
-
+            //Asset::add_path('assets/img/', 'img');
                 $datas = array(
                         'user_id' => $user_id,
                         'user_cheering_num' => Cheer::get_users_cheering_num($user_id),
                 );
-                // cheerボタンのリダイレクト用
-                Cookie::set('from_uri', 'sukima/timeline');
 
                 return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
         }
@@ -96,22 +87,15 @@ class Controller_Sukima extends Controller
 
         }
 
-        public function post_cheer()
+        public function action_cheer($target_id, $type_id)
         {
-                $redirect = Cookie::get('from_uri');
-                $user_id = Cookie::get('user_id');
-                $container_id = Input::post('container_id');
-                $cheered_num = Cheer::get_cheered_num($container_id, TYPE_CONTAINER);
+                $cheered_num = Cheer::get_cheered_num($target_id, $type_id);
 
                 if($cheered_num === null){
-                        Response::redirect($redirect);
-                }else{
-                        Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1);
-                        $user_cheered_num = Cheer::get_users_cheering_num($user_id);
-                        Cheer::set_users_cheering_num($user_id, $user_cheered_num+1);
-                        Cookie::delete('from_uri');
-                        Response::redirect($redirect);
+                  return -1;
                 }
+                Cheer::set_cheered_num($target_id, $type_id, $cheered_num+1);
+                return Cheer::get_cheered_num($target_id, $type_id);
         }
 
         /**

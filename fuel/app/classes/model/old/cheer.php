@@ -3,10 +3,8 @@
 namespace Model;
 use DB;
 
-/*
 define('TYPE_GOAL', 1);
 define('TYPE_CONTAINER', 2);
-*/
 
 class Cheer extends \Model
 {
