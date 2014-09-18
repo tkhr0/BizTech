@@ -1,5 +1,6 @@
 $(function(){
   $(".cheer-form").submit(function(){
+	  $this = $(this);
       console.log("test");
       // hiddenから必要な情報の抽出
       targetId = $this.find("input[name=target-id]").val();
