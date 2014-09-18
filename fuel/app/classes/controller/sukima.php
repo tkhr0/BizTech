@@ -14,7 +14,8 @@ class Controller_Sukima extends Controller
 
         public function action_timeline()
         {
-          Asset::add_path('assets/css/', 'css');
+            Asset::add_path('assets/css/', 'css');
+            Asset::add_path('assets/js/', 'js');
           return Response::forge(View::forge('sukima/timeline'));
         }
 
