@@ -3,6 +3,23 @@
 class Controller_Sukima extends Controller
 {
 
+        public function action_test()
+        {
+                Model_Containers::insert(2);
+                Model_Containers::incriment_cheered(1);
+
+                $data = array(
+                        'datas' => array(
+                                'goal_id' => Model_Containers::get_goal_id(1),
+                                'cheered' => Model_Containers::get_cheered(1),
+                                'status' => Model_Containers::get_status(1),
+                        )
+                );
+
+                return Response::forge(View::forge('sukima/testframe', $data));
+
+        }
+
         public function action_index()
         {
                 // クッキーに仮のユーザIDを登録する

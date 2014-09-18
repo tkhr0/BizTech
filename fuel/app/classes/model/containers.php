@@ -1,7 +1,5 @@
 <?php
 
-use DB;
-
 class Model_Containers extends \Model
 {
         public static function insert($goal_id, $cheered=0, $status=1)
@@ -10,27 +8,53 @@ class Model_Containers extends \Model
                         'goal_id' => $goal_id,
                         'cheered' => $cheered,
                         'status'  => $status,
-                )->execute();
+                ))->execute();
 
                 return $query;
         }
 
+        /**/
         public static function get_goal_id($id)
         {
                 $query = DB::select('goal_id')->from('containers')->where('id', '=', $id)->execute();
                 return $query->as_array()[0]['goal_id'];
         }
 
-        public static function cheered($id)
+        /**/
+        public static function get_cheered($id)
         {
                 $query = DB::select('cheered')->from('containers')->where('id', '=', $id)->execute();
                 return $query->as_array()[0]['cheered'];
         }
 
-        public static function status($id)
+        /**/
+        public static function get_status($id)
         {
                 $query = DB::select('status')->from('containers')->where('id', '=', $id)->execute();
                 return $query->as_array()[0]['status'];
+        }
+
+        /**/
+        public static function set_cheered($id, $num)
+        {
+                $query = DB::update('containers')->value('cheered', $num)
+                                                 ->where('id', '=', $id)
+                                                 ->execute();
+                return $query;
+        }
+
+        /**/
+        public static function set_status($id, $status)
+        {
+                $query = DB::update('containers')->value('status', $status)
+                                                 ->where('id', '=', $id)
+                                                 ->execute();
+                return $query;
+        }
+
+        public static function incriment_cheered($id)
+        {
+                return $this->set_cheered($id, get_cheered($id)+1);
         }
 
 }
