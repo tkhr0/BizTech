@@ -22,8 +22,8 @@ class Controller_Sukima extends Controller
 
         public function action_index()
         {
-                // クッキーに仮のユーザIDを登録する
-                // ここにアクセスするたびにIDが順に1~3にかわる
+                // クッキーに仮のユーザIDを登録する
+                // ここにアクセスするたびにIDが順に1~3にかわる
                 $user_id = Cookie::get('user_id', null);
                 if($user_id == null){
                         $user_id = 1;
@@ -41,7 +41,7 @@ class Controller_Sukima extends Controller
 
         public function action_mypage()
         {
-                // cheerボタンのリダイレクト用
+                // cheerボタンのリダイレクト用
                 Cookie::set('from_uri', 'sukima/mypage');
 
         }
@@ -54,13 +54,12 @@ class Controller_Sukima extends Controller
             //Asset::add_path('assets/css/', 'css');
             //Asset::add_path('assets/js/', 'js');
             //Asset::add_path('assets/img/', 'img');
-
-
                 $datas = array(
-                        'user_id' => Cookie::get('user_id'),
+                        'user_id' => $user_id,
+                        'user_cheering_num' => Cheer::get_users_cheering_num($user_id),
                 );
 
-                return Response::forge(View::forge('sukima/timeline', $datas));
+                return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
         }
 
         public function post_new()
