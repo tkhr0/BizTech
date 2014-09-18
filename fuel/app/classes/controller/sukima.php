@@ -54,13 +54,17 @@ class Controller_Sukima extends Controller
         */
         public function action_timeline()
         {
+            Asset::add_path('assets/css/', 'css');
+            Asset::add_path('assets/js/', 'js');
+
+
                 $datas = array(
                         'user_id' => Cookie::get('user_id'),
                 );
                 // cheerボタンのリダイレクト用
                 Cookie::set('from_uri', 'sukima/timeline');
 
-                return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+                return Response::forge(View::forge('sukima/timeline', $datas));
         }
 
         public function post_new()
