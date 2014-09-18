@@ -4,6 +4,7 @@
 </head>
 <body>
         userId: {$user_id} <br />
+        cheering: {$user_cheering_num}<br />
 
         <p>
         読書 

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-18 14:04:05
+<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-18 23:51:55
          compiled from "/var/www/html/sukima/fuel/app/views/sukima/timeline.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1980062658541a62e4e8b699-69952385%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '6cdbb33ed2c14ea5011519a78e63e15e678b6995' => 
     array (
       0 => '/var/www/html/sukima/fuel/app/views/sukima/timeline.tpl',
-      1 => 1411016558,
+      1 => 1411051849,
       2 => 'file',
     ),
   ),
@@ -20,6 +20,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'variables' => 
   array (
     'user_id' => 0,
+    'user_cheering_num' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -30,6 +31,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <body>
         userId: <?php echo $_smarty_tpl->tpl_vars['user_id']->value;?>
  <br />
+        cheering: <?php echo $_smarty_tpl->tpl_vars['user_cheering_num']->value;?>
+<br />
 
         <p>
         読書 
