@@ -28,7 +28,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="assets/imgs/sukimaHackwithoutSub.png" alt="すきまハック" height="100%"/></a>
+          <!--assets/imgs/sukimaHackwithoutSub.png-->
+          <a class="navbar-brand" href="#"><?php echo Asset::img("sukimaHackwithoutSub.png", ["height"=>"30"])?></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -67,16 +68,16 @@
           <!--表明-->
           <div class="media">
             <a class="pull-left" href="#">
-              <img class="media-object" src="assets/imgs/dummy/icon1.png" width="100%" alt="...">
+              <?php echo Asset::img("icon1.png", ["width"=>"40"])?>
             </a>
             <div class="media-body">
               <h4 class="media-heading">階段使うぞ！<span class="badge">0</span></h4>
               <!--応援している人リスト(アイコン)-->
               <ul class="cheerer_list">
-                <li><img src="assets/imgs/dummy/icon1.png" width="100%"/></li>
-                <li><img src="assets/imgs/dummy/icon2.png" width="100%"/></li>
-                <li><img src="assets/imgs/dummy/icon3.png" width="100%"/></li>
-                <li><img src="assets/imgs/dummy/icon5.png" width="100%"/></li>
+                <li><?php echo Asset::img("icon2.png", ["width"=>"20"])?></li>
+                <li><?php echo Asset::img("icon3.png", ["width"=>"20"])?></li>
+                <li><?php echo Asset::img("icon4.png", ["width"=>"20"])?></li>
+                <li><?php echo Asset::img("icon5.png", ["width"=>"20"])?></li>
               </ul>
               <!--応援している人リスト(アイコン)-->
             </div>
@@ -96,7 +97,7 @@
      </div> <!-- /container -->    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <?php echo Asset::js('testtimeline.js'); ?>
+    <?php echo Asset::js('timeline.js'); ?>
     <?php echo Asset::js('bootstrap.min.js'); ?>
   </body>
 </html>
