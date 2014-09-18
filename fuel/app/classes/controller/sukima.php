@@ -54,17 +54,21 @@ class Controller_Sukima extends Controller
         */
         public function action_timeline()
         {
-            Asset::add_path('assets/css/', 'css');
-            Asset::add_path('assets/js/', 'js');
+            // iranai ?
+            //Asset::add_path('assets/css/', 'css');
+            //Asset::add_path('assets/js/', 'js');
+
+            $user_id = Cookie::get('user_id');
 
 
                 $datas = array(
-                        'user_id' => Cookie::get('user_id'),
+                        'user_id' => $user_id,
+                        'user_cheering_num' => Cheer::get_users_cheering_num($user_id),
                 );
                 // cheerボタンのリダイレクト用
                 Cookie::set('from_uri', 'sukima/timeline');
 
-                return Response::forge(View::forge('sukima/timeline', $datas));
+                return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
         }
 
         public function post_new()
@@ -99,17 +103,12 @@ class Controller_Sukima extends Controller
                 $container_id = Input::post('container_id');
                 $cheered_num = Cheer::get_cheered_num($container_id, TYPE_CONTAINER);
 
-                /*
-                $datas = array(
-                        'data' => $cheered_num,
-                );
-                return Response::forge(View_Smarty::forge('sukima/postcheer', $datas));
-                */
-
                 if($cheered_num === null){
                         Response::redirect($redirect);
                 }else{
                         Cheer::set_cheered_num($container_id, TYPE_CONTAINER, $cheered_num+1);
+                        $user_cheered_num = Cheer::get_users_cheering_num($user_id);
+                        Cheer::set_users_cheering_num($user_id, $user_cheered_num+1);
                         Cookie::delete('from_uri');
                         Response::redirect($redirect);
                 }
