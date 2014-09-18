@@ -1,27 +1,34 @@
 <?php
 
-use \Model\Hackend;
-use \Model\Cheer;
+#use \Model\Hackend;
+#use \Model\Cheer;
 
+/*
 define('TYPE_GOAL', 1);
 define('TYPE_CONTAINER', 2);
+*/
 
 class Controller_Sukima extends Controller
 {
 
-        /*
         // for model method test
         public function action_test()
         {
+                Model_Markcheers::insert(1, 1, 1);
+                $user = Model_Markcheers::get_user_id(1, 1);
+                $target = Model_Markcheers::get_target_id(1, 1);
+                $type = Model_Markcheers::get_type(1, 1);
+
                 $data = array(
                         'datas' => array(
+                                $user,
+                                $target,
+                                $type,
                                 ),
                 );
 
 		return Response::forge(View::forge('sukima/testframe', $data));
         }
-        */
-
 
         public function action_index()
         {
