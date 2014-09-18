@@ -51,9 +51,9 @@ class Controller_Sukima extends Controller
         */
         public function action_timeline()
         {
-            Asset::add_path('assets/css/', 'css');
-            Asset::add_path('assets/js/', 'js');
-            Asset::add_path('assets/img/', 'img');
+            //Asset::add_path('assets/css/', 'css');
+            //Asset::add_path('assets/js/', 'js');
+            //Asset::add_path('assets/img/', 'img');
 
 
                 $datas = array(

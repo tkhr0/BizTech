@@ -31,4 +31,12 @@ class Users extends \Model {
 		$results = \DB::select()->from('users')->where('id', $user_id)->as_assoc()->execute();
 		return $results[0];	
 	}
+
+	public static function set_profile($twitter_id, $name, $thumbnail_path){
+    list($insert_id, $rows_affected) = \DB::insert('users')->set(array(
+      'twitter_id' => $twitter_id,
+      'name' => $name,
+      'thumbnail_path' => $thumbnail_path,
+    ))->execute();
+	}
 }
