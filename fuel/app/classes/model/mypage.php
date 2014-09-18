@@ -1,6 +1,5 @@
 <?php
 
-
 Class Model_Mypage extends \Model{	
 	public static function action_select($user_id){
 		 //データベース接続

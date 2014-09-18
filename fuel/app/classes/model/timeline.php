@@ -1,6 +1,8 @@
 <?php
 
-class Timeline()
+namespace Model;
+
+class Timeline extends \Model()
 {
 
 }

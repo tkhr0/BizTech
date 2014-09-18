@@ -1,6 +1,8 @@
 <?
 
-class New()
+namespace Model;
+
+class New extends \Model()
 {
 
 }

@@ -32,4 +32,9 @@ desktop.ini
 /fuel/app/logs/*/*/*
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
+
+# takahiro add
+composer.phar
+
+# morimori add
 /fuel/app/config/config.php
