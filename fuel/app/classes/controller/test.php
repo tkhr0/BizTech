@@ -18,7 +18,7 @@ class Controller_Test extends Controller
 	 */
 	public function action_index()
 	{
-		$data['test'] = Model_Goals::set_achieve(16);
+		$data['test'] = Model_Goals::set_goal("aaaaaa", "10");
 		return Response::forge(View::forge('testview', $data));
 	}
 }

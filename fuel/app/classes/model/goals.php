@@ -23,7 +23,7 @@ class Model_Goals extends \Model {
       'achieve' => false,
       'active' => false,
       'cheered' => 0,
-      'created_at' => Date::forge()->format("%Y%m%d%H%M%S")
+      'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S")
     ))->execute();
 	}
 	
