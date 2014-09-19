@@ -1,5 +1,8 @@
 <?php
 
+include_once('constants.php');
+
+
 class Controller_Sukima extends Controller
 {
   public function action_index()
@@ -69,13 +72,37 @@ class Controller_Sukima extends Controller
   
   public function action_cheer($target_id, $type_id)
   {
-    $cheered_num = Cheer::get_cheered_num($target_id, $type_id);
-  
-    if($cheered_num === null){
-      return -1;
+    // watching user's id
+    $cheering_user_id = Cookie::get('user_id');
+    $container_id = -1;
+
+    // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
+    if($type_id == Constants::TYPE_CONTAINER){
+      $container_id = $target_id;
+      $goal_id = Model_Containers::get_goal_id($container_id);
+    }elseif($type_id == Constants::TYPE_GOAL){ // 目標IDを取得
+      $goal_id = $target_id;
     }
-    Cheer::set_cheered_num($target_id, $type_id, $cheered_num+1);
-    return Cheer::get_cheered_num($target_id, $type_id);
+
+    // user's id which cheered
+    $cheered_user_id = Model_Goals::get_user_id($goal_id);
+
+    // それぞれのいいね数を増やす
+    if($type_id == Constants::TYPE_CONTAINER){
+      Model_Containers::increment_cheered($container_id);
+    }
+    Model_Goals::increment_cheered($goal_id);
+    Model_Users::increment_total_cheered($cheered_user_id);
+    Model_Users::increment_total_cheering($cheering_user_id);
+
+    $data = array('datas' => array(
+      'container' => (0 < $container_id) ? Model_Containers::get_cheered($container_id):null,
+      'goal'      => Model_Goals::get_cheered($goal_id),
+      'cheering'  => Model_Users::get_total_cheering($cheering_user_id),
+      'cheered'   => Model_Users::get_total_cheered($cheered_user_id),
+    ));
+
+    return Response::forge(View::forge('sukima/testframe', $data));
   }
   
   /**
@@ -89,22 +116,4 @@ class Controller_Sukima extends Controller
     return Response::forge(Presenter::forge('welcome/404'), 404);
   }
   
-  
-  //ここからHelper
-  private function get_containers_from_user_id($user_id){
-    //フレンドの取得
-    $friends = Model_Follows::get_friends($user_id);
-
-    //フレンドたちの全ての目標を取得
-    $goals = Model_Goals::get_goals_from_users($friends);
-
-    //目標からコンテナを取得
-    $containers = [];
-    foreach($goals as $goal){
-      $container = 
-    }
-
-    
-    return $containers;
-  }
 }

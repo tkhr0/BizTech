@@ -8,12 +8,12 @@ class Model_Users extends \Model {
 	
 	public static function get_total_cheered($user_id){
 		$results = \DB::select('cheered')->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];
+		return $results->as_array()[0]['cheered'];
 	}
 
 	public static function get_total_cheering($user_id){
 		$results = \DB::select('cheering')->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];	
+		return $results->as_array()[0]['cheering'];	
 	}
 
 	public static function get_thumbnail_path($user_id){
@@ -39,4 +39,25 @@ class Model_Users extends \Model {
     ))->execute();
 	}
 
+  public static function set_total_cheered($user_id, $cheered_num){
+    $query = \DB::update('users')->value('cheered', $cheered_num)
+                                 ->where('id', '=', $user_id)
+                                 ->execute();
+    return $query;
+  }
+
+  public static function set_total_cheering($user_id, $cheered_num){
+    $query = \DB::update('users')->value('cheering', $cheered_num)
+                                 ->where('id', '=', $user_id)
+                                 ->execute();
+    return $query;
+  }
+
+    public static function increment_total_cheered($user_id){
+      return self::set_total_cheered($user_id, self::get_total_cheered($user_id) + 1);
+    }
+
+    public static function increment_total_cheering($user_id){
+      return self::set_total_cheering($user_id, self::get_total_cheering($user_id) + 1);
+    }
 }

@@ -1,8 +1,5 @@
 <?php
 
-define('TYPE_GOAL', 1);
-define('TYPE_CONTAINER', 2);
-
 class Model_Markcheers extends \Model
 {
 
