@@ -1,1 +1,5 @@
-<?php var_dump($test); ?>
+<?php 
+echo "<pre>";
+var_dump($test);
+echo "</pre>";
+ ?>

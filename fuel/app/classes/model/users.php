@@ -38,4 +38,5 @@ class Model_Users extends \Model {
       'thumbnail_path' => $thumbnail_path,
     ))->execute();
 	}
+
 }
