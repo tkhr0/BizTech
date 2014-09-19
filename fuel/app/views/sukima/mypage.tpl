@@ -5,10 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>すきまハック</title>
-
     <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
     {Asset::css('custom.css')}
     {Asset::css('bootstrap.min.css')}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elstrongents and media queries -->
@@ -19,46 +16,45 @@
     <![endif]-->
   </head>
   <body>
+    <!--ヘッダー-->
     {include file='./page_header.tpl'}
+    <!--ヘッダー-->
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
-      <div class=""><!--ユーザ情報-->
-      <div class="row">
-        <div class="col-xs-4"> 
-       {Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])} 
-        </div>          
-	<div class="col-xs-8">
-          <div class="col-xs-6">
-            {$name}
+      <div class="user_info"><!--ユーザ情報-->
+        <div class="row">
+          <div class="col-xs-4"> 
+            {Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])} 
           </div>
-          <div class="col-xs-6">
-            <a class="btn btn-xs btn-primary btn-block" href="mypage.html">フォロー</a>
-          </div>
-          <div class="col-xs-12">がんばる人を応援するスキマハックを作ってます！</div>
-        </div>
-      </div>
-      <div>
-        <div class="col-xs-12">
-        <div class="col-xs-6">
-          <p class="text-center">応援された回数</p>
-        </div>
-        <div class="col-xs-6">
-          <p class="text-center">応援した回数</p>
-        </div>
-        </div><!--12-->
-        <div>
-        <div class="col-xs-6">
-          <p class="text-center"><strong>{$cheered}</strong></p>
-        </div>
-        <div class="col-xs-6">
-          <p class="text-center"><strong>{$cheering}</strong></p>
-        </div>
-        </div>
-      </div><!-- 12 -->
-      </div>
-      </div>
-      <!--ユーザ情報-->
-      <div calss="col-xs-12">
+          <div class="col-xs-8"><!--ユーザ紹介-->
+            <div id="user-name"><!--名前-->
+              {$name}
+            </div>
+            <div id="user-description">がんばる人を応援するスキマハックを作ってます！</div>
+          </div><!--ユーザ紹介-->
+        </div><!--ユーザ情報-->
+        <!--チアされた数-->
+        <table class="cheer-table">
+          <tr>
+            <th>応援された回数</th>
+            <th>応援した回数</th>
+          </tr>
+          <tr>
+            <td><strong>{$cheered}</strong></td>
+            <td><strong>{$cheering}</strong></td>
+          </tr>
+        </table>
+        <!--チアされた数-->
+        <!--フォローボタン-->
+        <div class="follow-btn">
+        <form action="#" class="follow-form">
+          <input type="hidden" name="user-id" value="1" />
+          <input type="hidden" name="follow-id" value="2" />
+          <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
+        </form>
+        </div><!--フォローボタン-->
+      </div><!--ユーザ情報-->
+      <div class="col-xs-12">
       <!--目標リスト-->
       <ul class="yaritai_list">
         <!--やりたいこと-->
@@ -98,8 +94,8 @@
     </div> <!-- /container -->    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    {Asset::js('mypage.js')}
     {Asset::js('bootstrap.min.js')}
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
 
