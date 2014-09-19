@@ -40,7 +40,8 @@ class Controller_Sukima extends Controller
     $user_id = 1;
     $containers = Model_Timeline::get_containers($user_id, 5);
     $datas = array(
-            'containers' => $containers
+            'containers'        => $containers,
+            'type_container'    => Constants::TYPE_CONTAINER,
     );
     return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
@@ -101,8 +102,9 @@ class Controller_Sukima extends Controller
       }
     }
 
+    // zuminobaaiha kokode kaeru
     if(!$flag_cheerable){
-      return false; //Response::forge(View_Smarty::forge('sukima/testframe', $data=array('datas' => array('fowa', 'target'=>'fjewoa'))));
+            return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
     }
 
     // コンテナを発信したユーザのID
@@ -119,18 +121,7 @@ class Controller_Sukima extends Controller
     // cheerしたことをマーク
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
-    $data = array('datas' => array(
-      'container' => (0 < $container_id) ? Model_Containers::get_cheered($container_id):null,
-      'goal'      => Model_Goals::get_cheered($goal_id),
-      'target'    => 11,
-      'container' => Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER),
-      'goal' => Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_GOAL),
-      'target' => $target_id,
-    ));
-
-
-    //return Response::forge(View_Smarty::forge('sukima/testframe', $data));
-    return true;
+    return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
   }
   
   /**

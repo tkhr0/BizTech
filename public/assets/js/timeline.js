@@ -18,7 +18,7 @@ var pushedCheeringButton = function(){
     $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://192.168.56.10/dammy/cheering/" + targetId + "/" + typeId,
+      url: "http://192.168.56.10/sukima/cheer/" + targetId + "/" + typeId,
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
