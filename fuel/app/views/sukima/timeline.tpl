@@ -95,10 +95,10 @@
      <!--<div id="yaruzo"><div><span class="glyphicon glyphicon-star"></span></div></div>-->
      <div id="yaruzo">
         <!--<div>★</div>-->
-        <form action="#" class="cheer-form">
+        <form action="#" class="hack-form">
           <input type="hidden" name="target-id" value="1" />
           <input type="hidden" name="type-id" value="2" />
-          <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" >
+          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
      </div>
    </div>
@@ -106,4 +106,3 @@
   {Asset::js('timeline.js')}
   </body>
 </html>
-
