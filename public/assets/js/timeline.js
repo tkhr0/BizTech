@@ -40,7 +40,7 @@ var pushedCheeringButton = function(){
     //$("#select_goals").css("display","block");
     var goals_elem = $("#select_goals");
     goals_elem.css("display","block");
-    var goals_select = goals_elem.find("select").eq(0);
+    var goals_select = goals_elem.find("ul");
     $this.find("input[type=submit]").val("やるぜ！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
@@ -49,7 +49,7 @@ var pushedCheeringButton = function(){
         //jqueryデータを受け取る
         var datas = $.parseJSON(msg);
         for(var i=0; i<datas.length; i++){
-          var opt = "<option value="+i+">"+datas[i].name+"</option>";
+          var opt = "<li role='presentation' class='dropdown-header' value="+i+">"+datas[i].name+"</li>";
           goals_select.append(opt);
         }
       }
