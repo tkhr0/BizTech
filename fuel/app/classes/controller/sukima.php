@@ -74,6 +74,12 @@ class Controller_Sukima extends Controller
   {
   
   }
+    
+  public function action_goals($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    return json_encode($goals);
+  }
+
   
   public function action_cheer($target_id, $type)
   {
