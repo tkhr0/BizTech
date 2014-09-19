@@ -37,15 +37,22 @@ var pushedCheeringButton = function(){
 
     //$this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     //var parent = $this.parent();
-    $("#select_goals").css("display","block");
+    //$("#select_goals").css("display","block");
+    var goals_elem = $("#select_goals");
+    goals_elem.css("display","block");
+    var goals_select = goals_elem.find("select").eq(0);
     $this.find("input[type=submit]").val("やるぜ！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://" + location.host + "/sukima/goals/",
+      url: "http://" + location.host + "/sukima/goals/" + "1/",
       success: function(msg){
-        //バッジに書き込み
-        badge.text(msg);
+        //jqueryデータを受け取る
+        var datas = $.parseJSON(msg);
+        for(var i=0; i<datas.length; i++){
+          var opt = "<option value="+i+">"+datas[i].name+"</option>";
+          goals_select.append(opt);
         }
+      }
     });
   });
     //submitのデフォルト機能のキャンセル
