@@ -96,16 +96,15 @@ class Controller_Sukima extends Controller
     $friends = Model_Follows::get_friends($user_id);
 
     //フレンドたちの全ての目標を取得
-    $goals = [];
-    foreach($friends as $friend){
-      $goals = array_merge($goals, Model_Goals::get_goals_from_user($friend));
-    }
-    
+    $goals = Model_Goals::get_goals_from_users($friends);
+
+    //目標からコンテナを取得
     $containers = [];
-    foreach($friends as $friend){
-      $goals = array_merge($goals, Model_Goals::get_goals_from_user($friend));
+    foreach($goals as $goal){
+      $container = 
     }
 
+    
     return $containers;
   }
 }
