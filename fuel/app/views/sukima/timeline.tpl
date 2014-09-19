@@ -103,6 +103,11 @@
           <input type="hidden" name="type-id" value="2" />
           <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
+        <form id="select_goals" action="#">
+          <select name="目標を選ぶ" size="">
+           <!--<option value="サンプル">サンプル</option> -->
+          </select>
+        </form>
      </div>
    </div>
   {include file='./js_footer.tpl'}
