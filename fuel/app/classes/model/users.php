@@ -18,7 +18,7 @@ class Model_Users extends \Model {
 
 	public static function get_thumbnail_path($user_id){
 		$results = \DB::select('thumbnail_path')->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];	
+		return $results->as_array()[0]['thumbnail_path'];
 	}
 
 	public static function get_name($user_id){
@@ -38,5 +38,4 @@ class Model_Users extends \Model {
       'thumbnail_path' => $thumbnail_path,
     ))->execute();
 	}
-
 }

@@ -34,12 +34,13 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {  
     $user_id = Cookie::get('user_id', null);
-    $containers = self::get_containers_from_user_id($user_id);
+    $user_id = 1;
+    $containers = Model_Timeline::get_containers($user_id, 5);
     $datas = array(
-            'test' => $containers
+            'containers' => $containers
     );
-    return Response::forge(View::forge('testview', $datas));
-    //return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+    //return Response::forge(View::forge('testview', $datas));
+    return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
   
   public function post_new()
@@ -87,24 +88,5 @@ class Controller_Sukima extends Controller
   public function action_404()
   {
     return Response::forge(Presenter::forge('welcome/404'), 404);
-  }
-  
-  
-  //ここからHelper
-  private function get_containers_from_user_id($user_id){
-    //フレンドの取得
-    $friends = Model_Follows::get_friends($user_id);
-
-    //フレンドたちの全ての目標を取得
-    $goals = Model_Goals::get_goals_from_users($friends);
-
-    //目標からコンテナを取得
-    $containers = [];
-    foreach($goals as $goal){
-      $container = 
-    }
-
-    
-    return $containers;
-  }
+  }  
 }
