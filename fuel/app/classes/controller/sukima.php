@@ -41,12 +41,12 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {  
     $user_id = Cookie::get('user_id', null);
-    $user_id = 1;
-    $containers = Model_Timeline::get_containers($user_id, 5);
+    $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
     $datas = array(
-            'containers'        => $containers,
-            'type_container'    => Constants::TYPE_CONTAINER,
-    );
+        'containers'        => $containers,
+        'type_container'    => Constants::TYPE_CONTAINER,
+        'user_id'           => $user_id,
+        );
     return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
   
@@ -80,7 +80,7 @@ class Controller_Sukima extends Controller
     $flag_cheerable = true;
 
     // コンテナを見ているユーザのID
-    $cheering_user_id = 1;//Cookie::get('user_id');
+    $cheering_user_id = Cookie::get('user_id');
     $container_id = -1;
 
     if($type == Constants::TYPE_CONTAINER){
@@ -126,6 +126,21 @@ class Controller_Sukima extends Controller
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
     return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
+  }
+
+  /**/
+  public static function helper_add_disabled_info($user_id, $containers){
+    function info(&$item, $key){
+      $item['disabled'] = '';
+    }
+    array_walk($containers, 'info');
+
+    foreach($containers as &$container){
+      if(!Model_Markcheers::cheerable($user_id, $container['container_id'], Constants::TYPE_CONTAINER)){
+        $container['disabled'] = 'disabled';
+      }
+    }
+    return $containers;
   }
   
   /**
