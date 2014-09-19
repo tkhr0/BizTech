@@ -12,6 +12,16 @@ class Model_Markcheers extends \Model
     return $query->as_array()[0]['user_id'];
   }
 
+  public static function get_count($user_id, $target_id, $type)
+  {
+    $query = \DB::select()->from('markcheers')
+      ->where('user_id', $user_id)
+      ->where('target_id', $target_id)
+      ->where('type', $type)
+      ->execute();
+    return count($query);
+  }
+
   public static function get_target_id($user_id, $type)
   {
     $query = \DB::select('target_id')->from('markcheers')
@@ -19,6 +29,15 @@ class Model_Markcheers extends \Model
       ->where('type', '=', $type)
       ->execute();
     return $query->as_array()[0]['target_id'];
+  }
+
+  public static function get_user_ids($target_id, $type)
+  {
+    $query = \DB::select('user_id')->from('markcheers')
+      ->where('target_id', '=', $target_id)
+      ->where('type', '=', $type)
+      ->execute();
+    return $query->as_array();
   }
 
   public static function get_type($user_id, $target_id)
