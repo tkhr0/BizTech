@@ -23,15 +23,44 @@ class Model_Goals extends \Model {
       'achieve' => false,
       'active' => false,
       'cheered' => 0,
-      'created_at' => Date::forge()->format("%Y%m%d%H%M%S")
+      'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S")
     ))->execute();
 	}
-	
-	public static function set_achieve($target_id){
+
+  public static function set_whether_active($target_id, $bool){
     $result = DB::update('goals')
-        ->value("achieve", true)
+        ->value("active", $bool)
         ->where('id', '=', $target_id)
         ->execute();
-        return $result;
+    return $result;
 	}
+	
+  public static function set_whether_achieve($target_id, $bool){
+    $result = DB::update('goals')
+        ->value("achieve", $bool)
+        ->where('id', '=', $target_id)
+        ->execute();
+    return $result;  	  
+  } 
+
+  public static function test(){
+    return "aaaa";
+  }
+	public static function set_achieve($target_id){
+    return self::set_whether_achieve($target_id, true);
+	}
+	
+  public static function set_unachieve($target_id){
+    return self::set_whether_achieve($target_id, false);
+	}
+	
+  public static function set_active($target_id){
+    return self::set_whether_active($target_id, true);
+	}
+
+  public static function set_unactive($target_id){
+    return self::set_whether_active($target_id, false);
+	}
+	
+
 }
