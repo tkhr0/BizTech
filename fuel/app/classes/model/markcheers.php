@@ -27,9 +27,9 @@ class Model_Markcheers extends \Model
         public static function get_type($user_id, $target_id)
         {
                 $query = \DB::select('type')->from('markcheers')
-                                                 ->where('user_id', '=', $target_id)
-                                                 ->where('target_id', '=', $target_id)
-                                                 ->execute();
+                                            ->where('user_id', '=', $target_id)
+                                            ->where('target_id', '=', $target_id)
+                                            ->execute();
                 return $query->as_array()[0]['type'];
         }
 

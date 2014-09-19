@@ -34,9 +34,6 @@ class Controller_Sukima extends Controller
         */
         public function action_timeline()
         {
-            //Asset::add_path('assets/css/', 'css');
-            //Asset::add_path('assets/js/', 'js');
-            //Asset::add_path('assets/img/', 'img');
                 $datas = array(
                         'user_id' => $user_id,
                         'user_cheering_num' => Cheer::get_users_cheering_num($user_id),
@@ -72,6 +69,24 @@ class Controller_Sukima extends Controller
 
         public function action_cheer($target_id, $type_id)
         {
+
+          //target_id、type_idからターゲットの固有IDを取得
+
+          // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
+          if($type_id == TYPE_CONTAINER){
+            $container_id = $target_id;
+            $goal_id = Model_Containers::get_goal_id($container_id);
+          }elseif($type_id == TYPE_GOAL){ // 目標IDを取得
+            $goal_id = $target_id;
+          }
+          $user_id = Model_Goals::get_user_id($goal_id);
+
+          // それぞれのいいね数を増やす
+          Model_Containers::incriment_cheered($container_id);
+          Model_Goals::incriment_cheered($goal_id);
+
+
+                /*
                 $cheered_num = Cheer::get_cheered_num($target_id, $type_id);
 
                 if($cheered_num === null){
@@ -79,6 +94,7 @@ class Controller_Sukima extends Controller
                 }
                 Cheer::set_cheered_num($target_id, $type_id, $cheered_num+1);
                 return Cheer::get_cheered_num($target_id, $type_id);
+                */
         }
 
         /**
