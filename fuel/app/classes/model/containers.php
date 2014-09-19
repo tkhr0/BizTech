@@ -8,6 +8,7 @@ class Model_Containers extends \Model
                         'goal_id' => $goal_id,
                         'cheered' => $cheered,
                         'status'  => $status,
+                        'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
                 ))->execute();
 
                 return $query;
@@ -52,9 +53,10 @@ class Model_Containers extends \Model
                 return $query;
         }
 
+        /**/
         public static function incriment_cheered($id)
         {
-                return $this->set_cheered($id, get_cheered($id)+1);
+                return self::set_cheered($id, self::get_cheered($id)+1);
         }
 
 }
