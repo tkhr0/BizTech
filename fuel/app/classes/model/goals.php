@@ -20,6 +20,14 @@ class Model_Goals extends \Model {
     $results = \DB::select('user_id')->from('goals')->where('id', $target_id)->as_assoc()->execute();
     return $results->as_array()[0]['user_id'];
   }
+	
+	public static function get_goals_from_users($user_ids){
+    $goals = [];
+    foreach($user_ids as $user_id){
+      $goals = array_merge($goals, Model_Goals::get_goals_from_user($user_id));
+    }
+    return $goals;
+	}
 
   public static function set_goal($name, $user_id){
     list($insert_id, $rows_affected) = \DB::insert('goals')->set(array(

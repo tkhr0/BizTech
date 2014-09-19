@@ -14,6 +14,11 @@ class Model_Containers extends \Model
                 return $query;
         }
 
+        public static function get_container_from_goal($goal_id){
+                $query = DB::select()->from('containers')->where('id', '=', $id)->execute();
+                return $query->as_array()[0];          
+        }
+
         /**/
         public static function get_goal_id($id)
         {
