@@ -16,7 +16,7 @@ class Model_Containers extends \Model
 
         public static function get_container_from_goal($goal_id){
                 $query = DB::select()->from('containers')->where('id', '=', $id)->execute();
-                return $query->as_array()[0];          
+                return $query->as_array();          
         }
 
         /**/

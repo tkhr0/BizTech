@@ -10,8 +10,7 @@ class Controller_Sukima extends Controller
   {
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
-    $user_id = Cookie::get('user_id', null);
-    if($user_id == null){
+    $user_id = Cookie::get('user_id', null); if($user_id == null){
             $user_id = 1;
     }else{
             $user_id = floor($user_id) % 3 + 1;
@@ -38,12 +37,12 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {  
     $user_id = Cookie::get('user_id', null);
-    $containers = self::get_containers_from_user_id($user_id);
+    $user_id = 1;
+    $containers = Model_Timeline::get_containers($user_id, 5);
     $datas = array(
-            'test' => $containers
+            'containers' => $containers
     );
-    return Response::forge(View::forge('/sukima/testframe', $datas));
-    //return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+    return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
   
   public function post_new()
@@ -144,5 +143,6 @@ class Controller_Sukima extends Controller
   {
     return Response::forge(Presenter::forge('welcome/404'), 404);
   }
+
   
 }

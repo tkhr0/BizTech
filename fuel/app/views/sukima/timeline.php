@@ -60,16 +60,13 @@
 
 
     <div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
       <!--タイムライン-->
       <div id="timeline">
         <!--やりたいことアクティビティ-->
         <div class="activity">
           <!--表明-->
           <div class="media">
-            <a class="pull-left" href="#">
-              <?php echo Asset::img("icon1.png", ["width"=>"40"])?>
-            </a>
+            <a class="pull-left" href="#"><?php echo Asset::img("icon1.png", ["width"=>"40"])?></a>
             <div class="media-body">
               <h4 class="media-heading">階段使うぞ！<span class="badge">0</span></h4>
               <!--応援している人リスト(アイコン)-->
@@ -97,7 +94,7 @@
      </div> <!-- /container -->    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <?php echo Asset::js('testtimeline.js'); ?>
+    <?php echo Asset::js('timeline.js'); ?>
     <?php echo Asset::js('bootstrap.min.js'); ?>
   </body>
 </html>
