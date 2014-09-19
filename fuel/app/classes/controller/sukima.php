@@ -6,21 +6,6 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
-  public function action_test()
-  {
-    $target_id = 11;
-
-    $data = array(
-      'datas' => array(
-        'container' => Model_Markcheers::cheerable($target_id, Constants::TYPE_CONTAINER),
-        'goal' => Model_Markcheers::cheerable($target_id, Constants::TYPE_GOAL),
-        'target' => $target_id,
-      ),
-    );
-    return Response::forge(View_Smarty::forge('sukima/testframe', $data));
-  }
-
-
   public function action_index()
   {
     // クッキーに仮のユーザIDを登録する
