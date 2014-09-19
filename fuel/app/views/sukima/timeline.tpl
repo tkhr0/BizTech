@@ -94,10 +94,18 @@
       <!--タイムライン-->
      </div> <!-- /container -->
    {/foreach} 
-   <div><div id="yaruzo"><span class="glyphicon glyphicon-star"></span> Star</div></div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <div id="footer">
+     <!--<div id="yaruzo"><div><span class="glyphicon glyphicon-star"></span></div></div>-->
+     <div id="yaruzo">
+        <!--<div>★</div>-->
+        <form action="#" class="hack-form">
+          <input type="hidden" name="target-id" value="1" />
+          <input type="hidden" name="type-id" value="2" />
+          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+        </form>
+     </div>
+   </div>
+  {include file='./js_footer.tpl'}
   {Asset::js('timeline.js')}
-  {Asset::js('bootstrap.min.js')}
   </body>
 </html>

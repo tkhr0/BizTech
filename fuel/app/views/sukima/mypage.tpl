@@ -10,6 +10,7 @@
     <!--ヘッダー-->
     {include file='./page_header.tpl'}
     <!--ヘッダー-->
+    <!--user-->
     <div class="container">
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
@@ -46,6 +47,7 @@
       </div><!--ユーザ情報-->
       <div class="col-xs-12">
       <!--目標リスト-->
+      <!-- goals -->
       <ul class="yaritai_list">
         <!--やりたいこと-->
         <li>
