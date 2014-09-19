@@ -1,0 +1,6 @@
+[19-Sep-2014 11:38:17 Asia/Tokyo] PHP Fatal error:  Class 'Clumnconstants' not found in /var/www/html/sukima/fuel/app/classes/model/test.php on line 3
+[19-Sep-2014 11:38:53 Asia/Tokyo] PHP Fatal error:  Cannot use object of type Clumnconstants as array in /var/www/html/sukima/fuel/app/classes/model/test.php on line 7
+[19-Sep-2014 11:39:15 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '[' in /var/www/html/sukima/fuel/app/classes/model/test.php on line 7
+[19-Sep-2014 11:48:35 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /var/www/html/sukima/fuel/app/classes/model/test.php on line 5
+[19-Sep-2014 11:48:45 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM) in /var/www/html/sukima/fuel/app/classes/model/test.php on line 5
+[19-Sep-2014 12:03:44 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM) in /var/www/html/sukima/fuel/app/classes/model/test.php on line 5
