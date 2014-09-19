@@ -15,13 +15,13 @@ var pushedCheeringButton = function(){
     //変更するバッジ
     badge = $this.parent().find(".badge");
 
+    $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
       url: "http://192.168.56.10/dammy/cheering/" + targetId + "/" + typeId,
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
-        $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
         }
         });
     //submitのデフォルト機能のキャンセル

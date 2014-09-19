@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-18 14:04:02
+<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-19 17:53:56
          compiled from "/var/www/html/sukima/fuel/app/views/sukima/index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1280585385541a65cc1d4788-84407540%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '959c1c0a9c318bc20955283f908e646ec69dd941' => 
     array (
       0 => '/var/www/html/sukima/fuel/app/views/sukima/index.tpl',
-      1 => 1411016641,
+      1 => 1411116610,
       2 => 'file',
     ),
   ),
