@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-19 16:05:10
+<?php /* Smarty version Smarty-3.1.19-dev, created on 2014-09-20 03:03:57
          compiled from "/var/www/html/sukima/fuel/app/views/sukima/mypage.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1414926286541b9890be9ea9-51713065%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'baf38e9a976e3152386388ee12e3e9dc3145d61c' => 
     array (
       0 => '/var/www/html/sukima/fuel/app/views/sukima/mypage.tpl',
-      1 => 1411109159,
+      1 => 1411149691,
       2 => 'file',
     ),
   ),
@@ -19,30 +19,18 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_541b9890c6b8e8_28389195',
   'variables' => 
   array (
-    'name' => 0,
-    'cheered' => 0,
-    'cheering' => 0,
+    'user' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_541b9890c6b8e8_28389195')) {function content_541b9890c6b8e8_28389195($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>すきまハック</title>
-    <!-- Bootstrap -->
-    <?php echo Asset::css('custom.css');?>
+    <!--メタデータのヘッダー-->
+    <?php echo $_smarty_tpl->getSubTemplate ('./meta_header.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
-    <?php echo Asset::css('bootstrap.min.css');?>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elstrongents and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!--メタデータのヘッダー-->
   </head>
   <body>
     <!--ヘッダー-->
@@ -50,7 +38,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
     <!--ヘッダー-->
     <div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
           <div class="col-xs-4"> 
@@ -59,7 +46,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
             <div id="user-name"><!--名前-->
-              <?php echo $_smarty_tpl->tpl_vars['name']->value;?>
+              <?php echo $_smarty_tpl->tpl_vars['user']->value['name'];?>
 
             </div>
             <div id="user-description">がんばる人を応援するスキマハックを作ってます！</div>
@@ -72,9 +59,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <th>応援した回数</th>
           </tr>
           <tr>
-            <td><strong><?php echo $_smarty_tpl->tpl_vars['cheered']->value;?>
+            <td><strong><?php echo $_smarty_tpl->tpl_vars['user']->value['cheered'];?>
 </strong></td>
-            <td><strong><?php echo $_smarty_tpl->tpl_vars['cheering']->value;?>
+            <td><strong><?php echo $_smarty_tpl->tpl_vars['user']->value['cheering'];?>
 </strong></td>
           </tr>
         </table>
@@ -137,9 +124,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       </ul>
       <!--目標リスト-->
       </div>
-    </div> <!-- /container -->    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    </div> <!-- /container -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <?php echo Asset::js('mypage.js');?>
 
     <?php echo Asset::js('bootstrap.min.js');?>
