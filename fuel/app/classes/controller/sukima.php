@@ -29,6 +29,9 @@ class Controller_Sukima extends Controller
   {
     // cheerボタンのリダイレクト用
     Cookie::set('from_uri', 'sukima/mypage');
+    $user_id = 1;
+    $datas["goals"] = Model_Goals::get_goals_from_user($user_id);
+    return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
   
   /*
