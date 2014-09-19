@@ -19,7 +19,7 @@
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
             <div id="user-name"><!--名前-->
-              {$name}
+              {$user.name}
             </div>
             <div id="user-description">がんばる人を応援するスキマハックを作ってます！</div>
           </div><!--ユーザ紹介-->
@@ -31,8 +31,8 @@
             <th>応援した回数</th>
           </tr>
           <tr>
-            <td><strong>{$cheered}</strong></td>
-            <td><strong>{$cheering}</strong></td>
+            <td><strong>{$user.cheered}</strong></td>
+            <td><strong>{$user.cheering}</strong></td>
           </tr>
         </table>
         <!--チアされた数-->

@@ -17,7 +17,7 @@ var pushedFollowingButton = function(){
     $this.find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://192.168.56.10/dammy/timeline/" + userId + "/" + followerId,
+      url: "http://192.168.56.10/sukima/follower/" + userId + "/" + followerId,
       success: function(msg){
         //バッジに書き込み
         //badge.text(msg);
