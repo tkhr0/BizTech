@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-        <head>
-                <meta charset="utf-8">
-                <title>TEST</title>
-        </head>
-        <body>
-                <a href=""></a>
-        </body>
+<html>
+<head>
+</head>
+<body>
+        <?php var_dump($datas) ?>
+</body>
 </html>

@@ -1,5 +1,6 @@
 $(function(){
   $(".cheer-form").submit(function(){
+	  $this = $(this);
       console.log("test");
       $this = $(this);
       // hiddenから必要な情報の抽出

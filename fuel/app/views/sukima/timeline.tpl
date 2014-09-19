@@ -55,7 +55,6 @@
         <br>
         {/foreach}
    </ul>
-
 　{foreach from=$containers item=container}　
     <div class="container">
       <!--タイムライン-->
