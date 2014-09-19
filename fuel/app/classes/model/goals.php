@@ -12,12 +12,12 @@ class Model_Goals extends \Model {
   }
 
   public static function get_cheered($goals_id){
-    $results = \DB::select('cheered')->from('goals')->where('id', $target_id)->as_assoc()->execute();
+    $results = \DB::select('cheered')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
     return $results->as_array()[0]['cheered'];
   }
 
   public static function get_user_id($goals_id){
-    $results = \DB::select('user_id')->from('goals')->where('id', $target_id)->as_assoc()->execute();
+    $results = \DB::select('user_id')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
     return $results->as_array()[0]['user_id'];
   }
 	
@@ -81,7 +81,7 @@ class Model_Goals extends \Model {
   }
 
   public static function increment_cheered($target_id){
-    return self::set_cheered(self::get_cheered($target_id) + 1);
+    return self::set_cheered($target_id, self::get_cheered($target_id) + 1);
   }
 
 

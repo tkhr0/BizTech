@@ -59,7 +59,7 @@ class Model_Containers extends \Model
         }
 
         /**/
-        public static function incriment_cheered($id)
+        public static function increment_cheered($id)
         {
                 return self::set_cheered($id, self::get_cheered($id)+1);
         }
