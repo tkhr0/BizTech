@@ -5,6 +5,22 @@ include_once('constants.php');
 
 class Controller_Sukima extends Controller
 {
+
+  public function action_test()
+  {
+    $target_id = 11;
+
+    $data = array(
+      'datas' => array(
+        'container' => Model_Markcheers::cheerable($target_id, Constants::TYPE_CONTAINER),
+        'goal' => Model_Markcheers::cheerable($target_id, Constants::TYPE_GOAL),
+        'target' => $target_id,
+      ),
+    );
+    return Response::forge(View_Smarty::forge('sukima/testframe', $data));
+  }
+
+
   public function action_index()
   {
     // クッキーに仮のユーザIDを登録する
@@ -41,7 +57,7 @@ class Controller_Sukima extends Controller
     $datas = array(
             'test' => $containers
     );
-    return Response::forge(View::forge('testview', $datas));
+    return Response::forge(View::forge('/sukima/testframe', $datas));
     //return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
   
@@ -70,39 +86,67 @@ class Controller_Sukima extends Controller
   
   }
   
-  public function action_cheer($target_id, $type_id)
+  public function action_cheer($target_id, $type)
   {
-    // watching user's id
-    $cheering_user_id = Cookie::get('user_id');
+    $flag_cheerable = true;
+
+    // コンテナを見ているユーザのID
+    $cheering_user_id = 1;//Cookie::get('user_id');
     $container_id = -1;
 
-    // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
-    if($type_id == Constants::TYPE_CONTAINER){
+    if($type == Constants::TYPE_CONTAINER){
+      // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
       $container_id = $target_id;
       $goal_id = Model_Containers::get_goal_id($container_id);
-    }elseif($type_id == Constants::TYPE_GOAL){ // 目標IDを取得
+    }elseif($type == Constants::TYPE_GOAL){ 
+      // 目標IDを取得
       $goal_id = $target_id;
     }
 
-    // user's id which cheered
+    if($type == Constants::TYPE_CONTAINER){
+      // コンテナにcheer可能かチェック、できなければreturn
+      if((0 < $container_id) 
+          && (Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER) == false)){
+        $flag_cheerable = false;
+      }
+    }
+    if($type == Constants::TYPE_GOAL){
+      // 目標にcheer可能かチェック、できなければretuen
+      if(Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_GOAL) == false){
+        $flag_cheerable = false;
+      }
+    }
+
+    if(!$flag_cheerable){
+      return false; //Response::forge(View_Smarty::forge('sukima/testframe', $data=array('datas' => array('fowa', 'target'=>'fjewoa'))));
+    }
+
+    // コンテナを発信したユーザのID
     $cheered_user_id = Model_Goals::get_user_id($goal_id);
 
     // それぞれのいいね数を増やす
-    if($type_id == Constants::TYPE_CONTAINER){
+    if($type == Constants::TYPE_CONTAINER){
       Model_Containers::increment_cheered($container_id);
     }
     Model_Goals::increment_cheered($goal_id);
     Model_Users::increment_total_cheered($cheered_user_id);
     Model_Users::increment_total_cheering($cheering_user_id);
 
+    // cheerしたことをマーク
+    Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
+
     $data = array('datas' => array(
       'container' => (0 < $container_id) ? Model_Containers::get_cheered($container_id):null,
       'goal'      => Model_Goals::get_cheered($goal_id),
-      'cheering'  => Model_Users::get_total_cheering($cheering_user_id),
-      'cheered'   => Model_Users::get_total_cheered($cheered_user_id),
+      'target'    => 11,
+      'container' => Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER),
+      'goal' => Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_GOAL),
+      'target' => $target_id,
     ));
 
-    return Response::forge(View::forge('sukima/testframe', $data));
+
+    //return Response::forge(View_Smarty::forge('sukima/testframe', $data));
+    return true;
   }
   
   /**
