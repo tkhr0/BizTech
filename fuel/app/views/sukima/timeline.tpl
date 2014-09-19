@@ -49,16 +49,15 @@
     login_user_id: {$user_id}
     </p>
    <ul style="display:none;">
-　　　　{foreach from=$containers item=container}
-          
-          {foreach from=$container.cheer_users item=user}
-            <li>{$user.name}</li>
-            <li>{$user.thumbnail}</li>
-          {/foreach}
-        <br>
-        {/foreach}
+    {foreach from=$containers item=container}
+      {foreach from=$container.cheer_users item=user}
+        <li>{$user.name}</li>
+        <li>{$user.thumbnail}</li>
+      {/foreach}
+    <br>
+    {/foreach}
    </ul>
-　{foreach from=$containers item=container}　
+  {foreach from=$containers item=container}
     <div class="container">
       <!--タイムライン-->
       <div id="timeline">
