@@ -39,7 +39,7 @@ class Controller_Sukima extends Controller
     $datas = array(
             'containers' => $containers
     );
-    return Response::forge(View::forge('testview', $datas));
+    //return Response::forge(View::forge('testview', $datas));
     return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
   }
   
