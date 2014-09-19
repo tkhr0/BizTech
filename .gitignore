@@ -39,3 +39,6 @@ composer.phar
 
 # morimori add
 /fuel/app/config/config.php
+
+# yasu add
+fuel/app/tmp/Smarty/templates_c/
