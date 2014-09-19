@@ -80,7 +80,7 @@
           </div>
           <!--いいねボタン-->
           <form action="#" class="cheer-form">
-            <input type="hidden" name="target-id" value="{$cheer_user.id}" />
+            <input type="hidden" name="target-id" value="1" />
             <input type="hidden" name="type-id" value="2" />
             <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" >
           </form>
@@ -91,8 +91,7 @@
       <!--タイムライン-->
      </div> <!-- /container -->
    {/foreach} 
-   <div><div id="yaruzo"><span class="glyphicon glyphicon-star"></span> Star</div></div>
-
+   <div id="yaruzo"><div><span class="glyphicon glyphicon-star"></span></div></div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   {Asset::js('timeline.js')}
   {Asset::js('bootstrap.min.js')}
