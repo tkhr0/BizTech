@@ -6,16 +6,27 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
+  public function before()
+  {
+    // redirect /sukima if there is a fraud which between session and cookie
+    if((Session::get('user_id', null) != null)
+      && (Session::get('user_id') != Cookie::get('user_id'))){
+      Responce::redirect('/sukima');
+    }
+  }
+
   public function action_index()
   {
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
-    $user_id = Cookie::get('user_id', null); if($user_id == null){
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
             $user_id = 1;
     }else{
             $user_id = floor($user_id) % 4 + 1;
     }
     Cookie::set('user_id', $user_id);
+    Session::set('user_id', $user_id);
 
     $datas = array();
     $datas['data'] = Model_Users::get_profile($user_id);
@@ -28,9 +39,9 @@ class Controller_Sukima extends Controller
   public function action_mypage($page_user_id)
   {
     // cheerボタンのリダイレクト用
-    Cookie::set('from_uri', "sukima/mypage/$page_user_id");
+    Session::set('from_uri', "sukima/mypage/$page_user_id");
 
-    $user_id = Cookie::get('user_id');  // ログイン中のユーザid
+    $user_id = Session::get('user_id');  // ログイン中のユーザid
 
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
@@ -65,8 +76,14 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {
     $user_id = Cookie::get('user_id', null);
-    $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
+    $containers = Model_Timeline::get_containers($user_id, 100);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
     $datas = array(
+        'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
@@ -77,29 +94,35 @@ class Controller_Sukima extends Controller
   /* for ajax */
   public function action_getcontainers($start, $limit=10)
   {
-    $user_id = Cookie::get('user_id');
+    $user_id = Session::get('user_id');
     $data = Model_Timeline::get_containers_with_offset($user_id, intval($start), intval($limit));
     return Format::forge($data)->to_json();
   }
   
-  public function post_new()
+  public function action_make_goal($name, $user_id)
   {
-  
+    $goal_id = Model_Goals::set_goal($name, $user_id);  
+    Model_Containers::set_container($goal_id, 1);
+    Model_Goals::set_active($goal_id);
+    return $goal_id;
   }
   
-  public function post_hackstart()
+  public function action_hack_start($goal_id)
   {
-  
+    Model_Containers::set_container($goal_id, 2);
+    Model_Goals::set_active($goal_id);
+    return 1;
   }
   
-  public function post_hackend()
+  public function action_hack_end($goal_id)
   {
-  
+    Model_Containers::set_container($goal_id, 3);
+    Model_Goals::set_unactive($goal_id);
+    return 1;
   }
   
-  public function post_achieve()
+  public function action_achieve_goal($name, $user_id)
   {
-  
   }
   
   /* follow */
@@ -114,30 +137,19 @@ class Controller_Sukima extends Controller
     }
   }
   
-  public function action_is_active($user_id){
-    $goals = Model_Goals::get_goals_from_user($user_id);
-    $isActive = 0;
-    $datas["test"] = $goals;
-
-    foreach($goals as $goal){
-      if($goal["active"] == 1){
-        $isActive = 1;
-        break;
-      }
-    }
-    return $isActive;  
+  public function action_active_id($user_id){
+    return self::active_id($user_id);
   }
     
   public function action_goals($user_id){
     $goals = Model_Goals::get_goals_from_user($user_id);
     return json_encode($goals);
   }
-
   
   public function action_cheer($target_id, $type)
   {
     // コンテナを見ているユーザのID
-    $cheering_user_id = Cookie::get('user_id');
+    $cheering_user_id = Session::get('user_id');
     $container_id = -1;
 
     if($type == Constants::TYPE_CONTAINER){
@@ -173,21 +185,20 @@ class Controller_Sukima extends Controller
     return $count;
   }
 
-  /**/
-  public static function helper_add_disabled_info($user_id, $containers){
-    function info(&$item, $key){
-      $item['disabled'] = '';
-    }
-    array_walk($containers, 'info');
+  private function active_id($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    $activeNum = -1;
+    $datas["test"] = $goals;
 
-    foreach($containers as &$container){
-      if(!Model_Markcheers::cheerable($user_id, $container['container_id'], Constants::TYPE_CONTAINER)){
-        $container['disabled'] = 'disabled';
+    foreach($goals as $goal){
+      if($goal["active"] == 1){
+        $activeNum = $goal["id"];
+        break;
       }
     }
-    return $containers;
+    return $activeNum; 
   }
-  
+
   /**
   * The 404 action for the application.
   *

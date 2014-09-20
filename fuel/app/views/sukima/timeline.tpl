@@ -3,6 +3,7 @@
   <head>
     <title>すきまハック</title>
     {include file='./meta_header.tpl'}
+    {Asset::css('timeline.css')}
   </head>
   <body>
   {include file='./page_header.tpl'}
@@ -57,11 +58,14 @@
     </div>
     <!--input-->
   </div><!--container-->
-  <div id="footr">
+  <div id="footer">
      <div id="yaruzo">
         <form action="#" class="hack-form">
-          <input type="hidden" name="target-id" value="1" />
-          <input type="hidden" name="type-id" value="2" />
+          <input type="hidden" name="state" value="{$state}" />
+          <select class="display-none" name="目標を選ぶ" multiple="multiple">
+           <!--<option value="サンプル">サンプル</option> -->
+          </select>
+          <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
           <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
         <ul id="select_goals" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">

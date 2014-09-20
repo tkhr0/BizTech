@@ -37,6 +37,7 @@ class Model_Goals extends \Model {
           'cheered' => 0,
           'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S")
           ))->execute();
+    return $insert_id;
   }
 
   public static function set_cheered($target_id, $num){
