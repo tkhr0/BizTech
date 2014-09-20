@@ -75,10 +75,6 @@
 }
 
 /*やるぞ！*/
-#footer {
-  overflow: hidden;
-}
-
 #yaruzo {
   display: table;
   overflow: hidden;
@@ -104,5 +100,4 @@
 
 #select_goals {
   display: none;
-  color: red;
 }
