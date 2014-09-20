@@ -80,7 +80,7 @@ class Controller_Sukima extends Controller
     $flag_cheerable = true;
 
     // コンテナを見ているユーザのID
-    $cheering_user_id = 1;//Cookie::get('user_id');
+    $cheering_user_id = Cookie::get('user_id');
     $container_id = -1;
 
     if($type == Constants::TYPE_CONTAINER){
