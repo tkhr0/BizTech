@@ -106,7 +106,7 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  border: 3px #EFB31F double;
+  border: 1px #EFB31F solid;
   background-color: #eee;
   color: red;
   text-align: center;
