@@ -37,7 +37,6 @@
           </tr>
         </table>
         <!--チアされた数-->
-        <p>{$followable}</p>
         <!--フォローボタン-->
         <div class="follow-btn">
         <input type="hidden" name="followable" value="{$followable}" />
@@ -47,7 +46,6 @@
           <input type="hidden" name="follow-id" value="{$user.id}" />
           <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
-
         {/if}
         </div><!--フォローボタン-->
       </div><!--ユーザ情報-->

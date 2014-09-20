@@ -10,8 +10,10 @@ class Controller_Sukima extends Controller
   {
     // redirect /sukima if there is a fraud which between session and cookie
     if((Session::get('user_id', null) != null)
-      && (Session::get('user_id') != Cookie::get('user_id'))){
-      Responce::redirect('/sukima');
+      && (Session::get('user_id') != Cookie::get('user_id')
+      && (Session::get('noredirect', false) == false))){
+      Session::set('noredirect', true);
+      Response::redirect('/sukima');
     }
   }
 
@@ -25,14 +27,15 @@ class Controller_Sukima extends Controller
     }else{
             $user_id = floor($user_id) % 4 + 1;
     }
-    Cookie::set('user_id', $user_id);
     Session::set('user_id', $user_id);
+    Cookie::set('user_id', $user_id);
 
     $datas = array();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
     $datas['user_id'] = $user_id;
 
+    Session::delete('noredirect');
     return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
   }
   
