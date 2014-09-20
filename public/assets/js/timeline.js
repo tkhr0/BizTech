@@ -2,10 +2,7 @@ $(function(){
   // 応援ボタンが押された時の処理
   initCheerButton();
   pushedCheeringButton();
-<<<<<<< HEAD
   // やるぞボタン(hack)をおしたとき
-=======
->>>>>>> 4d812c7a9d98bfcb43738016efa947dfb41aef0f
   pushedHackButton();
 });
 
