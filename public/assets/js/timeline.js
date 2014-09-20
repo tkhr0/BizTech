@@ -1,7 +1,21 @@
 $(function(){
   // 応援ボタンが押された時の処理
+  initCheerButton();
   pushedCheeringButton();
+  pushedHackButton();
 });
+
+//ボタンの初期状態を設定
+var ininCheerButton = function(){
+  cheerForms = $(".cheer-form");
+  $.each(cheerForms, function(){
+    $this = $(this);
+    count = $this.find("input[name=cheer-status]").val();
+    if(count > 0){
+      $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
+    }
+  });
+};
 
 // 応援ボタンが押された時の処理
 var pushedCheeringButton = function(){
@@ -27,6 +41,9 @@ var pushedCheeringButton = function(){
     //submitのデフォルト機能のキャンセル
     return false;
   });
+};
+
+var pushedHackButton = function(){
   // hackだよ
   $(".hack-form").submit(function(){
     $this = $(this);
