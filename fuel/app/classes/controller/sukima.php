@@ -100,6 +100,20 @@ class Controller_Sukima extends Controller
       return true;
     }
   }
+  
+  public function action_is_active($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    $isActive = 0;
+    $datas["test"] = $goals;
+
+    foreach($goals as $goal){
+      if($goal["active"] == 1){
+        $isActive = 1;
+        break;
+      }
+    }
+    return $isActive;  
+  }
     
   public function action_goals($user_id){
     $goals = Model_Goals::get_goals_from_user($user_id);
