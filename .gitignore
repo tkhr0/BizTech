@@ -38,7 +38,7 @@ composer.phar
 *.swp
 
 /fuel/app/tmp/Smarty/templates_c/*
- 
+
 # morimori add
 /fuel/app/config/config.php
 *.swp
