@@ -49,16 +49,15 @@
     login_user_id: {$user_id}
     </p>
    <ul style="display:none;">
-　　　　{foreach from=$containers item=container}
-          
-          {foreach from=$container.cheer_users item=user}
-            <li>{$user.name}</li>
-            <li>{$user.thumbnail}</li>
-          {/foreach}
-        <br>
-        {/foreach}
+    {foreach from=$containers item=container}
+      {foreach from=$container.cheer_users item=user}
+        <li>{$user.name}</li>
+        <li>{$user.thumbnail}</li>
+      {/foreach}
+    <br>
+    {/foreach}
    </ul>
-　{foreach from=$containers item=container}　
+  {foreach from=$containers item=container}
     <div class="container">
       <!--タイムライン-->
       <div id="timeline">
@@ -85,6 +84,7 @@
           <form action="#" class="cheer-form">
             <input type="hidden" name="target-id" value="{$container.container_id}" />
             <input type="hidden" name="type-id" value="{$type_container}" />
+            <input type="hidden" name="cheer-status" value="{$container.cheer_status}" />
             <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" {$container.disabled}>
           </form>
           <!--いいねボタン-->

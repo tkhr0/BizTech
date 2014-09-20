@@ -51,6 +51,9 @@
         <h1>
            {Asset::img('sukimaHack.png',['width' => '100%'])} 
         </h1>
+
+        <p>user id:{$user_id}</p>
+
        <form class="form-signin" role="form">
        <!--
         <h2 class="form-signin-heading">Please sign in</h2>
