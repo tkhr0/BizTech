@@ -25,13 +25,32 @@ class Controller_Sukima extends Controller
     //return Response::forge(View::forge('sukima/index.tpl', $datas));
   }
   
-  public function action_mypage()
+  public function action_mypage($page_user_id)
   {
     // cheerボタンのリダイレクト用
-    Cookie::set('from_uri', 'sukima/mypage');
-    $user_id = 1;
-    $datas["goals"] = Model_Goals::get_goals_from_user($user_id);
-    $datas["user"] = Model_Users::get_profile($user_id);
+    Cookie::set('from_uri', "sukima/mypage/$page_user_id");
+
+    // ログイン中のユーザID取得
+    $user_id = Cookie::get('user_id');
+
+    // 情報を取得
+    $datas['user'] = Model_Users::get_profile($user_id);  // ユーザの情報
+    // 目標
+    $datas['goals'] = Model_Goals::get_goals_from_user($user_id);   // 目標の連想配列の配列
+    // 応援した人のデータを取得、追加
+    foreach($datas['goals'] as &$goal){
+      $cheering_users_data = array();
+      foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
+        $user_data = array();  // init
+        $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
+        $user_data['mypage_url'] = '/sukima/'.$cheering_user_profile['id'];  // idをセット
+        $user_data['thumbnail'] = $cheering_user_profile['thumbnail_path']; // サムネ
+        $user_data['name'] = $cheering_user_profile['name'];  // 名前
+        array_push($cheering_users_data, $user_data);
+      }
+      $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
+    }
+
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
   
@@ -74,6 +93,12 @@ class Controller_Sukima extends Controller
   {
   
   }
+    
+  public function action_goals($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    return json_encode($goals);
+  }
+
   
   public function action_cheer($target_id, $type)
   {
@@ -92,25 +117,6 @@ class Controller_Sukima extends Controller
       $goal_id = $target_id;
     }
 
-    if($type == Constants::TYPE_CONTAINER){
-      // コンテナにcheer可能かチェック、できなければreturn
-      if((0 < $container_id) 
-          && (Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER) == false)){
-        $flag_cheerable = false;
-      }
-    }
-    if($type == Constants::TYPE_GOAL){
-      // 目標にcheer可能かチェック、できなければretuen
-      if(Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_GOAL) == false){
-        $flag_cheerable = false;
-      }
-    }
-
-    // zuminobaaiha kokode kaeru
-    if(!$flag_cheerable){
-            return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
-    }
-
     // コンテナを発信したユーザのID
     $cheered_user_id = Model_Goals::get_user_id($goal_id);
 
@@ -122,10 +128,17 @@ class Controller_Sukima extends Controller
     Model_Users::increment_total_cheered($cheered_user_id);
     Model_Users::increment_total_cheering($cheering_user_id);
 
+    $count = 0;
+    if($type == Constants::TYPE_CONTAINER){
+      $count = Model_Containers::get_cheered($container_id);
+    }elseif($type == Constants::TYPE_GOAL){ 
+      $count = Model_Goals::get_cheered($goal_id);
+    }
+
     // cheerしたことをマーク
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
-    return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
+    return $count;
   }
 
   /**/

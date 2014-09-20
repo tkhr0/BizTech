@@ -81,9 +81,10 @@
 
 #yaruzo {
   display: table;
+  overflow: hidden;
 }
 
-#yaruzo > div, #yaruzo > form {
+#yaruzo > .btn {
   position: absolute;
   display: table-cell;
   text-align: center;
@@ -99,4 +100,9 @@
   background: black;
   color: white;
   z-index: 1000;
+}
+
+#select_goals {
+  display: none;
+  color: red;
 }
