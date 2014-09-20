@@ -6,7 +6,7 @@ $(function(){
 });
 
 //ボタンの初期状態を設定
-var ininCheerButton = function(){
+var initCheerButton = function(){
   cheerForms = $(".cheer-form");
   $.each(cheerForms, function(){
     $this = $(this);
@@ -72,6 +72,6 @@ var pushedHackButton = function(){
       }
     });
   });
-    //submitのデフォルト機能のキャンセル
+     //submitのデフォルト機能のキャンセル
     return false;
 };
