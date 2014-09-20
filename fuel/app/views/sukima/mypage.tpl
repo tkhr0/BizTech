@@ -38,11 +38,13 @@
         <!--チアされた数-->
         <!--フォローボタン-->
         <div class="follow-btn">
-        <form action="#" class="follow-form">
-          <input type="hidden" name="user-id" value="1" />
-          <input type="hidden" name="follow-id" value="2" />
+        {if $visited_user_id != $user.id}
+        <form action="/sukima/follower" class="follow-form" action="post">
+          <input type="hidden" name="user-id" value="{$visited_user_id}" />
+          <input type="hidden" name="follow-id" value="{$user.id}" />
           <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
+        {/if}
         </div><!--フォローボタン-->
       </div><!--ユーザ情報-->
       <div class="col-xs-12">

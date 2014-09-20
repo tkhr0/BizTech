@@ -12,10 +12,17 @@ class Model_Follows extends \Model {
 		return $results->as_array();
 	}
 
+  /*
+    インサートした行数を返す
+    失敗で0
+    $to_user_id: 相手
+    $from_user_id: 自分
+  */
 	public static function set_follow($to_user_id, $from_user_id){
     list($insert_id, $rows_affected) = \DB::insert('follows')->set(array(
       'to_user_id' => $to_user_id,
       'from_user_id' => $from_user_id,
     ))->execute();
+    return $rows_affected;
 	}
 }
