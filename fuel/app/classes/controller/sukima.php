@@ -74,6 +74,14 @@ class Controller_Sukima extends Controller
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
 
+  /* for ajax */
+  public function action_getcontainers($start, $limit=10)
+  {
+    $user_id = Cookie::get('user_id');
+    $data = Model_Timeline::get_containers_with_offset($user_id, intval($start), intval($limit));
+    return Format::forge($data)->to_json();
+  }
+  
   public function post_new()
   {
   
@@ -94,6 +102,7 @@ class Controller_Sukima extends Controller
   
   }
   
+  /* follow */
   public function post_follower($user_id, $follow_id)
   {
     $success = Model_Follows::follow($user_id, $follow_id);
