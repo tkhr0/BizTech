@@ -15,6 +15,7 @@ $request_token = $connection->getRequestToken(OAUTH_CALLBACK);
 $_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
 $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
  
+
 /* If last connection failed don't display authorization link. */
 switch ($connection->http_code) {
   case 200:
