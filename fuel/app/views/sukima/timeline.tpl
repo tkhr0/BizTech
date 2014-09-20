@@ -43,7 +43,10 @@
   <div class="container">
     <!--Btnグループ-->
     <div class="row">
-      <button type="button" class="btn btn-danger col-xs-12">やるぞ</button>
+      <div class="col-xs-12">
+      <!--<button type="button" class="btn btn-danger col-xs-12">やるぞ</button>-->
+      <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
+      </div>
     </div>
     <!--Btnグループ-->
     <!--input-->
