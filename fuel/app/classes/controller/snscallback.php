@@ -33,8 +33,8 @@ class Controller_Snscallback extends Controller{
      //print $user_info->profile_image_url_https;
      //print "<br>";
      //フレンド情報の取得
-　
-     $friends = $connection->get('friends/list');
+     
+     //$friends = $connection->get('friends/list');
     
      Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https);    
     
