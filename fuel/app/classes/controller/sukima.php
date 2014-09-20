@@ -60,8 +60,14 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {
     $user_id = Cookie::get('user_id', null);
-    $containers = Model_Timeline::get_containers($user_id, 5);
+    $containers = Model_Timeline::get_containers($user_id, 100);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
     $datas = array(
+        'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
@@ -69,24 +75,30 @@ class Controller_Sukima extends Controller
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
   
-  public function post_new()
+  public function action_make_goal($name, $user_id)
   {
-  
+    $goal_id = Model_Goals::set_goal($name, $user_id);  
+    Model_Containers::set_container($goal_id, 1);
+    Model_Goals::set_active($goal_id);
+    return $goal_id;
   }
   
-  public function post_hackstart()
+  public function action_hack_start($goal_id)
   {
-  
+    Model_Containers::set_container($goal_id, 2);
+    Model_Goals::set_active($goal_id);
+    return 1;
   }
   
-  public function post_hackend()
+  public function action_hack_end($goal_id)
   {
-  
+    Model_Containers::set_container($goal_id, 3);
+    Model_Goals::set_unactive($goal_id);
+    return 1;
   }
   
-  public function post_achieve()
+  public function action_achieve_goal($name, $user_id)
   {
-  
   }
   
   public function post_follower()
@@ -94,25 +106,14 @@ class Controller_Sukima extends Controller
   
   }
   
-  public function action_is_active($user_id){
-    $goals = Model_Goals::get_goals_from_user($user_id);
-    $isActive = 0;
-    $datas["test"] = $goals;
-
-    foreach($goals as $goal){
-      if($goal["active"] == 1){
-        $isActive = 1;
-        break;
-      }
-    }
-    return $isActive;  
+  public function action_active_id($user_id){
+    return self::active_id($user_id);
   }
     
   public function action_goals($user_id){
     $goals = Model_Goals::get_goals_from_user($user_id);
     return json_encode($goals);
   }
-
   
   public function action_cheer($target_id, $type)
   {
@@ -153,6 +154,20 @@ class Controller_Sukima extends Controller
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
     return $count;
+  }
+
+  private function active_id($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    $activeNum = -1;
+    $datas["test"] = $goals;
+
+    foreach($goals as $goal){
+      if($goal["active"] == 1){
+        $activeNum = $goal["id"];
+        break;
+      }
+    }
+    return $activeNum; 
   }
 
   /**
