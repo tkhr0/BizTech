@@ -58,15 +58,15 @@ class Controller_Sukima extends Controller
         タイムラインの動作
   */
   public function action_timeline()
-  {  
+  {
     $user_id = Cookie::get('user_id', null);
     $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
     $datas = array(
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
-        );
-    return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+    );
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
   
   public function post_new()
