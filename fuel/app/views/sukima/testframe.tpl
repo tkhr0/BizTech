@@ -2,13 +2,7 @@
 <head>
 </head>
 <body>
-        {$data|var_dump}
-        <br />
-        {*
-        {foreach $data.containers as $d}
-          <p>{$d|var_dump}</p>
-        {/foreach}
-        *}
+        {$datas|var_dump}
         
 </body>
 </html>
