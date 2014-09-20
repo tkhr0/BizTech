@@ -48,7 +48,10 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1><img src="assets/imgs/sukimaHack.png" width="100%"/></h1>
+
+        <p>user id:{$user_id}</p>
+
+        <h1><a href="/twitterlogin"><img src="assets/imgs/sukimaHack.png" width="100%"/></a></h1>
        <form class="form-signin" role="form">
        <!--
         <h2 class="form-signin-heading">Please sign in</h2>
