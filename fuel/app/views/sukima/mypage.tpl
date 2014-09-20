@@ -50,36 +50,9 @@
       <!-- goals -->
       <ul class="yaritai_list">
         <!--やりたいこと-->
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-          <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li>  
-	</ul>
-        </li>
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-        <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li> 
-        </ul>
-        </li>
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-          <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li>
-	  </ul>
-        </li>
+        {foreach $goals as $goal}
+          {include file='./goal.tpl' name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users}
+        {/foreach}
       </ul>
       <!--目標リスト-->
       </div>

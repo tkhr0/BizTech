@@ -25,13 +25,32 @@ class Controller_Sukima extends Controller
     //return Response::forge(View::forge('sukima/index.tpl', $datas));
   }
   
-  public function action_mypage()
+  public function action_mypage($page_user_id)
   {
     // cheerボタンのリダイレクト用
-    Cookie::set('from_uri', 'sukima/mypage');
-    $user_id = 1;
-    $datas["goals"] = Model_Goals::get_goals_from_user($user_id);
-    $datas["user"] = Model_Users::get_profile($user_id);
+    Cookie::set('from_uri', "sukima/mypage/$page_user_id");
+
+    // ログイン中のユーザID取得
+    $user_id = Cookie::get('user_id');
+
+    // 情報を取得
+    $datas['user'] = Model_Users::get_profile($user_id);  // ユーザの情報
+    // 目標
+    $datas['goals'] = Model_Goals::get_goals_from_user($user_id);   // 目標の連想配列の配列
+    // 応援した人のデータを取得、追加
+    foreach($datas['goals'] as &$goal){
+      $cheering_users_data = array();
+      foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
+        $user_data = array();  // init
+        $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
+        $user_data['mypage_url'] = '/sukima/'.$cheering_user_profile['id'];  // idをセット
+        $user_data['thumbnail'] = $cheering_user_profile['thumbnail_path']; // サムネ
+        $user_data['name'] = $cheering_user_profile['name'];  // 名前
+        array_push($cheering_users_data, $user_data);
+      }
+      $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
+    }
+
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
   
