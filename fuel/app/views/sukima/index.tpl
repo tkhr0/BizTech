@@ -51,7 +51,7 @@
 
         <p>user id:{$user_id}</p>
 
-        <h1><a href="/twitterlogin"><img src="assets/imgs/sukimaHack.png" width="100%"/></a></h1>
+        <h1><img src="assets/imgs/sukimaHack.png" width="100%"/></h1>
        <form class="form-signin" role="form">
        <!--
         <h2 class="form-signin-heading">Please sign in</h2>
@@ -61,7 +61,7 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label>
         -->
-        <a class="btn btn-lg btn-primary btn-block" href="mypage.html">Sign in with Twitter</a>
+        <a class="btn btn-lg btn-primary btn-block" href="/twitterlogin">Sign in with Twitter</a>
       </form>
       </div>
 
