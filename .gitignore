@@ -35,6 +35,7 @@ desktop.ini
 
 # takahiro add
 composer.phar
+*.swp
 
 # morimori add
 /fuel/app/config/config.php
