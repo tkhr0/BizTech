@@ -6,6 +6,18 @@ $(function(){
   pushedHackButton();
 });
 
+var fixedFooter = function(){
+  var footer = $("#footer");
+    var pos = footer.position();
+    var height = $(window).height();
+    height = height - pos.top;
+    height = height - footer.height();
+    if (height > 0) {
+      footer.css({
+        'margin-top': height + 'px'
+      });
+  }
+}
 //ボタンの初期状態を設定
 var initCheerButton = function(){
   cheerForms = $(".cheer-form");

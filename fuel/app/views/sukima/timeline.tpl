@@ -40,14 +40,14 @@
       {/foreach}
     </div><!--タイムライン-->
   </div><!-- /container -->
-  <div class="container">
+  <div id="footer" class="container">
     <!--Btnグループ-->
     <div class="row">
       <div class="col-xs-12">
       <!--<button type="button" class="btn btn-danger col-xs-12">やるぞ</button>-->
       <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
-      </div>
-    </div>
+      </div><!--col-xs-12-->
+    </div><!--row-->
     <!--Btnグループ-->
     <!--input-->
     <div class="input-group">
@@ -58,7 +58,7 @@
     </div>
     <!--input-->
   </div><!--container-->
-  <div id="footer">
+  <div id="footr">
      <div id="yaruzo">
         <form action="#" class="hack-form">
           <input type="hidden" name="target-id" value="1" />
@@ -69,7 +69,7 @@
         </ul>
      </div><!--yaruzo-->
   </div><!--footer-->
-{include file='./js_footer.tpl'}
-{Asset::js('timeline.js')}
+  {include file='./js_footer.tpl'}
+  {Asset::js('timeline.js')}
 </body>
 </html>
