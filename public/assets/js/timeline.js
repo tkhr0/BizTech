@@ -4,20 +4,48 @@ $(function(){
   pushedCheeringButton();
   // やるぞボタン(hack)をおしたとき
   pushedHackButton();
+  //fixedFooter();
+  fixedHackBtn();
 });
 
+var fixedHackBtn = function(){
+  console.log("loaded HackBtn");
+  var btn = $("#hacka_btn");
+  var pos = btn.position();
+  var height = $(window).height();
+  var width = $(window).width();
+  var xpos = (height - btn.height());
+  var ypos = (width - btn.width())/2.0;
+  btn.css("position","fixed");
+  btn.css("bottom","0");
+/*
+  btn.css({
+    "position":"absolute",
+    "left":xpos+"px",
+    "bottom":0+"px"
+  });*/
+};
 var fixedFooter = function(){
   var footer = $("#footer");
-    var pos = footer.position();
-    var height = $(window).height();
-    height = height - pos.top;
-    height = height - footer.height();
-    if (height > 0) {
-      footer.css({
-        'margin-top': height + 'px'
-      });
+  var pos = footer.position();
+  var height = $(window).height();
+  var width = $(window).width();
+  height = height - pos.top;
+  height = height - footer.height();
+  width  = width - pos.left;
+  width  = width - footer.width()/2.0;
+  console.log(height);
+  if (height > 0) {
+    footer.css({
+      //'margin-top': height + 'px'
+      'top': height + 'px'
+    });
+    footer.css({
+      //'margin-left': width + 'px'
+      'left': width + 'px'
+    });
   }
-}
+};
 //ボタンの初期状態を設定
 var initCheerButton = function(){
   cheerForms = $(".cheer-form");

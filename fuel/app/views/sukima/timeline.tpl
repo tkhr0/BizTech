@@ -40,17 +40,16 @@
       {/foreach}
     </div><!--タイムライン-->
   </div><!-- /container -->
+  <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
   <div id="footer" class="container">
     <!--Btnグループ-->
-    <div class="row">
-      <div class="col-xs-12">
+      <div style="width:100%">
       <!--<button type="button" class="btn btn-danger col-xs-12">やるぞ</button>-->
-      <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
       </div><!--col-xs-12-->
     </div><!--row-->
     <!--Btnグループ-->
     <!--input-->
-    <div class="input-group">
+    <div class="input-group" style="display:none;">
       <input type="text" class="form-control">
       <div class="input-group-btn">
         <button type="submit" class="btn btn-default">登録</button>
