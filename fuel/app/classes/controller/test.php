@@ -18,7 +18,8 @@ class Controller_Test extends Controller
 	 */
 	public function action_index()
 	{
-		$data['test'] = Model_Users::get_profile(1);
-		return Response::forge(View::forge('testview', $data));
+		//$data['test'] = Model_Users::get_profile(1);
+		$data['test'] = File::get_url("vender/testvender.php");
+		return Response::forge(View::forge('imamori', $data));
 	}
 }
