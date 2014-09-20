@@ -39,8 +39,12 @@ class Controller_Sukima extends Controller
     return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
   }
   
-  public function action_mypage($page_user_id)
+  public function action_mypage($page_user_id=null)
   {
+    if($page_user_id == null){
+      $user_id = Session::get('user_id');
+      Response::redirect("/sukima/mypage/{$user_id}");
+    }
     // cheerボタンのリダイレクト用
     Session::set('from_uri', "sukima/mypage/$page_user_id");
 
@@ -196,6 +200,11 @@ class Controller_Sukima extends Controller
       }
     }
     return $activeNum; 
+  }
+
+  private function get_page_header_data(){
+    $data['header_home_url'] = Uri::create('/sukima/timeline');
+    $data['header_mypage_url'] = Uri::create('/sukima/mypage');
   }
 
   /**
