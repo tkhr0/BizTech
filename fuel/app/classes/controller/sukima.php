@@ -58,15 +58,15 @@ class Controller_Sukima extends Controller
         タイムラインの動作
   */
   public function action_timeline()
-  {  
+  {
     $user_id = Cookie::get('user_id', null);
     $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
     $datas = array(
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
-        );
-    return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+    );
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
   
   public function post_new()
@@ -92,6 +92,20 @@ class Controller_Sukima extends Controller
   public function post_follower()
   {
   
+  }
+  
+  public function action_is_active($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    $isActive = 0;
+    $datas["test"] = $goals;
+
+    foreach($goals as $goal){
+      if($goal["active"] == 1){
+        $isActive = 1;
+        break;
+      }
+    }
+    return $isActive;  
   }
     
   public function action_goals($user_id){

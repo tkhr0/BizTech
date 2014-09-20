@@ -2,6 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {Asset::css('custom.css')}
+{Asset::css('buttons.css')}
 {Asset::css('bootstrap.min.css')}
 {Asset::css('jquery.mobile.custom.structure.min.css')}
 {Asset::css('jquery.mobile.custom.theme.min.css')}
