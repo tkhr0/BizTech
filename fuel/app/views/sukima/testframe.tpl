@@ -2,7 +2,10 @@
 <head>
 </head>
 <body>
-        {$datas|var_dump}
+
+  <pre>
+    {$data|var_dump}
+  </pre>
         
 </body>
 </html>
