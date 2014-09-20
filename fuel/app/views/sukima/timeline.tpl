@@ -70,6 +70,5 @@
      </div><!--yaruzo-->
   </div><!--footer-->
   {include file='./js_footer.tpl'}
-  {Asset::js('timeline.js')}
 </body>
 </html>

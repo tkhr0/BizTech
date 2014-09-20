@@ -1,6 +1,6 @@
 $(function(){
-  // 応援ボタンが押された時の処理
   initCheerButton();
+  // 応援ボタンが押された時の処理
   pushedCheeringButton();
   // やるぞボタン(hack)をおしたとき
   pushedHackButton();
@@ -50,7 +50,7 @@ var pushedCheeringButton = function(){
         //バッジに書き込み
         badge.text(msg);
         }
-        });
+      });
     //submitのデフォルト機能のキャンセル
     return false;
   });
@@ -89,4 +89,3 @@ var pushedHackButton = function(){
     return false;
   });
 };
-

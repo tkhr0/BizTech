@@ -50,11 +50,15 @@ class Controller_Sukima extends Controller
         array_push($cheering_users_data, $user_data);
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
+      $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
+      $cheerable = "";
+      if($cheer_num>999){ $cheerable = "disabled"; }
+      $goal = array_merge($goal, array('cheerable' => $cheerable));
     }
 
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
-  
+
   /*
         タイムラインの動作
   */
@@ -69,7 +73,7 @@ class Controller_Sukima extends Controller
     );
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
-  
+
   public function post_new()
   {
   
