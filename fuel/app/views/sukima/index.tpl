@@ -48,7 +48,9 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1><img src="assets/imgs/sukimaHack.png" width="100%"/></h1>
+        <h1>
+           {Asset::img('sukimaHack.png',['width' => '100%'])} 
+        </h1>
        <form class="form-signin" role="form">
        <!--
         <h2 class="form-signin-heading">Please sign in</h2>
