@@ -3,6 +3,7 @@
   <head>
     <title>すきまハック</title>
     {include file='./meta_header.tpl'}
+    {Asset::css('timeline.css')}
   </head>
   <body>
     {include file='./page_header.tpl'}
@@ -46,7 +47,7 @@
     }
     *}  
     <p>
-    login_user_id: {$user_id}
+    login_user_id: {$user_id}, state: {$state}
     </p>
    <ul style="display:none;">
     {foreach from=$containers item=container}
@@ -85,7 +86,7 @@
             <input type="hidden" name="target-id" value="{$container.container_id}" />
             <input type="hidden" name="type-id" value="{$type_container}" />
             <input type="hidden" name="cheer-status" value="{$container.cheer_status}" />
-            <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" {$container.disabled}>
+            <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" />
           </form>
           <!--いいねボタン-->
         </div>
@@ -101,12 +102,12 @@
         <form action="#" class="hack-form">
           <input type="hidden" name="target-id" value="1" />
           <input type="hidden" name="type-id" value="2" />
-          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
-        </form>
-        <form id="select_goals" action="#">
-          <select name="目標を選ぶ" size="">
+          <input type="hidden" name="state" value="{$state}" />
+          <select class="display-none" name="目標を選ぶ" multiple="multiple">
            <!--<option value="サンプル">サンプル</option> -->
           </select>
+          <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
+          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
      </div>
    </div>
