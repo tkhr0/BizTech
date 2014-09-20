@@ -15,7 +15,6 @@
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
           <div class="col-xs-4"> 
-            {*Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])*} 
             <img src="{$user.thumbnail_path}" class="img-thumbnail" alt="{$user.name}" width="100%" />
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
@@ -28,16 +27,17 @@
         <!--チアされた数-->
         <table class="cheer-table">
           <tr>
+            <th>達成した目標数</th>
             <th>応援された回数</th>
             <th>応援した回数</th>
           </tr>
           <tr>
+            <td><strong>{$achieved_goals_num}</strong></td>
             <td><strong>{$user.cheered}</strong></td>
             <td><strong>{$user.cheering}</strong></td>
           </tr>
         </table>
         <!--チアされた数-->
-        <p>{$followable}</p>
         <!--フォローボタン-->
         <div class="follow-btn">
         <input type="hidden" name="followable" value="{$followable}" />
@@ -47,7 +47,6 @@
           <input type="hidden" name="follow-id" value="{$user.id}" />
           <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
-
         {/if}
         </div><!--フォローボタン-->
       </div><!--ユーザ情報-->

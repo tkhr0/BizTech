@@ -106,9 +106,7 @@ class Model_Markcheers extends \Model
   */
   public static function hadcheered($user_id, $target_id, $type)
   {
-    /*  // テスト用にチア制限解除
     return self::insert($user_id, $target_id, $type);
-    */
   }
 
 }

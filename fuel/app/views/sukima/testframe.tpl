@@ -4,7 +4,7 @@
 <body>
 
   <pre>
-    {$data|var_dump}
+    {$user|var_dump}
   </pre>
         
 </body>

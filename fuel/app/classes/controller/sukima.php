@@ -10,8 +10,10 @@ class Controller_Sukima extends Controller
   {
     // redirect /sukima if there is a fraud which between session and cookie
     if((Session::get('user_id', null) != null)
-      && (Session::get('user_id') != Cookie::get('user_id'))){
-      Responce::redirect('/sukima');
+      && (Session::get('user_id') != Cookie::get('user_id')
+      && (Session::get('noredirect', false) == false))){
+      Session::set('noredirect', true);
+      Response::redirect('/sukima');
     }
   }
 
@@ -25,27 +27,39 @@ class Controller_Sukima extends Controller
     }else{
             $user_id = floor($user_id) % 4 + 1;
     }
-    Cookie::set('user_id', $user_id);
     Session::set('user_id', $user_id);
+    Cookie::set('user_id', $user_id);
 
-    $datas = array();
+    $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
     $datas['user_id'] = $user_id;
 
+    Session::delete('noredirect');
     return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
   }
-  
-  public function action_mypage($page_user_id)
+
+  public function action_mypage($page_user_id=null)
   {
+    if($page_user_id == null){
+      $user_id = Session::get('user_id');
+      Response::redirect("/sukima/mypage/{$user_id}");
+    }
     // cheerボタンのリダイレクト用
     Session::set('from_uri', "sukima/mypage/$page_user_id");
+    // for header
+    $datas = self::get_page_header_data();
 
     $user_id = Session::get('user_id');  // ログイン中のユーザid
 
     // 情報を取得
-    $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
+    $page_user_info = Model_Users::get_profile($page_user_id); // ページのユーザの情報
+    if(count($page_user_info) < 1){   // redirect to mypage if  faild to find user's info
+      Response::redirect('/sukima/mypage');
+    }
+    $datas['user'] = $page_user_info;
     $datas['visited_user_id'] = $user_id;
+    $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
     $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
     // 目標
     $datas['goals'] = Model_Goals::get_goals_from_user($page_user_id);   // 目標の連想配列の配列
@@ -75,6 +89,7 @@ class Controller_Sukima extends Controller
   */
   public function action_timeline()
   {
+    $datas = self::get_page_header_data();
     $user_id = Cookie::get('user_id', null);
     $containers = Model_Timeline::get_containers($user_id, 100);
     $state = 0;
@@ -82,12 +97,12 @@ class Controller_Sukima extends Controller
       $state = 2;
     }
 
-    $datas = array(
+    $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
-    );
+    ));
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
 
@@ -107,6 +122,7 @@ class Controller_Sukima extends Controller
     return $goal_id;
   }
   
+  /* for ajax */
   public function action_hack_start($goal_id)
   {
     Model_Containers::set_container($goal_id, 2);
@@ -114,6 +130,7 @@ class Controller_Sukima extends Controller
     return 1;
   }
   
+  /* for ajax */
   public function action_hack_end($goal_id)
   {
     Model_Containers::set_container($goal_id, 3);
@@ -197,6 +214,26 @@ class Controller_Sukima extends Controller
       }
     }
     return $activeNum; 
+  }
+
+  private function get_page_header_data(){
+    $data['header_home_url'] = Uri::create('/sukima/timeline');
+    $data['header_mypage_url'] = Uri::create('/sukima/mypage');
+    return $data;
+  }
+
+  /*
+    return goals num whech achieved
+  */
+  private function get_achieved_goals_num($user_id){
+    $count = 0;
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    foreach($goals as $goal){
+      if($goal['achieve'] == Constants::ACHIEVE_TRUE){
+        $count ++;
+      }
+    }
+    return $count;
   }
 
   /**
