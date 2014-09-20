@@ -57,7 +57,9 @@ class Model_Markcheers extends \Model
     $query = \DB::select('user_id')->from('markcheers')
       ->where('target_id', '=', $target_id)
       ->where('type', '=', $type)
+      ->distinct(true)
       ->execute();
+      //distinct
     return $query->as_array();
   }
 

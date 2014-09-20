@@ -26,6 +26,7 @@
 }
 
 .cheerer_list:before {
+  display: block;
   content: "応援してくれた人";
   font-size: x-small;
 }
