@@ -15,7 +15,8 @@
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
           <div class="col-xs-4"> 
-            {Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])} 
+            {*Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])*} 
+            <img src="{$user.thumbnail_path}" class="img-thumbnail" alt="{$user.name}" width="100%" />
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
             <div id="user-name"><!--名前-->
