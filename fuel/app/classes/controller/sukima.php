@@ -6,16 +6,27 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
+  public function before()
+  {
+    // redirect /sukima if there is a fraud which between session and cookie
+    if((Session::get('user_id', null) != null)
+      && (Session::get('user_id') != Cookie::get('user_id'))){
+      Responce::redirect('/sukima');
+    }
+  }
+
   public function action_index()
   {
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
-    $user_id = Cookie::get('user_id', null); if($user_id == null){
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
             $user_id = 1;
     }else{
             $user_id = floor($user_id) % 4 + 1;
     }
     Cookie::set('user_id', $user_id);
+    Session::set('user_id', $user_id);
 
     $datas = array();
     $datas['data'] = Model_Users::get_profile($user_id);
@@ -28,9 +39,9 @@ class Controller_Sukima extends Controller
   public function action_mypage($page_user_id)
   {
     // cheerボタンのリダイレクト用
-    Cookie::set('from_uri', "sukima/mypage/$page_user_id");
+    Session::set('from_uri', "sukima/mypage/$page_user_id");
 
-    $user_id = Cookie::get('user_id');  // ログイン中のユーザid
+    $user_id = Session::get('user_id');  // ログイン中のユーザid
 
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
@@ -79,7 +90,7 @@ class Controller_Sukima extends Controller
   /* for ajax */
   public function action_getcontainers($start, $limit=10)
   {
-    $user_id = Cookie::get('user_id');
+    $user_id = Session::get('user_id');
     $data = Model_Timeline::get_containers_with_offset($user_id, intval($start), intval($limit));
     return Format::forge($data)->to_json();
   }
@@ -134,7 +145,7 @@ class Controller_Sukima extends Controller
   public function action_cheer($target_id, $type)
   {
     // コンテナを見ているユーザのID
-    $cheering_user_id = Cookie::get('user_id');
+    $cheering_user_id = Session::get('user_id');
     $container_id = -1;
 
     if($type == Constants::TYPE_CONTAINER){
