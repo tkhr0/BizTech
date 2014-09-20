@@ -1,10 +1,11 @@
 $(function(){
   // フォローボタンが押された時の処理
   pushedFollowingButton();
+  followButtonInitialize();
   console.log('loaded');
 });
 
-// 応援ボタンが押された時の処理
+// フォローボタンが押された時の処理
 var pushedFollowingButton = function(){
   console.log('load function');
   $('.follow-form').submit(function(){
@@ -25,3 +26,13 @@ var pushedFollowingButton = function(){
     return false;
   });
 };
+
+// フォローボタンの初期状態を指定
+var followButtonInitialize = function(){
+  // hiddenから必要な情報の抽出
+  var followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
+  if(followable == '0'){
+    $(".follow-btn").eq(0).find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
+  }
+};
+

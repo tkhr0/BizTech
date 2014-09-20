@@ -17,5 +17,33 @@ class Model_Follows extends \Model {
       'to_user_id' => $to_user_id,
       'from_user_id' => $from_user_id,
     ))->execute();
+    return $rows_affected;
 	}
+
+  /*
+    $to_user_id: 相手
+    $from_user_id: 自分
+  */
+  public static function follow($from_user_id, $to_user_id){
+    $res = self::set_follow($to_user_id, $from_user_id);
+    if(0 < $res){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public static function followable($from_user_id, $to_user_id){
+    $results = \DB::select('id')->from('follows')
+                                ->where('to_user_id', $to_user_id)
+                                ->where('from_user_id', $from_user_id)
+                                ->execute();
+    if(0 < count($results->as_array())){
+      return false;
+    }else{
+      return true;
+    }
+
+  }
+
 }
