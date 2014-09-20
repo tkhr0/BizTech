@@ -2,9 +2,9 @@ USER_ID = $.cookie("user_id");
 console.log("userID: " + USER_ID);
 $(function(){
   initCheerButton();
-  //fixedFooter();
-  fixedHackBtn();
   initState();
+  //fixedFooter();
+  //fixedHackBtn();
   // 応援ボタンが押された時の処理
   pushedCheeringButton();
   // やるぞボタン(hack)をおしたとき
@@ -20,12 +20,6 @@ var fixedHackBtn = function(){
   var ypos = (width - btn.width())/2.0;
   btn.css("position","fixed");
   btn.css("bottom","0");
-/*
-  btn.css({
-    "position":"absolute",
-    "left":xpos+"px",
-    "bottom":0+"px"
-  });*/
 };
 var fixedFooter = function(){
   var footer = $("#footer");
@@ -237,6 +231,5 @@ var pushedMainButtonForHackEnd = function(form){
         }
       });     
     }
->>>>>>> FETCH_HEAD
   });
 };

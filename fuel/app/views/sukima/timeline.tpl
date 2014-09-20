@@ -33,7 +33,7 @@
         <form action="#" class="cheer-form">
           <input type="hidden" name="target-id" value="{$container.container_id}" />
           <input type="hidden" name="type-id" value="{$type_container}" />
-          <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" {$container.disabled}>
+          <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" />
         </form>
         <!--いいねボタン-->
       </div>
