@@ -60,7 +60,7 @@ class Controller_Sukima extends Controller
   public function action_timeline()
   {
     $user_id = Cookie::get('user_id', null);
-    $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
+    $containers = Model_Timeline::get_containers($user_id, 5);
     $datas = array(
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
@@ -155,21 +155,6 @@ class Controller_Sukima extends Controller
     return $count;
   }
 
-  /**/
-  public static function helper_add_disabled_info($user_id, $containers){
-    function info(&$item, $key){
-      $item['disabled'] = '';
-    }
-    array_walk($containers, 'info');
-
-    foreach($containers as &$container){
-      if(!Model_Markcheers::cheerable($user_id, $container['container_id'], Constants::TYPE_CONTAINER)){
-        $container['disabled'] = 'disabled';
-      }
-    }
-    return $containers;
-  }
-  
   /**
   * The 404 action for the application.
   *

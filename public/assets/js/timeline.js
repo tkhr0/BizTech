@@ -7,11 +7,13 @@ $(function(){
 
 //ボタンの初期状態を設定
 var initCheerButton = function(){
+  console.log("init CheerButton");
   cheerForms = $(".cheer-form");
   $.each(cheerForms, function(){
     $this = $(this);
     count = $this.find("input[name=cheer-status]").val();
     if(count > 0){
+      console.log("count 0");
       $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     }
   });
@@ -52,9 +54,6 @@ var pushedHackButton = function(){
     targetId = $this.find("input[name=target-id]").val();
     typeId = $this.find("input[name=type-id]").val();
 
-    //$this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
-    //var parent = $this.parent();
-    //$("#select_goals").css("display","block");
     var goals_elem = $("#select_goals");
     goals_elem.css("display","block");
     var goals_select = goals_elem.find("select").eq(0);
