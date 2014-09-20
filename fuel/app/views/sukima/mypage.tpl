@@ -36,14 +36,17 @@
           </tr>
         </table>
         <!--チアされた数-->
+        <p>{$followable}</p>
         <!--フォローボタン-->
         <div class="follow-btn">
-        {if $visited_user_id != $user.id}
+        <input type="hidden" name="followable" value="{$followable}" />
+        {if ($visited_user_id != $user.id)}
         <form action="/sukima/follower" class="follow-form" action="post">
           <input type="hidden" name="user-id" value="{$visited_user_id}" />
           <input type="hidden" name="follow-id" value="{$user.id}" />
           <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
+
         {/if}
         </div><!--フォローボタン-->
       </div><!--ユーザ情報-->

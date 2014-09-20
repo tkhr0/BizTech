@@ -13,13 +13,14 @@ class Controller_Sukima extends Controller
     $user_id = Cookie::get('user_id', null); if($user_id == null){
             $user_id = 1;
     }else{
-            $user_id = floor($user_id) % 3 + 1;
+            $user_id = floor($user_id) % 4 + 1;
     }
     Cookie::set('user_id', $user_id);
 
     $datas = array();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
+    $datas['user_id'] = $user_id;
 
     return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
   }
@@ -29,9 +30,12 @@ class Controller_Sukima extends Controller
     // cheerボタンのリダイレクト用
     Cookie::set('from_uri', "sukima/mypage/$page_user_id");
 
+    $user_id = Cookie::get('user_id');  // ログイン中のユーザid
+
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
-    $datas['visited_user_id'] = Cookie::get('user_id');       // ログイン中のユーザ
+    $datas['visited_user_id'] = $user_id;
+    $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
     // 目標
     $datas['goals'] = Model_Goals::get_goals_from_user($page_user_id);   // 目標の連想配列の配列
     // 応援した人のデータを取得、追加
@@ -88,7 +92,7 @@ class Controller_Sukima extends Controller
   
   public function post_follower($user_id, $follow_id)
   {
-    $success = Model_Follows($follow_id, $user_id);
+    $success = Model_Follows::follow($user_id, $follow_id);
 
     if($success === 0){
       return false;
