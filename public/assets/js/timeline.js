@@ -24,7 +24,7 @@ var initCheerButton = function(){
   $.each(cheerForms, function(){
     $this = $(this);
     count = $this.find("input[name=cheer-status]").val();
-    if(count > 0){
+    if(count > 1000){ // テスト用に制限解除
       $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     }
   });
@@ -42,7 +42,8 @@ var pushedCheeringButton = function(){
     //変更するバッジ
     badge = $this.parent().find(".badge");
 
-    $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
+    // テスト用に制限解除
+    //$this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
       url: "http://" + location.host + "/sukima/cheer/" + targetId + "/" + typeId,

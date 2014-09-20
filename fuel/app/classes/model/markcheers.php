@@ -91,11 +91,14 @@ class Model_Markcheers extends \Model
                               ->where('target_id', '=', intval($target_id))
                               ->where('type', '=', $type)
                               ->execute();
+    /*  // テスト用にチア制限解除
     if(0 < count($query->as_array())){
       return false;
     }else{
       return true;
     }
+    */
+    return true;
   }
 
   /*
@@ -103,7 +106,9 @@ class Model_Markcheers extends \Model
   */
   public static function hadcheered($user_id, $target_id, $type)
   {
+    /*  // テスト用にチア制限解除
     return self::insert($user_id, $target_id, $type);
+    */
   }
 
 }

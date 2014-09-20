@@ -44,7 +44,7 @@ class Controller_Sukima extends Controller
       foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
         $user_data = array();  // init
         $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
-        $user_data['mypage_url'] = '/sukima/'.$cheering_user_profile['id'];  // idをセット
+        $user_data['mypage_url'] = '/sukima/mypage/'.$cheering_user_profile['id'];  // idをセット
         $user_data['thumbnail'] = $cheering_user_profile['thumbnail_path']; // サムネ
         $user_data['name'] = $cheering_user_profile['name'];  // 名前
         array_push($cheering_users_data, $user_data);
