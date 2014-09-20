@@ -35,7 +35,7 @@ class Model_Timeline extends \Model {
 
   public static function get_containers_with_offset($user_id, $offset, $limit=10){
     $TYPE = 2;//Constants::TYPE_CONTAINER;
-    $containers = \DB::query('SELECT goals.user_id as user_id, goals.name as goal_name, goals.achieve as achieve, goals.active as active, goals.cheered as goal_cheered, containers.id as container_id, containers.cheered as cheer_num, containers.created_at as created_at, containers.status as status FROM follows JOIN goals ON follows.to_user_id=goals.user_id JOIN containers ON goals.id=containers.goal_id WHERE follows.from_user_id=:userid ORDER BY containers.id DESC LIMIT :limit OFFSET :offset')->bind('userid', $user_id)->bind('limit', $limit)->bind('offset', $offset)->execute()->as_array();
+    $containers = \DB::query('SELECT DISTINCT goals.user_id as user_id, goals.name as goal_name, goals.achieve as achieve, goals.active as active, goals.cheered as goal_cheered, containers.id as container_id, containers.cheered as cheer_num, containers.created_at as created_at, containers.status as status FROM follows JOIN goals ON follows.to_user_id=goals.user_id JOIN containers  ON goals.id=containers.goal_id WHERE follows.from_user_id= :userid OR goals.user_id = :userid ORDER BY containers.id DESC LIMIT :limit')->bind('userid', $user_id)->bind('limit', $limit)->execute()->as_array();
 
     $new_containers = [];
     foreach($containers as $container){
