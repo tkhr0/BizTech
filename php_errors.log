@@ -1,0 +1,5 @@
+[18-Sep-2014 11:51:33 Asia/Tokyo] PHP Fatal error:  Uncaught exception 'PharException' with message 'phar "/var/www/html/sukima/composer.phar" has a broken signature' in /var/www/html/sukima/composer.phar:13
+Stack trace:
+#0 /var/www/html/sukima/composer.phar(13): Phar::mapPhar('composer.phar')
+#1 {main}
+  thrown in /var/www/html/sukima/composer.phar on line 13
