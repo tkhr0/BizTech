@@ -12,7 +12,7 @@ $(function(){
 });
 
 var fixedHackBtn = function(){
-  var btn = $("#hacka_btn");
+  var btn = $("#hack_btn");
   var pos = btn.position();
   var height = $(window).height();
   var width = $(window).width();
