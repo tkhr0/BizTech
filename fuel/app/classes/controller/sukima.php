@@ -8,22 +8,6 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-  /*
-    // redirect /sukima if there is a fraud which between session and cookie
-    //if((Session::get('user_id', null) != null)
-    //  && (Session::get('user_id') != Cookie::get('user_id')
-    //  && (Session::get('noredirect', false) == false))){
-    
-    //$arr = Session::get('user_id');
-    //var_dump($arr);exit;
-
-    if(Session::get('user_id', null) == null && (Session::get('noredirect', false) == false) ){
-      Session::set('noredirect', true);
-      Response::redirect('/sukima');
-    }
-  }
-  */
-
     if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
       Session::set('noredirect', 1);
       Response::redirect('/');
@@ -34,18 +18,24 @@ class Controller_Sukima extends Controller
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
+  //  $user_id = Session::get('user_id', null);
+  //  if($user_id == null){
+  //        $user_id = 1;
+  //  }else{
+  //    $user_id = floor($user_id) % 4 + 1;
+  //  }
+  //  Session::set('user_id', $user_id);
+  //  Cookie::set('user_id', $user_id);
+   
+    
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
     }else{
-   
-   
-   
       $user_id = floor($user_id) % 4 + 1;
     }
     Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
-
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
@@ -90,9 +80,15 @@ class Controller_Sukima extends Controller
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
       $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
-      $cheerable = "";
-      if($cheer_num>999){ $cheerable = "disabled"; }
-      $goal = array_merge($goal, array('cheerable' => $cheerable));
+      $disable = '';
+      if($user_id == $page_user_id){
+        $disable = -1;
+      }elseif((1000 < $cheer_num)){
+        $disable = "disabled";
+      }
+      $goal = array_merge($goal, array('disable' => $disable));
+
+
     }
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
@@ -175,6 +171,7 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
+      array_push($from_user_datas, $from_user_data);
     }
     return $from_user_datas;
   }
@@ -183,7 +180,7 @@ class Controller_Sukima extends Controller
   public function action_follower()
   {
     $data = self::get_page_header_data();
-    $data['followers_data'] = self::help_follower_view(1);
+    $data['followers_data'] = self::help_follower_view(0);
     return Response::forge(View_Smarty::forge('sukima/follower', $data));
   }
 
@@ -191,7 +188,7 @@ class Controller_Sukima extends Controller
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view($offset, $limit);
-    return Response::forge(View_Smarty::forge('', $data));
+    return View_Smarty::forge('', $data);
   }
 
   public function action_make_community($name){
@@ -333,7 +330,17 @@ class Controller_Sukima extends Controller
     // cheerしたことをマーク
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
-    return $count;
+    $data['count'] = $count;
+    if(Model_Markcheers::get_count($cheering_user_id, $target_id, $type) <= 1){
+      $profile = Model_Users::get_profile($cheering_user_id);
+      $data['user']['thumbnail'] = $profile['thumbnail_path'];
+      $data['user']['url'] = Uri::create('/sukima/mypage/'.$cheering_user_id);
+      $data['user']['name'] = $profile['name'];
+    }else{
+      $data['user'] = false;
+    }
+
+    return json_encode($data);
   }
 
   private function active_id($user_id){
@@ -375,6 +382,14 @@ class Controller_Sukima extends Controller
       }
     }
     return $count;
+  }
+
+  /*
+    応援した人のアイコンを出すAPI
+    渡されたidがすでに応援済みなら空文字を返す
+  */
+  public function action_get_thumbnail($user_id, $target_id, $type){
+
   }
 
   /**

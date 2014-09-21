@@ -10,10 +10,8 @@ $(function(){
   // やるぞボタン(hack)をおしたとき
   mainButtonListner();
   achievedButtonListener();
-  reloadButtonListner();
+  // タイムラインの自動追加読み込み
   autoLoader();
-  //fixFooter();
-  //$('body').modalmanager('loading');
 });
 
 var autoLoader = function(){
@@ -23,7 +21,6 @@ var autoLoader = function(){
     if (!obj.data("loading")) {
       obj.data("loading", true);
 
-      //$('#timeline').append('<p>Loading...</p>');
       var offset = $("#timeline").find(".activity").length;
       $('#timeline').append('<p>NOW LOADING...</p>');
       setTimeout(function() {
@@ -31,13 +28,13 @@ var autoLoader = function(){
         //タイムラインを追加でリロード
         reloadAddTimeline(offset, RELOAD_NUM);
         obj.data("loading", false);
-      }, 1000);
+      }, 800);
     }
   });
 }
 
 var initContainer = function(){
-  $(".activity")
+  $(".activity");
 };
 
 //ボタンの初期状態を設定
@@ -75,7 +72,7 @@ var initState = function(){
 // 応援ボタンが押された時の処理
 var cheeringButtonListner = function(){
   $(".cheer-form").unbind().submit(function(){
-    $this = $(this);
+    var $this = $(this);
 
     //hiddenから必要な情報の抽出
     targetId = $this.find("input[name=target-id]").val();
@@ -94,7 +91,7 @@ var cheeringButtonListner = function(){
         var ret = jQuery.parseJSON(msg);
         var count = ret.count;
         badge.text(count);
-
+	console.log(msg);
                 
         badge.addClass("background-yellow");
         setTimeout(function(){
@@ -103,9 +100,11 @@ var cheeringButtonListner = function(){
 
         var user = ret.user;
         if(user){
+	    console.log("first cheer");
           var path = user.thumbnail;
           var name = user.name;
           var url = user.url;
+	  $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img src='" + path  + "' /></a></li>");
         }
       }
     });
@@ -266,16 +265,6 @@ var reloadAddTimeline = function($offset, $num){
   });
 };
 
-var reloadButtonListner = function(){
-  $(".reload-form").submit(function(){
-    console.log("timeline reload!");
-    //現在あるコンテナの数を取得
-    offset = $("#timeline").find(".activity").length;
-    //タイムラインを追加でリロード
-    reloadAddTimeline(offset, RELOAD_NUM);
-    return false;
-  });
-};
 
 var achievedButtonListener = function(){
   $(".achieve-form").submit(function(){

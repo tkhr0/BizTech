@@ -97,12 +97,12 @@ class Model_Markcheers extends \Model
   */
   public static function cheerable($user_id, $target_id, $type)
   {
+    /*  // テスト用にチア制限解除
     $query = \DB::select('id')->from('markcheers')
                               ->where('user_id', '=', $user_id)
                               ->where('target_id', '=', intval($target_id))
                               ->where('type', '=', $type)
                               ->execute();
-    /*  // テスト用にチア制限解除
     if(0 < count($query->as_array())){
       return false;
     }else{

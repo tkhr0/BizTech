@@ -70,12 +70,26 @@ var cheerButtonListner = function(){
       type: "POST",
       url: "/sukima/cheer/" + targetId + "/" + typeId,
       success: function(msg){
+	var ret = jQuery.parseJSON(msg);
+        var count = ret.count;
         console.log("応援！");
-        badge.text(msg);
+        badge.text(count);
+
+	console.log(msg);
         badge.addClass("background-yellow");
         setTimeout(function(){
           badge.removeClass("background-yellow");
         }, 130);
+
+        var user = ret.user;
+	if(user){
+            console.log("first cheer");
+	    var path = user.thumbnail;
+	    var name = user.name;
+	    var url = user.url;
+	    $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img src='" + path  + "' /></\
+a></li>");
+	}
       }
     });
     //submitのデフォルト機能のキャンセル

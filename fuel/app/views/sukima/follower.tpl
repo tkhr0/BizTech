@@ -5,12 +5,18 @@
     {include file='./meta_header.tpl'}
   </head>
   <body>
-  {*{include file='./page_header.tpl'}*}
+  {include file='./page_header.tpl'}
   <div class="container">
     <!--タイムライン-->
     <div id="timeline">
 
-      {include file='./follower_item.tpl'}
+    <pre>
+    {$followers_data|var_dump}
+    </pre>
+
+    {foreach $followers_data as $follower}
+    {include file='./follower_item.tpl' achieved_goals_num=$follower.achieve_num num=$follower.goal_num cheered=$follower.cheered cheering=$follower.cheering thumbnail=$follower.thumbnail name=$follower.name}
+    {/foreach}
 
     </div><!--タイムライン-->
   </div><!-- /container -->
