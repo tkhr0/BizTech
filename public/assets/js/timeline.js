@@ -166,7 +166,7 @@ var pushedMainButtonForHackStart = function(form){
   form.find("select").eq(0);
   form.find("input[name=goal]").addClass("display-none");
   form.find("select").addClass("display-none");
-  form.find("input[name=hack]").val("やったぞ！");
+  //form.find("input[name=hack]").val("やったぞ！");
   $(".state-holder").find("input[name=state]").val(2);
   goalName = form.find("input[name=goal]").val();
 
@@ -226,7 +226,7 @@ var pushedMainButtonForHackEnd = function(form){
   var goals_elem = $("#select_goals");
   goals_elem.css("display","block");
   var goals_select = goals_elem.find("select").eq(0);
-  form.find("input[name=hack]").val("やるぞ！");
+  //form.find("input[name=hack]").val("やるぞ！");
   $(".state-holder").find("input[name=state]").val(0);
 
   //活動している目標のIDを取得し，その成功後，そのIDでコンテナを生成
@@ -279,7 +279,7 @@ var pushedAchievedButton = function(form){
     success: function(goal_id){
         //終了時処理
         console.log("goal_id "+goal_id);
-        form.find("input[name=hack]").val("やるぞ！");
+        //form.find("input[name=hack]").val("やるぞ！");
         $(".state-holder").find("input[name=state]").val(0);
         $.ajax({
           type: "POST",
@@ -294,6 +294,5 @@ var pushedAchievedButton = function(form){
       });     
     }
   });
-
 };
 
