@@ -168,7 +168,7 @@ class Controller_Sukima extends Controller
       $from_user_data['name'] = $profile['name'];
       $from_user_data['twitter_id'] = $profile['twitter_id'];
       $from_user_data['achieve_num'] = Model_Goals::get_achieved_num($from_user_id);
-      $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
+      $from_user_data['description'] = $profile['description'];
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
       $from_user_data['mypage_url'] = "/sukima/mypage/{$profile['id']}";
@@ -182,7 +182,7 @@ class Controller_Sukima extends Controller
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view(0);
-    return Response::forge(View_Smarty::forge('sukima/follower', $data));
+    return Response::forge(View_Smarty::forge('sukima/follower.tpl', $data));
   }
 
   public function action_follower_add($offset, $limit)
@@ -385,12 +385,7 @@ class Controller_Sukima extends Controller
     return $count;
   }
 
-  /*
-    応援した人のアイコンを出すAPI
-    渡されたidがすでに応援済みなら空文字を返す
-  */
-  public function action_get_thumbnail($user_id, $target_id, $type){
-
+  public function action_unfollow($friend_id){
   }
 
   /**
