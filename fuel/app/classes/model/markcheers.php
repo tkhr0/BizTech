@@ -1,5 +1,4 @@
 <?php
-
 class Model_Markcheers extends \Model
 {
 
@@ -111,5 +110,3 @@ class Model_Markcheers extends \Model
   }
 
 }
-
-

@@ -1,5 +1,4 @@
 <?php
-
 /*
   Useage: include_once('constants.php');Constants::TYPE_GOAL; // => 1
 */
