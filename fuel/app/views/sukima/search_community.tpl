@@ -23,5 +23,6 @@
   </div><!--container-->
   {include file='./js_footer.tpl'}
   {Asset::js('community.js')}
+  <div id="footer"></div>
 </body>
 </html>
