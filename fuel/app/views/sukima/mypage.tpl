@@ -15,7 +15,7 @@
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
           <div class="col-xs-4"> 
-            {Asset::img('dummy_icon.jpeg',['class' => 'img-thumbnail', 'width' => '100%'])} 
+            <img src="{$user.thumbnail_path}" class="img-thumbnail" alt="{$user.name}" width="100%" />
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
             <div id="user-name"><!--名前-->
@@ -27,10 +27,12 @@
         <!--チアされた数-->
         <table class="cheer-table">
           <tr>
+            <th>達成した目標数</th>
             <th>応援された回数</th>
             <th>応援した回数</th>
           </tr>
           <tr>
+            <td><strong>{$achieved_goals_num}</strong></td>
             <td><strong>{$user.cheered}</strong></td>
             <td><strong>{$user.cheering}</strong></td>
           </tr>
@@ -38,55 +40,29 @@
         <!--チアされた数-->
         <!--フォローボタン-->
         <div class="follow-btn">
-        <form action="#" class="follow-form">
-          <input type="hidden" name="user-id" value="1" />
-          <input type="hidden" name="follow-id" value="2" />
+        <input type="hidden" name="followable" value="{$followable}" />
+        {if ($visited_user_id != $user.id)}
+        <form action="/sukima/follower" class="follow-form" action="post">
+          <input type="hidden" name="user-id" value="{$visited_user_id}" />
+          <input type="hidden" name="follow-id" value="{$user.id}" />
           <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
+        {/if}
         </div><!--フォローボタン-->
       </div><!--ユーザ情報-->
       <div class="col-xs-12">
       <!--目標リスト-->
-      <!-- goals -->
       <ul class="yaritai_list">
         <!--やりたいこと-->
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-          <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li>  
-	</ul>
-        </li>
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-        <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li> 
-        </ul>
-        </li>
-        <li>
-          <h3>たばこ我慢するぞ</h3><span class="badge">42</span>
-          <!--応援してくれた人リスト-->
-          <ul class="cheerer_list">
-            <li>{Asset::img('icon2.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon3.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon4.png',['width'=> '100%'])}</li>
-            <li>{Asset::img('icon5.png',['width'=> '100%'])}</li>
-	  </ul>
-        </li>
+        {foreach $goals as $goal}
+          {include file='./goal.tpl' id=$goal.id name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users disable=$goal.cheerable}
+        {/foreach}
       </ul>
       <!--目標リスト-->
       </div>
     </div> <!-- /container -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    {Asset::js('mypage.js')}
-    {Asset::js('bootstrap.min.js')}
+  {include file='./js_footer.tpl'}
+  {Asset::js('mypage.js')}
   </body>
 </html>
 

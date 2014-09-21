@@ -6,83 +6,250 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
+  public function before()
+  {
+    // redirect /sukima if there is a fraud which between session and cookie
+    if((Session::get('user_id', null) != null)
+      && (Session::get('user_id') != Cookie::get('user_id')
+      && (Session::get('noredirect', false) == false))){
+      Session::set('noredirect', true);
+      Response::redirect('/sukima');
+    }
+  }
+
   public function action_index()
   {
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
-    $user_id = Cookie::get('user_id', null); if($user_id == null){
-            $user_id = 1;
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
+          $user_id = 1;
     }else{
-            $user_id = floor($user_id) % 3 + 1;
-    }
+            $user_id = floor($user_id) % 4 + 1;
+   }
+   Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
 
-    $datas = array();
+    $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
+    $datas['user_id'] = $user_id;
 
+    Session::delete('noredirect');
     return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
-    //return Response::forge(View::forge('sukima/index.tpl', $datas));
   }
-  
-  public function action_mypage()
+
+  public function action_mypage($page_user_id=null)
   {
+    if($page_user_id == null){
+      $user_id = Session::get('user_id');
+      Response::redirect("/sukima/mypage/{$user_id}");
+    }
     // cheerボタンのリダイレクト用
-    Cookie::set('from_uri', 'sukima/mypage');
-    $user_id = 1;
-    $datas["goals"] = Model_Goals::get_goals_from_user($user_id);
-    $datas["user"] = Model_Users::get_profile($user_id);
+    Session::set('from_uri', "sukima/mypage/$page_user_id");
+    // for header
+    $datas = self::get_page_header_data();
+
+    $user_id = Session::get('user_id');  // ログイン中のユーザid
+
+    // 情報を取得
+    $page_user_info = Model_Users::get_profile($page_user_id); // ページのユーザの情報
+    if(count($page_user_info) < 1){   // redirect to mypage if  faild to find user's info
+      Response::redirect('/sukima/mypage');
+    }
+    $datas['user'] = $page_user_info;
+    $datas['visited_user_id'] = $user_id;
+    $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
+    $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
+    // 目標
+    $datas['goals'] = Model_Goals::get_goals_from_user($page_user_id);   // 目標の連想配列の配列
+    // 応援した人のデータを取得、追加
+    foreach($datas['goals'] as &$goal){
+      $cheering_users_data = array();
+      foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
+        $user_data = array();  // init
+        $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
+        $user_data['mypage_url'] = '/sukima/mypage/'.$cheering_user_profile['id'];  // idをセット
+        $user_data['thumbnail'] = $cheering_user_profile['thumbnail_path']; // サムネ
+        $user_data['name'] = $cheering_user_profile['name'];  // 名前
+        array_push($cheering_users_data, $user_data);
+      }
+      $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
+      $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
+      $cheerable = "";
+      if($cheer_num>999){ $cheerable = "disabled"; }
+      $goal = array_merge($goal, array('cheerable' => $cheerable));
+    }
+
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
-  
+
   /*
         タイムラインの動作
   */
   public function action_timeline()
-  {  
-    $user_id = Cookie::get('user_id', null);
-    $containers = self::helper_add_disabled_info($user_id, Model_Timeline::get_containers($user_id, 5));
-    $datas = array(
+  {
+    $datas = self::get_page_header_data();
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $datas = array_merge($datas, array(
+        'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
-        );
-    return Response::forge(View_Smarty::forge('sukima/timeline', $datas));
+    ));
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+  }
+
+  // 
+  public function action_follower_view()
+  {
+    $data = get_page_header_data();
+    $user_id = Session::get('user_id');
+    $from_user_ids = Model_Follows::get_friends($user_id);
+
+    $from_user_datas = array();
+    foreach($from_user_ids as $from_user_id){
+      $profile = Model_Users::get_profile($from_user_id);
+      $from_user_data['thumbnail'] = $profile['thumbnail_path'];
+      $from_user_data['name'] = $profile['name'];
+      $from_user_data['twitter_id'] = $profile['twitter_id'];
+      $from_user_data['achieve_num'] = Model_Goals::get_achieved_num($from_user_id);
+      $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
+      $from_user_data['cheering'] = $profile['cheering'];
+      $from_user_data['cheered'] = $profile['cheered'];
+    }
+
+    return Response::forge(View_Smarty::forge('', $data));
+  }
+
+  //タイムラインを追加で取得
+  public function action_timeline_add($offset, $num)
+  {
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $datas = array(
+        'state'             => $state,
+        'containers'        => $containers,
+        'type_container'    => Constants::TYPE_CONTAINER,
+        'user_id'           => $user_id,
+    );
+    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
+  }
+
+  public function action_follower($page_user_id=null)
+  {
+    $datas = array();
+    return Response::forge(View_Smarty::forge('sukima/follower.tpl', $datas));
+  }
+
+  public function action_make_community($name){
+    $user_id = Session::get('user_id');
+    $community_id = Model_Communities::set_community($name, $user_id);
+    Model_Belonging::belonging($community_id, $user_id);
+    return 1;
   }
   
-  public function post_new()
-  {
-  
+  public function action_belonging_communities(){
+    $user_id = Session::get('user_id');
+    $communities = Model_Communities::get_belonging_communities($user_id);
+    return json_encode($communities);
   }
   
-  public function post_hackstart()
-  {
-  
+  public function action_belong_community($community_id){
+    $user_id = Session::get('user_id');
+    Model_Belonging::belonging($community_id, $user_id);
+    return 1;
+  }
+
+  public function action_leave_community($community_id){
+    $user_id = Session::get('user_id');
+    Model_Belonging::leaving($community_id, $user_id);
+    return 1;
   }
   
-  public function post_hackend()
+  public function action_search_community($query){
+    $user_id = Session::get('user_id');
+    $communities = Model_Communities::search_community($query);
+    return json_encode($communities);
+  }
+
+  /* for ajax */
+  public function action_getcontainers($start, $limit=10)
   {
-  
+    $user_id = Session::get('user_id');
+    $data = Model_Timeline::get_containers_with_offset($user_id, intval($start), intval($limit));
+    return Format::forge($data)->to_json();
   }
   
-  public function post_achieve()
+  public function action_make_goal($name, $user_id)
   {
-  
+    $goal_id = Model_Goals::set_goal($name, $user_id);  
+    Model_Containers::set_container($goal_id, 1);
+    Model_Goals::set_active($goal_id);
+    return $goal_id;
   }
   
-  public function post_follower()
+  /* for ajax */
+  public function action_hack_start($goal_id)
   {
+    Model_Containers::set_container($goal_id, 2);
+    Model_Goals::set_active($goal_id);
+    return 1;
+  }
   
+  /* for ajax */
+  public function action_hack_end($goal_id)
+  {
+    Model_Containers::set_container($goal_id, 3);
+    Model_Goals::set_unactive($goal_id);
+    return 1;
+  }
+
+  public function action_hack_achieved($goal_id){
+    Model_Containers::set_container($goal_id, 4);
+  }
+  
+  public function action_achieve_goal($name, $user_id)
+  {
+  }
+  
+  /* follow */
+  public function post_follower($user_id, $follow_id)
+  {
+    $success = Model_Follows::follow($user_id, $follow_id);
+
+    if($success === 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  
+  public function action_active_id($user_id){
+    return self::active_id($user_id);
+  }
+    
+  public function action_goals($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    return json_encode($goals);
   }
   
   public function action_cheer($target_id, $type)
   {
-    $flag_cheerable = true;
-
     // コンテナを見ているユーザのID
-    $cheering_user_id = Cookie::get('user_id');
+    $cheering_user_id = Session::get('user_id');
     $container_id = -1;
-
     if($type == Constants::TYPE_CONTAINER){
       // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
       $container_id = $target_id;
@@ -90,25 +257,6 @@ class Controller_Sukima extends Controller
     }elseif($type == Constants::TYPE_GOAL){ 
       // 目標IDを取得
       $goal_id = $target_id;
-    }
-
-    if($type == Constants::TYPE_CONTAINER){
-      // コンテナにcheer可能かチェック、できなければreturn
-      if((0 < $container_id) 
-          && (Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER) == false)){
-        $flag_cheerable = false;
-      }
-    }
-    if($type == Constants::TYPE_GOAL){
-      // 目標にcheer可能かチェック、できなければretuen
-      if(Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_GOAL) == false){
-        $flag_cheerable = false;
-      }
-    }
-
-    // zuminobaaiha kokode kaeru
-    if(!$flag_cheerable){
-            return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
     }
 
     // コンテナを発信したユーザのID
@@ -122,27 +270,60 @@ class Controller_Sukima extends Controller
     Model_Users::increment_total_cheered($cheered_user_id);
     Model_Users::increment_total_cheering($cheering_user_id);
 
+    $count = 0;
+    if($type == Constants::TYPE_CONTAINER){
+      $count = Model_Containers::get_cheered($container_id);
+    }elseif($type == Constants::TYPE_GOAL){ 
+      $count = Model_Goals::get_cheered($goal_id);
+    }
+
     // cheerしたことをマーク
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
-    return Model_Markcheers::cheerable($cheering_user_id, $target_id, Constants::TYPE_CONTAINER);
+    return $count;
   }
 
-  /**/
-  public static function helper_add_disabled_info($user_id, $containers){
-    function info(&$item, $key){
-      $item['disabled'] = '';
-    }
-    array_walk($containers, 'info');
+  private function active_id($user_id){
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    $activeNum = -1;
+    $datas["test"] = $goals;
 
-    foreach($containers as &$container){
-      if(!Model_Markcheers::cheerable($user_id, $container['container_id'], Constants::TYPE_CONTAINER)){
-        $container['disabled'] = 'disabled';
+    foreach($goals as $goal){
+      if($goal["active"] == 1){
+        $activeNum = $goal["id"];
+        break;
       }
     }
-    return $containers;
+    return $activeNum; 
   }
-  
+
+  private function get_page_header_data(){
+    $data['header_home_url'] = Uri::create('/sukima/timeline');
+    $data['header_mypage_url'] = Uri::create('/sukima/mypage');
+    return $data;
+  }
+
+  public function action_to_achieved($user_id){
+    $active_id = self::active_id($user_id);
+    Model_Goals::set_unactive($active_id);
+    Model_Goals::set_achieve($active_id);
+    return $active_id;
+  }
+
+  /*
+    return goals num whech achieved
+  */
+  private function get_achieved_goals_num($user_id){
+    $count = 0;
+    $goals = Model_Goals::get_goals_from_user($user_id);
+    foreach($goals as $goal){
+      if($goal['achieve'] == Constants::ACHIEVE_TRUE){
+        $count ++;
+      }
+    }
+    return $count;
+  }
+
   /**
   * The 404 action for the application.
   *

@@ -22,7 +22,13 @@ class Constants
         */
         const TYPE_GOAL = 1;
         const TYPE_CONTAINER = 2;
+        const TYPE_COMMUNITY = 3;
 
+        /*
+          define: goals.achieve
+        */
+        const ACHIEVE_TRUE  = true;   // tasseizumi
+        const ACHIEVE_FALSE = false;  // mitassei
 
 }
 

@@ -1,12 +1,12 @@
 $(function(){
+  // フォローボタンの初期化
+  followButtonInitialize();
   // フォローボタンが押された時の処理
   pushedFollowingButton();
-  console.log('loaded');
 });
 
-// 応援ボタンが押された時の処理
+// フォローボタンが押された時の処理
 var pushedFollowingButton = function(){
-  console.log('load function');
   $('.follow-form').submit(function(){
     $this = $(this);
 
@@ -17,13 +17,20 @@ var pushedFollowingButton = function(){
     $this.find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://192.168.56.10/sukima/follower/" + userId + "/" + followerId,
-      success: function(msg){
-        //バッジに書き込み
-        //badge.text(msg);
-        }
-        });
+      url: "http://" + location.host + "sukima/follower/" + userId + "/" + followerId,
+      success: function(msg){}
+    });
     //submitのデフォルト機能のキャンセル
     return false;
   });
 };
+
+// フォローボタンの初期状態を指定
+var followButtonInitialize = function(){
+  // hiddenから必要な情報の抽出
+  var followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
+  if(followable == '0'){
+    $(".follow-btn").eq(0).find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
+  }
+};
+

@@ -3,9 +3,24 @@
 class Model_Users extends \Model {
 	public static function get_twitter_id($user_id){
 		$results = \DB::select('twitter_id')->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];
+            	return $results->as_array()[0];
 	}
-	
+
+        public static function get_user_id($twitter_id){
+                $results = \DB::select('id')->from('users')->where('twitter_id', $twitter_id)->as_assoc()->execute();
+                return $results->as_array()[0]['id'];
+        }
+              
+	public static function check_exist_id($user_id){          	
+		$results = \DB::select('twitter_id')->from('users')->where('twitter_id', $user_id)->as_assoc()->execute();   
+                // データベースにtwitter_idがあれば　TRUE  なければ FALSEを返す　  
+                if(array_key_exists(0, $results->as_array())){
+                  return true;
+		}else{
+                   return false;
+                }
+	}
+ 	
 	public static function get_total_cheered($user_id){
 		$results = \DB::select('cheered')->from('users')->where('id', $user_id)->as_assoc()->execute();
 		return $results->as_array()[0]['cheered'];
@@ -28,7 +43,11 @@ class Model_Users extends \Model {
 
 	public static function get_profile($user_id){
 		$results = \DB::select()->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];	
+    if($results->count() == 0){
+      return array();
+    }else{
+      return $results->as_array()[0];	
+    }
 	}
 
 	public static function set_profile($twitter_id, $name, $thumbnail_path){
@@ -36,6 +55,7 @@ class Model_Users extends \Model {
       'twitter_id' => $twitter_id,
       'name' => $name,
       'thumbnail_path' => $thumbnail_path,
+      'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
     ))->execute();
 	}
 

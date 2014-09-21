@@ -1,5 +1,4 @@
 <?php
-
 /*
   Useage: include_once('constants.php');Constants::TYPE_GOAL; // => 1
 */
@@ -22,6 +21,7 @@ class Constants
         */
         const TYPE_GOAL = 1;
         const TYPE_CONTAINER = 2;
+        const TYPE_COMMUNITY = 3;
 
 
 }

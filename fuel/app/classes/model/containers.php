@@ -2,7 +2,7 @@
 
 class Model_Containers extends \Model
 {
-        public static function insert($goal_id, $cheered=0, $status=1)
+        public static function set_container($goal_id, $status = 1, $cheered = 0)
         {
                 $query = DB::insert('containers')->set(array(
                         'goal_id' => $goal_id,
