@@ -8,11 +8,32 @@ $(function(){
   cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
   mainButtonListner();
+  achievedButtonListener();
   reloadButtonListner();
+  autoLoader();
   //fixFooter();
   //$('body').modalmanager('loading');
-  achievedButtonListener();
 });
+
+var autoLoader = function(){
+  $(window).bottom({proximity: 0.1});
+  $(window).bind("bottom", function() {
+    var obj = $(this);
+    if (!obj.data("loading")) {
+      obj.data("loading", true);
+
+      //$('#timeline').append('<p>Loading...</p>');
+      var offset = $("#timeline").find(".activity").length;
+      $('#timeline').append('<p>NOW LOADING...</p>');
+      setTimeout(function() {
+        $('#timeline p:last').remove();
+        //タイムラインを追加でリロード
+        reloadAddTimeline(offset, RELOAD_NUM);
+        obj.data("loading", false);
+      }, 1000);
+    }
+  });
+}
 
 var fixFooter = function(){
   console.log("fix footer");
