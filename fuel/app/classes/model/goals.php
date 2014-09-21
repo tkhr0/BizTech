@@ -20,7 +20,7 @@ class Model_Goals extends \Model {
     $results = \DB::select('user_id')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
     return $results->as_array()[0]['user_id'];
   }
-	
+
 	public static function get_goals_from_users($user_ids){
     $goals = [];
     foreach($user_ids as $user_id){
