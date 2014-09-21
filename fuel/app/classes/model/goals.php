@@ -31,12 +31,12 @@ class Model_Goals extends \Model {
   }
 
   public static function get_achieved_num($user_id){
-    $query = \DB::select()->from('goals')->where('user_id', $user_id)->where('achieve', true);
+    $query = \DB::select()->from('goals')->where('user_id', $user_id)->where('achieve', true)->execute();
     return $query->count();
   }
 
   public static function get_goals_num($user_id){
-    $query = \DB::select('id')->from('goals')->where('user_id', $user_id);
+    $query = \DB::select('id')->from('goals')->where('user_id', $user_id)->execute();
     return $query->count();
   }
 

@@ -9,10 +9,9 @@
          <div class="media-body">
             <h4 class="media-heading">{$container.goal_name}{$container.fixed_phrase}<span class="badge">{$container.cheer_num}</span></h4>
            <!--応援している人リスト(アイコン)-->
-           <ul class="cheerer_list">
-
+           <ul class="cheerer_list list-inline">
              {foreach from=$container.cheer_users item=cheer_user}
-               <li><a href="http://192.168.56.10/sukima/mypage/{$cheer_user.user_id}"><img src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>   
+               <li><a href="/sukima/mypage/{$cheer_user.user_id}"><img src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>
              {/foreach}
            </ul>
            <!--応援している人リスト(アイコン)-->
@@ -31,5 +30,5 @@
     <!--やりたいことアクティビティ-->
   </div>
   <!--タイムライン-->
-{/foreach} 
+{/foreach}
 
