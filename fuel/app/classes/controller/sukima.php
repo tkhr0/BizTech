@@ -334,7 +334,17 @@ class Controller_Sukima extends Controller
     // cheerしたことをマーク
     Model_Markcheers::hadcheered($cheering_user_id, $target_id, $type);
 
-    return $count;
+    $data['count'] = $count;
+    if(Model_Markcheers::get_count($cheering_user_id, $target_id, $type) <= 1){
+      $profile = Model_Users::get_profile($cheering_user_id);
+      $data['user']['thumbnail'] = $profile['thumbnail_path'];
+      $data['user']['url'] = Uri::create('/sukima/mypage/'.$cheering_user_id);
+      $data['user']['name'] = $profile['name'];
+    }else{
+      $data['user'] = false;
+    }
+
+    return json_encode($data);
   }
 
   private function active_id($user_id){
@@ -376,6 +386,14 @@ class Controller_Sukima extends Controller
       }
     }
     return $count;
+  }
+
+  /*
+    応援した人のアイコンを出すAPI
+    渡されたidがすでに応援済みなら空文字を返す
+  */
+  public function action_get_thumbnail($user_id, $target_id, $type){
+
   }
 
   /**
