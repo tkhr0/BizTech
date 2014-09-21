@@ -18,6 +18,16 @@ class Controller_Sukima extends Controller
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
+  //  $user_id = Session::get('user_id', null);
+  //  if($user_id == null){
+  //        $user_id = 1;
+  //  }else{
+  //    $user_id = floor($user_id) % 4 + 1;
+  //  }
+  //  Session::set('user_id', $user_id);
+  //  Cookie::set('user_id', $user_id);
+   
+    
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
@@ -155,6 +165,7 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
+      array_push($from_user_datas, $from_user_data);
     }
     return $from_user_datas;
   }
@@ -163,7 +174,7 @@ class Controller_Sukima extends Controller
   public function action_follower()
   {
     $data = self::get_page_header_data();
-    $data['followers_data'] = self::help_follower_view(1);
+    $data['followers_data'] = self::help_follower_view(0);
     return Response::forge(View_Smarty::forge('sukima/follower', $data));
   }
 
@@ -171,7 +182,7 @@ class Controller_Sukima extends Controller
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view($offset, $limit);
-    return Response::forge(View_Smarty::forge('', $data));
+    return View_Smarty::forge('', $data);
   }
 
   public function action_make_community($name){

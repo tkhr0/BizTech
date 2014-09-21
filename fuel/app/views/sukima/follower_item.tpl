@@ -1,8 +1,7 @@
-{assign var=foo value=[1,2,3]}
 <div class="media"><!--media-->
-<a class="pull-left" href="#"><img class="media-object" src="{$container.thumbnail}" width="100%" alt="..."></a>
+<a class="pull-left" href="#"><img class="media-object" src="{$thumbnail}" width="100%" alt="..."></a>
 <div class="media-body"><!--media body-->
-<h4 class="media-heading">{$container.goal_name}を{$container.status}<span class="badge">{$container.cheer_num}</span></h4>
+<h4 class="media-heading"><span class="badge">{$goal_name}</span></h4>
 </ul>
 <!--経歴-->
 <table class="cheer-table">
