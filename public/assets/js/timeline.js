@@ -1,5 +1,5 @@
-USER_ID = $.cookie("user_id");
-RELOAD_NUM = 10;
+var USER_ID = $.cookie("user_id");
+var RELOAD_NUM = 10;
 console.log("userID: " + USER_ID);
 $(function(){
   initCheerButton();
@@ -91,11 +91,22 @@ var cheeringButtonListner = function(){
       url: "/sukima/cheer/" + targetId + "/" + typeId,
       success: function(msg){
         //バッジに書き込み
-        badge.text(msg);
+        var ret = jQuery.parseJSON(msg);
+        var count = ret.count;
+        badge.text(count);
+
+                
         badge.addClass("background-yellow");
         setTimeout(function(){
           badge.removeClass("background-yellow");
         }, 130);
+
+        var user = ret.user;
+        if(user){
+          var path = user.thumbnail;
+          var name = user.name;
+          var url = user.url;
+        }
       }
     });
     //submitのデフォルト機能のキャンセル
