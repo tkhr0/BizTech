@@ -10,10 +10,8 @@ $(function(){
   // やるぞボタン(hack)をおしたとき
   mainButtonListner();
   achievedButtonListener();
-  reloadButtonListner();
+  // タイムラインの自動追加読み込み
   autoLoader();
-  //fixFooter();
-  //$('body').modalmanager('loading');
 });
 
 var autoLoader = function(){
@@ -23,7 +21,6 @@ var autoLoader = function(){
     if (!obj.data("loading")) {
       obj.data("loading", true);
 
-      //$('#timeline').append('<p>Loading...</p>');
       var offset = $("#timeline").find(".activity").length;
       $('#timeline').append('<p>NOW LOADING...</p>');
       setTimeout(function() {
@@ -31,13 +28,13 @@ var autoLoader = function(){
         //タイムラインを追加でリロード
         reloadAddTimeline(offset, RELOAD_NUM);
         obj.data("loading", false);
-      }, 1000);
+      }, 800);
     }
   });
 }
 
 var initContainer = function(){
-  $(".activity")
+  $(".activity");
 };
 
 //ボタンの初期状態を設定
@@ -266,16 +263,6 @@ var reloadAddTimeline = function($offset, $num){
   });
 };
 
-var reloadButtonListner = function(){
-  $(".reload-form").submit(function(){
-    console.log("timeline reload!");
-    //現在あるコンテナの数を取得
-    offset = $("#timeline").find(".activity").length;
-    //タイムラインを追加でリロード
-    reloadAddTimeline(offset, RELOAD_NUM);
-    return false;
-  });
-};
 
 var achievedButtonListener = function(){
   $(".achieve-form").submit(function(){

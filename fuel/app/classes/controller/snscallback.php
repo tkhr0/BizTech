@@ -50,6 +50,7 @@ class Controller_Snscallback extends Controller{
     $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);
     
     Session::set('user_id', $sukima_huck_id); 
+    
     $arr = Session::get('user_id');
  
     $cursor = -1;
