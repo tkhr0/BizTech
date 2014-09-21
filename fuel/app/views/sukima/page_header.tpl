@@ -8,7 +8,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="/sukima/">{Asset::img('sukimaHackwithoutSub.png',['width' => '100%','alt'=>"すきまハック"])}</a>
+  <a class="navbar-brand" href="/sukima/timeline">{Asset::img('sukimaHackwithoutSub.png',['width' => '100%','alt'=>"すきまハック"])}</a>
 </div>
 <div id="register_goal" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
 <div class="modal-header">

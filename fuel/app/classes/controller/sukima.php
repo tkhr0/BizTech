@@ -28,14 +28,24 @@ class Controller_Sukima extends Controller
   //  Cookie::set('user_id', $user_id);
    
     
-    $user_id = Session::get('user_id', null);
-    if($user_id == null){
-          $user_id = 1;
-    }else{
-      $user_id = floor($user_id) % 4 + 1;
+    //$user_id = Session::get('user_id', null);
+    //if($user_id == null){
+    //      $user_id = 1;
+    //}else{
+    //  $user_id = floor($user_id) % 4 + 1;
+   // }
+   // Session::set('user_id', $user_id);
+   // Cookie::set('user_id', $user_id);
+    
+    $user_id = Session::get('user_id');
+   
+     if($user_id != null){
+      $user_id = Session::get('user_id');
+      Response::redirect("/sukima/timeline");
     }
-    Session::set('user_id', $user_id);
-    Cookie::set('user_id', $user_id);
+
+  
+  
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
