@@ -54,24 +54,24 @@
   <h4 class="modal-title">やる気</h4>
   </div><!--modal-header-->
   <div class="modal-body">
-  <div class="row">
-  <div class="col-xs-12">
-      <form action="#" class="hack-form">
-        <input type="hidden" name="state" value="{$state}" />
-        <select class="display-none" name="目標を選ぶ">
-        </select>
-        <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
-        <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
-      </form>
-      <form class="reload-form">
-        <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
-      </form>
-  </div><!--12-->
-  </div><!--row-->
+    <div class="row">
+      <div class="col-xs-12">
+        <form action="#" class="hack-form">
+          <input type="hidden" name="state" value="{$state}" />
+          <select class="display-none" name="目標を選ぶ">
+          </select>
+          <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
+          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+        </form>
+        <form class="reload-form">
+          <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
+        </form>
+      </div><!--12-->
+    </div><!--row-->
   </div><!--modal-body-->
   <div class="modal-footer">
-  <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-  <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
   </div><!--modal-footer-->
   </div>
   <div id="hack_btn" class="btn btn-primary btn-xs" data-toggle="modal" href="#responsive"><span class="glyphicon glyphicon-fire"></span></div>
