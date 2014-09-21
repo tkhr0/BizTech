@@ -75,19 +75,23 @@ class Controller_Sukima extends Controller
         array_push($cheering_users_data, $user_data);
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
+      $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
+      $cheerable = "";
+      if($cheer_num>999){ $cheerable = "disabled"; }
+      $goal = array_merge($goal, array('cheerable' => $cheerable));
     }
 
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
-  
+
   /*
         タイムラインの動作
   */
   public function action_timeline()
   {
     $datas = self::get_page_header_data();
-    $user_id = Cookie::get('user_id', null);
-    $containers = Model_Timeline::get_containers($user_id, 100);
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
@@ -99,7 +103,26 @@ class Controller_Sukima extends Controller
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
     ));
-    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+    return View_Smarty::forge('sukima/timeline.tpl', $datas);
+  }
+
+  //タイムラインを追加で取得
+  public function action_timeline_add($offset, $num)
+  {
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $datas = array(
+        'state'             => $state,
+        'containers'        => $containers,
+        'type_container'    => Constants::TYPE_CONTAINER,
+        'user_id'           => $user_id,
+    );
+    return Response::forge(View_Smarty::forge('sukima/timeline_add.tpl', $datas));
   }
 
   /* for ajax */
@@ -164,7 +187,7 @@ class Controller_Sukima extends Controller
     // コンテナを見ているユーザのID
     $cheering_user_id = Session::get('user_id');
     $container_id = -1;
-
+    return $cheering_user_id;
     if($type == Constants::TYPE_CONTAINER){
       // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
       $container_id = $target_id;
