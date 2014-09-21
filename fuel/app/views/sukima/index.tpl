@@ -8,7 +8,6 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <p>user id</p>
         <h1>{Asset::img('sukimaHack.png',['width' => '100%','alt'=>'すきまハック'])}</h1>
        <form class="form-signin" role="form">
         <a class="btn btn-lg btn-primary btn-block" href="/twitterlogin">Sign in with Twitter</a>

@@ -99,8 +99,6 @@ class Controller_Sukima extends Controller
   */
   public function action_timeline()
   {
-   
-   
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
     //var_dump($user_id);
@@ -110,6 +108,8 @@ class Controller_Sukima extends Controller
       $state = 2;
     }
 
+    $containers = self::help_container_fixed_phrase($containers);
+
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
@@ -117,6 +117,48 @@ class Controller_Sukima extends Controller
         'user_id'           => $user_id,
     ));
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+  }
+
+  //タイムラインを追加で取得
+  public function action_timeline_add($offset, $num)
+  {
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $containers = self::help_container_fixed_phrase($containers);
+
+    $datas = array(
+        'state'             => $state,
+        'containers'        => $containers,
+        'type_container'    => Constants::TYPE_CONTAINER,
+        'user_id'           => $user_id,
+    );
+    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
+  }
+
+  private function help_container_fixed_phrase(&$containers)
+  {
+    foreach($containers as &$container){
+      switch(intval($container['status'])){
+        case(Constants::CONTAINER_TYPE_NEW):
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_NEW;
+        break;
+        case(Constants::CONTAINER_TYPE_START):
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_START;
+        break;
+        case(Constants::CONTAINER_TYPE_FINISH):
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_FINISH;
+        break;
+        case(Constants::CONTAINER_TYPE_ACHIEVED):
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_ACHIEVED;
+        break;
+      }
+    }
+    return $containers;
   }
 
   // 
@@ -136,28 +178,18 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
+      array_push($from_user_datas, $from_user_data);
     }
 
     return Response::forge(View_Smarty::forge('', $data));
   }
 
-  //タイムラインを追加で取得
-  public function action_timeline_add($offset, $num)
+  public function action_follower_view_add($offset, $num)
   {
-    $user_id = Session::get('user_id', null);
-    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
-    $state = 0;
-    if(self::active_id($user_id) > 0){
-      $state = 2;
-    }
+  }
 
-    $datas = array(
-        'state'             => $state,
-        'containers'        => $containers,
-        'type_container'    => Constants::TYPE_CONTAINER,
-        'user_id'           => $user_id,
-    );
-    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
+  private function help_follower_view($from_user_ids)
+  {
   }
 
   public function action_follower($page_user_id=null)

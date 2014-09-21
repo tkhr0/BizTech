@@ -4,6 +4,7 @@
     <title>すきまハック</title>
     <!--メタデータのヘッダー-->
     {include file='./meta_header.tpl'}
+    {Asset::css('mypage.css')}
     <!--メタデータのヘッダー-->
   </head>
   <body>
