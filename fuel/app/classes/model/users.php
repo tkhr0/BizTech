@@ -6,6 +6,10 @@ class Model_Users extends \Model {
             	return $results->as_array()[0];
 	}
 
+        public static function get_user_id($twitter_id){
+                $results = \DB::select('id')->from('users')->where('twitter_id', $twitter_id)->as_assoc()->execute();
+                return $results->as_array()[0]['id'];
+        }
               
 	public static function check_exist_id($user_id){          	
 		$results = \DB::select('twitter_id')->from('users')->where('twitter_id', $user_id)->as_assoc()->execute();   
