@@ -153,12 +153,9 @@ class Controller_Sukima extends Controller
     return $containers;
   }
 
-  // 
-  public function action_follower_view()
-  {
-    $data = get_page_header_data();
+  private function help_follower_view($offset,$limit=10){
     $user_id = Session::get('user_id');
-    $from_user_ids = Model_Follows::get_friends($user_id);
+    $from_user_ids = Model_Follows::get_friends_with_offset($user_id, $offset, $limit);
 
     $from_user_datas = array();
     foreach($from_user_ids as $from_user_id){
@@ -172,22 +169,22 @@ class Controller_Sukima extends Controller
       $from_user_data['cheered'] = $profile['cheered'];
       array_push($from_user_datas, $from_user_data);
     }
+    return $from_user_datas;
+  }
 
+  // 
+  public function action_follower()
+  {
+    $data = self::get_page_header_data();
+    $data['followers_data'] = self::help_follower_view(1);
+    return Response::forge(View_Smarty::forge('sukima/follower', $data));
+  }
+
+  public function action_follower_add($offset, $limit)
+  {
+    $data = self::get_page_header_data();
+    $data['followers_data'] = self::help_follower_view($offset, $limit);
     return Response::forge(View_Smarty::forge('', $data));
-  }
-
-  public function action_follower_view_add($offset, $num)
-  {
-  }
-
-  private function help_follower_view($from_user_ids)
-  {
-  }
-
-  public function action_follower($page_user_id=null)
-  {
-    $datas = array();
-    return Response::forge(View_Smarty::forge('sukima/follower.tpl', $datas));
   }
 
   public function action_make_community($name){
