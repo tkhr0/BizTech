@@ -7,9 +7,9 @@ $(function(){
   //fixedFooter();
   //fixedHackBtn();
   // 応援ボタンが押された時の処理
-  pushedCheeringButton();
+  cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
-  pushedMainButton();
+  mainButtonListner();
   reloadButtonListner();
   achievedButtonListener();
 
@@ -79,7 +79,7 @@ var initState = function(){
 };
 
 // 応援ボタンが押された時の処理
-var pushedCheeringButton = function(){
+var cheeringButtonListner = function(){
   $(".cheer-form").submit(function(){
     $this = $(this);
 
@@ -105,7 +105,7 @@ var pushedCheeringButton = function(){
   });
 };
 //メインボタンが押された時の処理(状態によって分岐)
-var pushedMainButton = function(){
+var mainButtonListner = function(){
   $(".hack-form").submit(function(){
     console.log("pushed main button ->");
     $this = $(this);
@@ -251,6 +251,7 @@ var reloadAddTimeline = function($offset, $num){
       //終了時処理
       $("#timeline").append(add_timeline);
       console.log($("#timeline"));
+      cheeringButtonListner();
     }
   });
 };
@@ -259,7 +260,7 @@ var reloadButtonListner = function(){
   $(".reload-form").submit(function(){
     console.log("timeline reload!");
     //現在あるコンテナの数を取得
-    offset = $("#timeline").find(".container").length;
+    offset = $("#timeline").find(".activity").length;
     //タイムラインを追加でリロード
     reloadAddTimeline(offset, RELOAD_NUM);
     return false;
