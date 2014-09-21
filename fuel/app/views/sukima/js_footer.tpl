@@ -2,7 +2,7 @@
 {Asset::js('jquery.mobile.custom.min.js')}
 {Asset::js('buttons.js')}
 {Asset::js('jquery.cookie.js')}
-{Asset::js('footerFixed.js')}
+{*{Asset::js('footerFixed.js')}*}
 {Asset::js('bootstrap.min.js')}
 {Asset::js('timeline.js')}
 {Asset::js('mypage.js')}

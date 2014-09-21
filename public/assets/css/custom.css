@@ -75,7 +75,8 @@
   margin: 3px;
 }
 
-#footer {
+#fixfooter {
+  width: 100%;
   position: fixed;
   bottom: 0;
   z-index: 9999;
@@ -121,8 +122,4 @@
   text-align: center;
   font-size: 220%;
   z-index: 1000;
-}
-
-#select_goals {
-  display: none;
 }

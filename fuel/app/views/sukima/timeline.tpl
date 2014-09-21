@@ -7,10 +7,8 @@
   </head>
   <body>
   {include file='./page_header.tpl'}
-  <p>
-  login_user_id: {$user_id}
-  </p>
   <div class="container">
+    <p>login_user_id: {$user_id}</p>
     <!--タイムライン-->
     <div id="timeline">
       {foreach from=$containers item=container}
@@ -41,31 +39,20 @@
       {/foreach}
     </div><!--タイムライン-->
   </div><!-- /container -->
-  <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
-  <div id="footer" class="container">
-    <!--input-->
-    <div class="input-group" style="display:none;">
-      <input type="text" class="form-control">
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-default">登録</button>
-      </div>
-    </div>
-    <!--input-->
-  </div><!--container-->
-  <div id="footer">
-     <div id="yaruzo">
-        <form action="#" class="hack-form">
-          <input type="hidden" name="state" value="{$state}" />
-          <select class="display-none" name="目標を選ぶ" multiple="multiple">
-           <!--<option value="サンプル">サンプル</option> -->
-          </select>
-          <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
-          <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
-        </form>
-        <form class="reload-form">
-          <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
-        </form>
-     </div><!--yaruzo-->
+  <div id="fixfooter">
+    <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
+    <div id="yaruzo">
+      <form action="#" class="hack-form">
+        <input type="hidden" name="state" value="{$state}" />
+        <select class="display-none" name="目標を選ぶ" multiple="multiple">
+        </select>
+        <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
+        <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+      </form>
+      <form class="reload-form">
+        <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
+      </form>
+    </div><!--yaruzo-->
   </div><!--footer-->
   {include file='./js_footer.tpl'}
 </body>
