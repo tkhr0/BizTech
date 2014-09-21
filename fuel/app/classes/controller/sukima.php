@@ -18,14 +18,14 @@ class Controller_Sukima extends Controller
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-  //  $user_id = Session::get('user_id', null);
-  //  if($user_id == null){
-  //        $user_id = 1;
-  //  }else{
-  //    $user_id = floor($user_id) % 4 + 1;
-  //  }
-  //  Session::set('user_id', $user_id);
-  //  Cookie::set('user_id', $user_id);
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
+          $user_id = 1;
+    }else{
+      $user_id = floor($user_id) % 4 + 1;
+    }
+    Session::set('user_id', $user_id);
+    Cookie::set('user_id', $user_id);
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
