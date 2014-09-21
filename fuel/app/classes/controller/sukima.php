@@ -22,12 +22,12 @@ class Controller_Sukima extends Controller
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
     $user_id = Session::get('user_id', null);
-    if($user_id == null){
-            $user_id = 1;
-    }else{
-            $user_id = floor($user_id) % 4 + 1;
-    }
-    Session::set('user_id', $user_id);
+    //if($user_id == null){
+      //      $user_id = 1;
+    //}else{
+    //        $user_id = floor($user_id) % 4 + 1;
+   // }
+   // Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
 
     $datas = self::get_page_header_data();
@@ -187,6 +187,10 @@ class Controller_Sukima extends Controller
     Model_Goals::set_unactive($goal_id);
     return 1;
   }
+
+  public function action_hack_achieved($goal_id){
+    Model_Containers::set_container($goal_id, 4);
+  }
   
   public function action_achieve_goal($name, $user_id)
   {
@@ -269,6 +273,13 @@ class Controller_Sukima extends Controller
     $data['header_home_url'] = Uri::create('/sukima/timeline');
     $data['header_mypage_url'] = Uri::create('/sukima/mypage');
     return $data;
+  }
+
+  public function action_to_achieved($user_id){
+    $active_id = self::active_id($user_id);
+    Model_Goals::set_unactive($active_id);
+    Model_Goals::set_achieve($active_id);
+    return $active_id;
   }
 
   /*

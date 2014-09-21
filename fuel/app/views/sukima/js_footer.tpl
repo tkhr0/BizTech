@@ -2,5 +2,12 @@
 {Asset::js('jquery.mobile.custom.min.js')}
 {Asset::js('buttons.js')}
 {Asset::js('jquery.cookie.js')}
-{Asset::js('footerFixed.js')}
-{Asset::js('bootstrap.min.js')}
+{*{Asset::js('footerFixed.js')}*}
+{Asset::js('bootstrap-modalmanager.js')}
+{Asset::js('bootstrap-modal.js')}
+{Asset::js('jquery.bottom-1.0.js')}
+
+
+{Asset::js('timeline.js')}
+{Asset::js('mypage.js')}
+

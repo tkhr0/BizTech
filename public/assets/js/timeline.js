@@ -4,46 +4,45 @@ console.log("userID: " + USER_ID);
 $(function(){
   initCheerButton();
   initState();
-  //fixedFooter();
-  //fixedHackBtn();
   // 応援ボタンが押された時の処理
   cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
   mainButtonListner();
+  achievedButtonListener();
   reloadButtonListner();
+  autoLoader();
+  //fixFooter();
+  //$('body').modalmanager('loading');
 });
 
-var fixedHackBtn = function(){
-  var btn = $("#hack_btn");
-  var pos = btn.position();
-  var height = $(window).height();
-  var width = $(window).width();
-  var xpos = (height - btn.height());
-  var ypos = (width - btn.width())/2.0;
-  btn.css("position","fixed");
-  btn.css("bottom","0");
-};
-var fixedFooter = function(){
-  var footer = $("#footer");
-  var pos = footer.position();
-  var height = $(window).height();
-  var width = $(window).width();
-  height = height - pos.top;
-  height = height - footer.height();
-  width  = width - pos.left;
-  width  = width - footer.width()/2.0;
-  console.log(height);
-  if (height > 0) {
-    footer.css({
-      //'margin-top': height + 'px'
-      'top': height + 'px'
-    });
-    footer.css({
-      //'margin-left': width + 'px'
-      'left': width + 'px'
-    });
-  }
-};
+var autoLoader = function(){
+  $(window).bottom({proximity: 0.1});
+  $(window).bind("bottom", function() {
+    var obj = $(this);
+    if (!obj.data("loading")) {
+      obj.data("loading", true);
+
+      //$('#timeline').append('<p>Loading...</p>');
+      var offset = $("#timeline").find(".activity").length;
+      $('#timeline').append('<p>NOW LOADING...</p>');
+      setTimeout(function() {
+        $('#timeline p:last').remove();
+        //タイムラインを追加でリロード
+        reloadAddTimeline(offset, RELOAD_NUM);
+        obj.data("loading", false);
+      }, 1000);
+    }
+  });
+}
+
+var fixFooter = function(){
+  console.log("fix footer");
+  var footer_id = "fix_footer";
+  var footer = $("#"+footer_id);
+  footer.css("position","absolute");
+  footer.css("bottom","0");
+}
+
 //ボタンの初期状態を設定
 var initCheerButton = function(){
   console.log("init CheerButton");
@@ -61,15 +60,18 @@ var initCheerButton = function(){
 var initState = function(){
   $this = $(this);
   form = $(".hack-form");
+  achieve = $(".achieve-form");
   state = form.find("input[name=state]").val();
   console.log("init button state: " + state);
   if(state == 0){
     form.find("input[name=hack]").val("やるぞ！");
+    achieve.find("input[name=achieve]").hide();
   }else if(state == 1){
-    form.find("input[name=hack]").val("やるぞ！");    
-    form.find("input[name=state]").val(0);    
+    form.find("input[name=hack]").val("やるぞ！");
+    form.find("input[name=state]").val(0);
+    achieve.find("input[name=achieve]").hide();
   }else if(state == 2){
-    form.find("input[name=hack]").val("やったぞ！");    
+    form.find("input[name=hack]").val("やったぞ！");
   }
 };
 
@@ -173,7 +175,7 @@ var pushedMainButtonForHackStart = function(form){
       return true;
     }
   };
-  
+
   //活動開始をするための通信
   var ajaxForStartActivity = function(goal_id){
     $.ajax({
@@ -218,7 +220,7 @@ var pushedMainButtonForHackEnd = function(form){
   var goals_select = goals_elem.find("select").eq(0);
   form.find("input[name=hack]").val("やるぞ！");
   form.find("input[name=state]").val(0);
-  
+
   //活動している目標のIDを取得し，その成功後，そのIDでコンテナを生成
   $.ajax({
     type: "POST",
@@ -231,9 +233,9 @@ var pushedMainButtonForHackEnd = function(form){
           success: function(goal_id){
           //終了時処理
           //timelineにリダイレクト
-          $(location).attr("href", "/sukima/timeline");     
+          $(location).attr("href", "/sukima/timeline");
         }
-      });     
+      });
     }
   });
 };
@@ -261,3 +263,39 @@ var reloadButtonListner = function(){
     return false;
   });
 };
+
+var achievedButtonListener = function(){
+  $(".achieve-form").submit(function(){
+    console.log("achieved button was pushed");
+    pushedAchievedButton($this);
+    return false;
+  });
+};
+
+var pushedAchievedButton = function(form){
+  console.log("pushed achieved button");
+
+  $.ajax({
+    type: "POST",
+    url: "http://" + location.host + "/sukima/to_achieved/" + USER_ID + "/",
+    success: function(goal_id){
+        //終了時処理
+        console.log("goal_id "+goal_id);
+        form.find("input[name=hack]").val("やるぞ！");
+        form.find("input[name=state]").val(0);
+        $.ajax({
+          type: "POST",
+          url: "http://" + location.host + "/sukima/hack_achieved/" + goal_id + "/",
+          success: function(goal_id){
+          //終了時処理
+          var goals_elem = $("#select_goals");
+          goals_elem.css("display","block");
+          //timelineにリダイレクト
+          $(location).attr("href", "/sukima/timeline");     
+        }
+      });     
+    }
+  });
+
+};
+
