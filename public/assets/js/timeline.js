@@ -33,10 +33,10 @@ var initState = function(){
   if(state == 0){
     form.find("input[name=hack]").val("やるぞ！");
   }else if(state == 1){
-    form.find("input[name=hack]").val("やるぞ！");    
-    form.find("input[name=state]").val(0);    
+    form.find("input[name=hack]").val("やるぞ！");
+    form.find("input[name=state]").val(0);
   }else if(state == 2){
-    form.find("input[name=hack]").val("やったぞ！");    
+    form.find("input[name=hack]").val("やったぞ！");
   }
 };
 
