@@ -6,6 +6,7 @@
 {Asset::js('bootstrap.min.js')}
 {Asset::js('bootstrap-modalmanager.js')}
 {Asset::js('bootstrap-modal.js')}
+{Asset::js('jquery.bottom-1.0.js')}
 
 
 {Asset::js('timeline.js')}
