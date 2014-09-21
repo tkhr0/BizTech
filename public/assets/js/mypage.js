@@ -22,7 +22,7 @@ var pushedFollowingButton = function(){
     if(followable == 1){
       $.ajax({
         type: "POST",
-        url: "/sukima/set_follow/" + userId + "/" + followerId,
+        url: "/sukima/set_follow/" + followerId + "/" + userId,
         success: function(msg){
           console.log("following");
           $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
@@ -33,7 +33,7 @@ var pushedFollowingButton = function(){
       $this.find("input[type=submit]").val("フォロー").removeClass("label-danger").addClass("label-success");
       $.ajax({
         type: "POST",
-        url: "/sukima/remove_follow/" + userId + "/" + followerId,
+        url: "/sukima/remove_follow/" + followerId + "/" + userId,
         success: function(msg){
           console.log("unfollowing");
           $(".follow-btn").eq(0).find("input[name=followable]").val(1);

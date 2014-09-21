@@ -4,6 +4,7 @@ console.log("userID: " + USER_ID);
 $(function(){
   initCheerButton();
   initState();
+  initContainer();
   // 応援ボタンが押された時の処理
   cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
@@ -34,6 +35,10 @@ var autoLoader = function(){
     }
   });
 }
+
+var initContainer = function(){
+  
+};
 
 var fixFooter = function(){
   console.log("fix footer");
