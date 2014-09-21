@@ -30,6 +30,25 @@ class Constants
         const ACHIEVE_TRUE  = true;   // tasseizumi
         const ACHIEVE_FALSE = false;  // mitassei
 
+        /*
+          define: containers type
+        */
+
+        const CONTAINER_TYPE_NEW       = 1;
+        const CONTAINER_TYPE_START     = 2;
+        const CONTAINER_TYPE_FINISH    = 3;
+        const CONTAINER_TYPE_ACHIEVED  = 4;
+
+        /*
+          define: containers message
+        */
+        const CONTAINER_MESSAGE_NEW       = 'を新しく目標にしました！';
+        const CONTAINER_MESSAGE_START     = 'をはじめました！';
+        const CONTAINER_MESSAGE_FINISH    = 'をやりました！';
+        const CONTAINER_MESSAGE_ACHIEVED  = 'を達成しました！';
+
+
+
 }
 
 

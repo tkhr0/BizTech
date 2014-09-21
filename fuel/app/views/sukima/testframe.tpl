@@ -4,8 +4,7 @@
 <body>
 
   <pre>
-    {$user|var_dump}
-    {$visited_user_id|var_dump}
+  {$containers|var_dump}
   </pre>
         
 </body>
