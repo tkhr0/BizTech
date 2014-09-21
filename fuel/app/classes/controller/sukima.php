@@ -80,9 +80,15 @@ class Controller_Sukima extends Controller
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
       $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
-      $cheerable = "";
-      if($cheer_num>999){ $cheerable = "disabled"; }
-      $goal = array_merge($goal, array('cheerable' => $cheerable));
+      $disable = '';
+      if($user_id == $page_user_id){
+        $disable = -1;
+      }elseif((1000 < $cheer_num)){
+        $disable = "disabled";
+      }
+      $goal = array_merge($goal, array('disable' => $disable));
+
+
     }
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }

@@ -1,7 +1,7 @@
 <div class="media"><!--media-->
 <a class="pull-left" href="#"><img class="media-object" src="{$thumbnail}" width="100%" alt="..."></a>
 <div class="media-body"><!--media body-->
-<h4 class="media-heading"><span class="badge">{$goal_name}</span></h4>
+<h4 class="media-heading"><span class="badge">{$name}</span></h4>
 </ul>
 <!--経歴-->
 <table class="cheer-table">
