@@ -11,8 +11,6 @@ $(function(){
   achievedButtonListener();
   reloadButtonListner();
   autoLoader();
-  //fixFooter();
-  //$('body').modalmanager('loading');
 });
 
 var autoLoader = function(){
