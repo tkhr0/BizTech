@@ -34,3 +34,15 @@ desktop.ini
 /fuel/app/config/crypt.php
 /fuel/app/config/config.php
 /fuel/app/tmp/
+
+# takahiro add
+composer.phar
+*.swp
+
+/fuel/app/tmp/Smarty/templates_c/*
+
+# morimori add
+/fuel/app/config/config.php
+*.swp
+
+# yasu add

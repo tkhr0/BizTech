@@ -1,0 +1,19 @@
+.cheer-form{
+  clear: both;
+}
+
+input{
+  font-size: 40px;
+}
+
+.follow-form {
+  margin: 3px 0px;
+  margin-top: 3px;
+  margin-right-value: 0px;
+  margin-bottom: 3px;
+  margin-left-value: 0px;
+  margin-left-ltr-source: physical;
+  margin-left-rtl-source: physical;
+  margin-right-ltr-source: physical;
+  margin-right-rtl-source: physical;
+}
