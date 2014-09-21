@@ -12,6 +12,16 @@ class Model_Follows extends \Model {
 		return $results->as_array();
 	}
 
+	public static function get_friends_with_offset($user_id, $offset, $limit=10){
+		$results = \DB::select('to_user_id')->from('follows')
+                                        ->where('from_user_id', $user_id)
+                                        ->limit($limit)
+                                        ->offset($offset)
+                                        ->as_assoc()
+                                        ->execute();
+		return $results->as_array();
+	}
+
 	public static function set_follow($to_user_id, $from_user_id){
     list($insert_id, $rows_affected) = \DB::insert('follows')->set(array(
       'to_user_id' => $to_user_id,

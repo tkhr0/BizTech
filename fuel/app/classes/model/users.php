@@ -56,6 +56,17 @@ class Model_Users extends \Model {
     }
 	}
 
+	public static function get_profile_with_offset($user_id, $offset, $limit){
+		$results = \DB::select()->from('users')->where('id', $user_id)
+                            ->limit($limit)->offset($offset)
+                            ->as_assoc()->execute();
+    if($results->count() == 0){
+      return array();
+    }else{
+      return $results->as_array()[0];	
+    }
+	}
+
 	public static function set_profile($twitter_id, $name, $thumbnail_path, $discription){
     list($insert_id, $rows_affected) = \DB::insert('users')->set(array(
       'twitter_id' => $twitter_id,

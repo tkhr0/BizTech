@@ -4,7 +4,7 @@
 <body>
 
   <pre>
-  {$containers|var_dump}
+  {$followers_data|var_dump}
   </pre>
         
 </body>
