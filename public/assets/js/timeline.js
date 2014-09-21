@@ -1,4 +1,4 @@
-USER_ID = $.cookie("user_id");
+  USER_ID = $.cookie("user_id");
 console.log("userID: " + USER_ID);
 $(function(){
   // 応援ボタンが押された時の処理
@@ -58,8 +58,26 @@ var pushedCheeringButton = function(){
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
-        }
-        });
+        badge.animate({ 
+          width: "+=4px",
+          height: "+=4px",
+          width: "+=4px",
+          height: "+=4px",
+          "mergin-left": "-=4px",
+          "mergin-top": "-=4px",
+          fontSize: "+=1px", 
+          }, 100 , function(){
+            badge.animate({
+              width: "-=4px",
+              height: "-=4px",
+              "mergin-left": "+=3px",
+              "mergin-top": "+=3px",
+              fontSize: "-=1px",
+            }, 100);
+          }            
+        );
+      }
+    });
     //submitのデフォルト機能のキャンセル
     return false;
   });
@@ -77,7 +95,7 @@ var pushedMainButton = function(){
     if(state == 0){
       pushedMainButtonForSelect($this);    //やるぞボタン     
     }else if(state == 1){
-      pushedMainButtonForHackStart($this); //開始ボタン
+      pushedMainButtonForHackStart($this); //開始ボタン #timelineにリダイレクト
     }else if(state == 2){
       pushedMainButtonForHackEnd($this);   //やったぞボタン
     }
@@ -113,6 +131,7 @@ var pushedMainButtonForSelect = function(form){
       }
     }
   });
+  reloadAddTimeline(0, 10);
 };
 
 
@@ -149,7 +168,8 @@ var pushedMainButtonForHackStart = function(form){
       url: "http://" + location.host + "/sukima/hack_start/" + goal_id + "/",
       success: function(msg){
         //終了時処理
-      }
+        //timelineにリダイレクト
+        $(location).attr("href", "/sukima/timeline");      }
     });
   };
 
@@ -196,9 +216,22 @@ var pushedMainButtonForHackEnd = function(form){
           url: "http://" + location.host + "/sukima/hack_end/" + goal_id + "/",
           success: function(goal_id){
           //終了時処理
-          
+          //timelineにリダイレクト
+          $(location).attr("href", "/sukima/timeline");     
         }
       });     
     }
   });
 };
+
+var reloadAddTimeline = function($offset, $num){
+  $.ajax({
+    type: "POST",
+    url: "http://" + location.host + "/sukima/timeline_add/" + $offset + "/" + $num,
+    success: function(add_timeline){
+      //終了時処理
+      $("#timeline").append(add_timeline);
+      console.log($("#timeline"));
+    }
+  });
+}
