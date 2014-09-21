@@ -22,12 +22,12 @@ class Controller_Sukima extends Controller
     // クッキーに仮のユーザIDを登録する
     // ここにアクセスするたびにIDが順に1~3にかわる
     $user_id = Session::get('user_id', null);
-    //if($user_id == null){
-      //      $user_id = 1;
-    //}else{
-    //        $user_id = floor($user_id) % 4 + 1;
-   // }
-   // Session::set('user_id', $user_id);
+    if($user_id == null){
+          $user_id = 1;
+    }else{
+            $user_id = floor($user_id) % 4 + 1;
+   }
+   Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
 
     $datas = self::get_page_header_data();
@@ -104,6 +104,29 @@ class Controller_Sukima extends Controller
         'user_id'           => $user_id,
     ));
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+  }
+
+  // 
+  public function action_follower_view()
+  {
+    $data = get_page_header_data();
+    $user_id = Session::get('user_id');
+    $from_user_ids = Model_Follows::get_friends($user_id);
+
+    $from_user_datas = array();
+    foreach($from_user_ids as $from_user_id){
+      $profile = Model_Users::get_profile($from_user_id);
+      $from_user_data['thumbnail'] = $profile['thumbnail_path'];
+      $from_user_data['name'] = $profile['name'];
+      $from_user_data['twitter_id'] = $profile['twitter_id'];
+      $from_user_data['achieve_num'] = Model_Goals::get_achieved_num($from_user_id);
+      $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
+      $from_user_data['cheering'] = $profile['cheering'];
+      $from_user_data['cheered'] = $profile['cheered'];
+      $from_user_datas
+    }
+
+    return Response::forge(View_Smarty::forge('', $data));
   }
 
   //タイムラインを追加で取得
