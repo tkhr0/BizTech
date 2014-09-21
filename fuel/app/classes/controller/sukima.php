@@ -123,7 +123,6 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
-      $from_user_datas
     }
 
     return Response::forge(View_Smarty::forge('', $data));
