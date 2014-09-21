@@ -21,9 +21,9 @@ class Model_Users extends \Model {
                 }
 	}
  	
- 	public static function get_discriptipn($user_id){
-		$results = \DB::select('discription')->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0]['discription'];
+ 	public static function get_descriptipn($user_id){
+		$results = \DB::select('description')->from('users')->where('id', $user_id)->as_assoc()->execute();
+		return $results->as_array()[0]['description'];
    	
  	}
  	

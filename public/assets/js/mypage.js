@@ -3,23 +3,40 @@ $(function(){
   followButtonInitialize();
   // フォローボタンが押された時の処理
   pushedFollowingButton();
+  //応援ボタンのリスナ
+  cheerButtonListner();
 });
 
 // フォローボタンが押された時の処理
 var pushedFollowingButton = function(){
   $('.follow-form').submit(function(){
     $this = $(this);
-
+    console.log("pushed follow button");
     // hiddenから必要な情報の抽出
     userId = $this.find("input[name=user-id]").val();
     followerId = $this.find("input[name=follow-id]").val();
+    followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
+    
+    if(followable == 1){
+      $.ajax({
+        type: "POST",
+        url: "/sukima/set_follow/" + userId + "/" + followerId,
+        success: function(msg){
+          $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
+          $(".follow-btn").eq(0).find("input[name=followable]").val(0); 
+        }
+      });     
+    }else{
+      $this.find("input[type=submit]").val("フォロー").removeClass("label-danger").addClass("label-success");
+      $.ajax({
+        type: "POST",
+        url: "/sukima/remove_follow/" + userId + "/" + followerId,
+        success: function(msg){
+          $(".follow-btn").eq(0).find("input[name=followable]").val(1);
+        }
+      });    
+    }
 
-    $this.find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
-    $.ajax({
-      type: "POST",
-      url: "http://" + location.host + "sukima/follower/" + userId + "/" + followerId,
-      success: function(msg){}
-    });
     //submitのデフォルト機能のキャンセル
     return false;
   });
@@ -30,7 +47,30 @@ var followButtonInitialize = function(){
   // hiddenから必要な情報の抽出
   var followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
   if(followable == '0'){
-    $(".follow-btn").eq(0).find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
+    $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
   }
 };
 
+// 応援ボタンのリスナを設定
+var cheerButtonListner = function(){
+  $('.cheer-form').submit(function(){
+    $this = $(this);
+    console.log("pushed cheer button");
+    // hiddenから必要な情報の抽出
+    userId = $this.find("input[name=user-id]").val();
+    targetId = $this.find("input[name=target-id]").val();
+    typeId = $this.find("input[name=type-id]").val();
+    badge = $this.parent().find(".badge");
+
+    $.ajax({
+      type: "POST",
+      url: "/sukima/cheer/" + targetId + "/" + typeId,
+      success: function(msg){
+        console.log("応援！");
+        badge.text(msg);
+      }
+    });
+    //submitのデフォルト機能のキャンセル
+    return false;
+  });  
+}

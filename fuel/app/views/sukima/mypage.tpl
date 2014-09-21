@@ -55,7 +55,7 @@
       <ul class="yaritai_list">
         <!--やりたいこと-->
         {foreach $goals as $goal}
-          {include file='./goal.tpl' id=$goal.id name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users disable=$goal.cheerable}
+          {include file='./goal.tpl' id=$goal.id name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users disable=$goal.disable}
         {/foreach}
       </ul>
       <!--目標リスト-->

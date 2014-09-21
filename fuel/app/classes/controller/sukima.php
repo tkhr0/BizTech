@@ -64,6 +64,7 @@ class Controller_Sukima extends Controller
 
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
+
     $datas['visited_user_id'] = $user_id;
     $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
     $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
@@ -82,11 +83,14 @@ class Controller_Sukima extends Controller
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
       $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
-      $cheerable = "";
-      if($cheer_num>999){ $cheerable = "disabled"; }
-      $goal = array_merge($goal, array('cheerable' => $cheerable));
+      $disable = '';
+      if($user_id == $page_user_id){
+        $disable = -1;
+      }elseif((1000 < $cheer_num)){
+        $disable = "disabled";
+      }
+      $goal = array_merge($goal, array('disable' => $disable));
     }
-
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
 
@@ -233,10 +237,22 @@ class Controller_Sukima extends Controller
   {
   }
   
-  /* follow */
-  public function post_follower($user_id, $follow_id)
+  /* set follow */
+  public function action_set_follow($user_id, $follow_id)
   {
-    $success = Model_Follows::follow($user_id, $follow_id);
+    $success = Model_Follows::set_follow($user_id, $follow_id);
+
+    if($success === 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  
+  /* remove follow */
+  public function action_remove_follow($user_id, $follow_id)
+  {
+    $success = Model_Follows::remove_follow($user_id, $follow_id);
 
     if($success === 0){
       return false;

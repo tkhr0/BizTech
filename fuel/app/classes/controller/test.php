@@ -18,7 +18,7 @@ class Controller_Test extends Controller
 	 */
 	public function action_index()
 	{
-		$data['test'] = Model_Users::set_profile("12", "test", "thumhoge", "discription");
+		$data['test'] = Model_Follows::remove_follow(3, 1);
 		//$data['test'] = File::get_url(DOCROOT."js/assets/timeline.js");
 		return Response::forge(View::forge('imamori', $data));
 	}

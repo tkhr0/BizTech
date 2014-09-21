@@ -3,14 +3,17 @@
   $thumbnail :
 *}
 <li class="row">
-  <h3 class="col-xs-8">{$name}</h3>
+  <h3>{$name}</h3>
   <!--応援してくれた人リスト-->
   <!--<div class="col-xs-4 btn btn-xs btn-primary btn-block">応援!</div>-->
   <!--いいねボタン-->
   <form action="#" class="cheer-form">
     <input type="hidden" name="target-id" value="{$id}" />
     <input type="hidden" name="type-id" value="1" />
-    <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" {$disable}>
+    {if ($disable === '') || ($disable === 'disabled')}
+    {* 自分のページでは表示されない 応援ボタンを入れる*}
+    <input type="submit" name="cheer" class="btn btn-xs btn-primary btn-block" value="応援！" {$disable} />
+    {/if}
   </form>
   <!--いいねボタン-->
   <!--cheerボタン-->
