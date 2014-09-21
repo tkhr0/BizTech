@@ -11,13 +11,17 @@ return array(
 	 * Base config, just need to set the DSN, username and password in env. config.
 	 */
 	'default' => array(
-		'type'        => 'pdo',
+		'type'        => 'mysqli',
 		'connection'  => array(
+			'hostname'   => '54.95.44.142',
+			'database'   => 'sukima',
+			'username'   => 'root',
+			'password'   => 'mori2iv',
 			'persistent' => false,
 		),
 		'identifier'   => '`',
 		'table_prefix' => '',
-		'charset'      => 'utf8',
+		'charset'      => 'utf8mb4',
 		'enable_cache' => true,
 		'profiling'    => false,
 	),
@@ -36,10 +40,10 @@ return array(
 			'database'   => 'sukima',
 			'username'   => 'sukima',
 			'password'   => 'sukima',
-			'persistent' => FALSE,
+			'persistent' => false,
 		),
 		'table_prefix' => '',
-		'charset'      => 'utf8',
+		'charset'      => 'utf8mb4',
 		'caching'      => false,
 		'profiling'    => true,
 	),

@@ -181,14 +181,14 @@ class Controller_Sukima extends Controller
   }
 
   // 
-  public function action_follower_view()
+  public function action_follower()
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view(1);
     return Response::forge(View_Smarty::forge('sukima/follower', $data));
   }
 
-  public function action_follower_view_add($offset, $limit)
+  public function action_follower_add($offset, $limit)
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view($offset, $limit);
