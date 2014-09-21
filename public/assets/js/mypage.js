@@ -17,7 +17,7 @@ var pushedFollowingButton = function(){
     $this.find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://" + location.host + "sukima/follower/" + userId + "/" + followerId,
+      url: "/sukima/follower/" + userId + "/" + followerId,
       success: function(msg){}
     });
     //submitのデフォルト機能のキャンセル
