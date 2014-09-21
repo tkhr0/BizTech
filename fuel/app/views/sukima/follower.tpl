@@ -11,7 +11,7 @@
     <div id="timeline">
 
     {foreach $followers_data as $follower}
-    {include file='./follower_item.tpl' achieved_goals_num=$follower.achieve_num num=$follower.goal_num cheered=$follower.cheered cheering=$follower.cheering thumbnail=$follower.thumbnail name=$follower.name mypage_url=$follower.mypage_url description=$description}
+    {include file='./follower_item.tpl' achieved_goals_num=$follower.achieve_num cheered=$follower.cheered cheering=$follower.cheering thumbnail=$follower.thumbnail name=$follower.name mypage_url=$follower.mypage_url description=$follower.description}
     {/foreach}
 
     </div><!--タイムライン-->
