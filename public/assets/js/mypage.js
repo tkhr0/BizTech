@@ -2,12 +2,10 @@ $(function(){
   // フォローボタンが押された時の処理
   pushedFollowingButton();
   followButtonInitialize();
-  console.log('loaded');
 });
 
 // フォローボタンが押された時の処理
 var pushedFollowingButton = function(){
-  console.log('load function');
   $('.follow-form').submit(function(){
     $this = $(this);
 
