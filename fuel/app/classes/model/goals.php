@@ -30,6 +30,16 @@ class Model_Goals extends \Model {
     return $results->as_array()[0]['active'];
   }
 
+  public static function get_achieved_num($user_id){
+    $query = \DB::select()->from('goals')->where('user_id', $user_id)->where('achieve', true);
+    return $query->count();
+  }
+
+  public static function get_goals_num($user_id){
+    $query = \DB::select('id')->from('goals')->where('user_id', $user_id);
+    return $query->count();
+  }
+
   public static function get_goals_from_users($user_ids){
     $goals = [];
     foreach($user_ids as $user_id){
