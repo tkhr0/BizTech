@@ -10,12 +10,8 @@
     <!--タイムライン-->
     <div id="timeline">
 
-    <pre>
-    {$followers_data|var_dump}
-    </pre>
-
     {foreach $followers_data as $follower}
-    {include file='./follower_item.tpl' achieved_goals_num=$follower.achieve_num num=$follower.goal_num cheered=$follower.cheered cheering=$follower.cheering thumbnail=$follower.thumbnail name=$follower.name}
+    {include file='./follower_item.tpl' achieved_goals_num=$follower.achieve_num num=$follower.goal_num cheered=$follower.cheered cheering=$follower.cheering thumbnail=$follower.thumbnail name=$follower.name mypage_url=$follower.mypage_url}
     {/foreach}
 
     </div><!--タイムライン-->
