@@ -6,7 +6,6 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
-  
   public function before()
   {
     if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
@@ -14,6 +13,7 @@ class Controller_Sukima extends Controller
       Response::redirect('/');
     } 
   }
+  
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
@@ -26,7 +26,6 @@ class Controller_Sukima extends Controller
   //  }
   //  Session::set('user_id', $user_id);
   //  Cookie::set('user_id', $user_id);
-    $user_id = Session::get('user_id');
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
@@ -71,13 +70,9 @@ class Controller_Sukima extends Controller
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
       $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
-      $disable = '';
-      if($user_id == $page_user_id){
-        $disable = -1;
-      }elseif((1000 < $cheer_num)){
-        $disable = "disabled";
-      }
-      $goal = array_merge($goal, array('disable' => $disable));
+      $cheerable = "";
+      if($cheer_num>999){ $cheerable = "disabled"; }
+      $goal = array_merge($goal, array('cheerable' => $cheerable));
     }
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
@@ -89,15 +84,12 @@ class Controller_Sukima extends Controller
   {
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
-    //var_dump($user_id);
     $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
+    $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
     }
-
-    $containers = self::help_container_fixed_phrase($containers);
-
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
@@ -163,12 +155,11 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
-      array_push($from_user_datas, $from_user_data);
     }
     return $from_user_datas;
   }
 
-  // 
+
   public function action_follower()
   {
     $data = self::get_page_header_data();
