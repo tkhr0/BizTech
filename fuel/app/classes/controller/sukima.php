@@ -124,7 +124,13 @@ class Controller_Sukima extends Controller
     );
     return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
-  
+
+  public function action_follower($page_user_id=null)
+  {
+    $datas = array();
+    return Response::forge(View_Smarty::forge('sukima/follower.tpl', $datas));
+  }
+
   public function action_make_community($name){
     $user_id = Session::get('user_id');
     $community_id = Model_Communities::set_community($name, $user_id);

@@ -49,7 +49,7 @@ class Controller_Snscallback extends Controller{
      }
 
       // スキマハックのuser id をセッションに保持
-    $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);    
+    $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);
     
     Session::set('user_id', $sukima_huck_id); 
   
@@ -77,7 +77,7 @@ class Controller_Snscallback extends Controller{
       
       }while($cursor != "0");
      
-     	
+     
      return Response::redirect('/sukima/timeline');
     
     }
