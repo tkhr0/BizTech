@@ -7,10 +7,8 @@
   </head>
   <body>
   {include file='./page_header.tpl'}
-  <p>
-  login_user_id: {$user_id}
-  </p>
   <div class="container">
+    <p>login_user_id: {$user_id}</p>
     <!--タイムライン-->
     <div id="timeline">
       {foreach from=$containers item=container}
@@ -41,29 +39,26 @@
       {/foreach}
     </div><!--タイムライン-->
   </div><!-- /container -->
-  <div id="hack_btn"><span class="glyphicon glyphicon-fire"></span></div>
-  <div id="footer" class="container">
-    <!--Btnグループ-->
-      <div style="width:100%">
-      <!--<button type="button" class="btn btn-danger col-xs-12">やるぞ</button>-->
-      </div><!--col-xs-12-->
-    </div><!--row-->
-    <!--Btnグループ-->
-    <!--input-->
-    <div class="input-group" style="display:none;">
-      <input type="text" class="form-control">
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-default">登録</button>
-      </div>
-    </div>
-    <!--input-->
-  </div><!--container-->
-  <div id="footer">
-     <div id="yaruzo">
+  <div id="fixfooter">
+    <div id="hack_btn_x">
+      <form action="#">
+        <input type="hidden" name="state" value="{$state}" />
+        <select class="display-none" name="目標を選ぶ">
+        </select>
+        <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
+      </form>
+   <!--test-->
+  <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4 class="modal-title">やる気</h4>
+  </div><!--modal-header-->
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-xs-12">
         <form action="#" class="hack-form">
           <input type="hidden" name="state" value="{$state}" />
-          <select class="display-none" name="目標を選ぶ" multiple="multiple">
-           <!--<option value="サンプル">サンプル</option> -->
+          <select class="display-none" name="目標を選ぶ">
           </select>
           <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
           <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
@@ -74,7 +69,17 @@
         <form class="reload-form">
           <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
         </form>
-     </div><!--yaruzo-->
+      </div><!--12-->
+    </div><!--row-->
+  </div><!--modal-body-->
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+  </div><!--modal-footer-->
+  </div>
+  <div id="hack_btn" class="btn btn-primary btn-xs" data-toggle="modal" href="#responsive"><span class="glyphicon glyphicon-fire"></span></div>
+  <!--test-->
+    </div>
   </div><!--footer-->
   {include file='./js_footer.tpl'}
 </body>
