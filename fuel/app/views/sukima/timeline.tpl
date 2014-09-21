@@ -58,7 +58,7 @@
   <div class="col-xs-12">
       <form action="#" class="hack-form">
         <input type="hidden" name="state" value="{$state}" />
-        <select class="display-none" name="目標を選ぶ" multiple="multiple">
+        <select class="display-none" name="目標を選ぶ">
         </select>
         <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
         <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
