@@ -6,7 +6,7 @@
  */
 
 return array(
-	'active' => 'default',
+	'active' => 'testdb',
 	/**
 	 * Base config, just need to set the DSN, username and password in env. config.
 	 */
