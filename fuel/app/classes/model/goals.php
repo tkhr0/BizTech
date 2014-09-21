@@ -20,6 +20,16 @@ class Model_Goals extends \Model {
     return $results->as_array()[0]['user_id'];
   }
 
+  public static function get_achieve($goals_id){
+    $results = \DB::select('achieve')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
+    return $results->as_array()[0]['achieve'];
+  }
+
+  public static function get_active($goals_id){
+    $results = \DB::select('active')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
+    return $results->as_array()[0]['active'];
+  }
+
   public static function get_goals_from_users($user_ids){
     $goals = [];
     foreach($user_ids as $user_id){

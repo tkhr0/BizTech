@@ -11,6 +11,8 @@ $(function(){
   // やるぞボタン(hack)をおしたとき
   pushedMainButton();
   reloadButtonListner();
+  achievedButtonListener();
+
 });
 
 var fixedHackBtn = function(){
@@ -61,13 +63,16 @@ var initCheerButton = function(){
 var initState = function(){
   $this = $(this);
   form = $(".hack-form");
+  achieve = $(".achieve-form");
   state = form.find("input[name=state]").val();
   console.log("init button state: " + state);
   if(state == 0){
     form.find("input[name=hack]").val("やるぞ！");
+    achieve.find("input[name=achieve]").hide();
   }else if(state == 1){
-    form.find("input[name=hack]").val("やるぞ！");    
-    form.find("input[name=state]").val(0);    
+    form.find("input[name=hack]").val("やるぞ！");
+    form.find("input[name=state]").val(0);
+    achieve.find("input[name=achieve]").hide();
   }else if(state == 2){
     form.find("input[name=hack]").val("やったぞ！");    
   }
@@ -260,3 +265,39 @@ var reloadButtonListner = function(){
     return false;
   });
 };
+
+var achievedButtonListener = function(){
+  $(".achieve-form").submit(function(){
+    console.log("achieved button was pushed");
+    pushedAchievedButton($this);
+    return false;
+  });
+};
+
+var pushedAchievedButton = function(form){
+  console.log("pushed achieved button");
+
+  $.ajax({
+    type: "POST",
+    url: "http://" + location.host + "/sukima/to_achieved/" + USER_ID + "/",
+    success: function(goal_id){
+        //終了時処理
+        console.log("goal_id "+goal_id);
+        form.find("input[name=hack]").val("やるぞ！");
+        form.find("input[name=state]").val(0);
+        $.ajax({
+          type: "POST",
+          url: "http://" + location.host + "/sukima/hack_achieved/" + goal_id + "/",
+          success: function(goal_id){
+          //終了時処理
+          var goals_elem = $("#select_goals");
+          goals_elem.css("display","block");
+          //timelineにリダイレクト
+          $(location).attr("href", "/sukima/timeline");     
+        }
+      });     
+    }
+  });
+
+};
+
