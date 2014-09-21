@@ -87,7 +87,6 @@ class Controller_Sukima extends Controller
       if($cheer_num>999){ $cheerable = "disabled"; }
       $goal = array_merge($goal, array('cheerable' => $cheerable));
     }
-
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
 

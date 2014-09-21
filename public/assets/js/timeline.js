@@ -91,7 +91,7 @@ var cheeringButtonListner = function(){
     //$this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
     $.ajax({
       type: "POST",
-      url: "http://" + location.host + "/sukima/cheer/" + targetId + "/" + typeId,
+      url: "/sukima/cheer/" + targetId + "/" + typeId,
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
@@ -138,7 +138,7 @@ var pushedMainButtonForSelect = function(form){
   //目標一覧を更新
   $.ajax({
     type: "POST",
-    url: "http://" + location.host + "/sukima/goals/" + USER_ID + "/",
+    url: "/sukima/goals/" + USER_ID + "/",
     success: function(msg){
       //jqueryデータを受け取る
       var datas = $.parseJSON(msg);
@@ -180,7 +180,7 @@ var pushedMainButtonForHackStart = function(form){
   var ajaxForStartActivity = function(goal_id){
     $.ajax({
       type: "POST",
-      url: "http://" + location.host + "/sukima/hack_start/" + goal_id + "/",
+      url: "/sukima/hack_start/" + goal_id + "/",
       success: function(msg){
         //終了時処理
         //timelineにリダイレクト
@@ -194,7 +194,7 @@ var pushedMainButtonForHackStart = function(form){
     console.log("make new goal");
     $.ajax({
       type: "POST",
-      url: "http://" + location.host + "/sukima/make_goal/" + goalName + "/" + USER_ID + "/",
+      url: "/sukima/make_goal/" + goalName + "/" + USER_ID + "/",
       success: function(new_goal_id){
         //終了時処理
         ajaxForStartActivity(new_goal_id);
@@ -224,12 +224,12 @@ var pushedMainButtonForHackEnd = function(form){
   //活動している目標のIDを取得し，その成功後，そのIDでコンテナを生成
   $.ajax({
     type: "POST",
-    url: "http://" + location.host + "/sukima/active_id/" + USER_ID + "/",
+    url: "/sukima/active_id/" + USER_ID + "/",
     success: function(goal_id){
       //終了時処理
         $.ajax({
           type: "POST",
-          url: "http://" + location.host + "/sukima/hack_end/" + goal_id + "/",
+          url: "/sukima/hack_end/" + goal_id + "/",
           success: function(goal_id){
           //終了時処理
           //timelineにリダイレクト
@@ -243,7 +243,7 @@ var pushedMainButtonForHackEnd = function(form){
 var reloadAddTimeline = function($offset, $num){
   $.ajax({
     type: "POST",
-    url: "http://" + location.host + "/sukima/timeline_add/" + $offset + "/" + $num,
+    url: "/sukima/timeline_add/" + $offset + "/" + $num,
     success: function(add_timeline){
       //終了時処理
       $("#timeline").append(add_timeline);
@@ -277,7 +277,7 @@ var pushedAchievedButton = function(form){
 
   $.ajax({
     type: "POST",
-    url: "http://" + location.host + "/sukima/to_achieved/" + USER_ID + "/",
+    url: "/sukima/to_achieved/" + USER_ID + "/",
     success: function(goal_id){
         //終了時処理
         console.log("goal_id "+goal_id);
@@ -285,7 +285,7 @@ var pushedAchievedButton = function(form){
         form.find("input[name=state]").val(0);
         $.ajax({
           type: "POST",
-          url: "http://" + location.host + "/sukima/hack_achieved/" + goal_id + "/",
+          url: "/sukima/hack_achieved/" + goal_id + "/",
           success: function(goal_id){
           //終了時処理
           var goals_elem = $("#select_goals");
