@@ -16,7 +16,6 @@
       <div class="activity">
         <div class="media"><!--media-->
           <a class="pull-left" href="/sukima/mypage/{$container.user_id}"><img class="media-object" src="{$container.thumbnail}" width="100%" alt="..."></a>
-          <p>{json_encode($container)}</p>
            <div class="media-body"><!--media body-->
             <h4 class="media-heading">{$container.goal_name}を{$container.status}<span class="badge">{$container.cheer_num}</span></h4>
             <!--応援している人リスト(アイコン)-->
