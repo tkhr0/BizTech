@@ -9,7 +9,7 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-  
+      user id: {$user_id}
           <h1><img src="assets/imgs/sukimaHack.png" width="100%"/></h1>
        <form class="form-signin" role="form">
        <!--
