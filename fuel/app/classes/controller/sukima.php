@@ -143,7 +143,7 @@ class Controller_Sukima extends Controller
   {
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
-    $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
+    $containers = Model_Timeline::get_all_containers_with_offset(0, 10);
     $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
     if(self::active_id($user_id) > 0){
@@ -163,7 +163,7 @@ class Controller_Sukima extends Controller
   public function action_all_timeline_add($offset, $num)
   {
     $user_id = Session::get('user_id', null);
-    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
+    $containers = Model_Timeline::get_all_containers_with_offset($offset, $num);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
