@@ -6,24 +6,8 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
-  /*
   public function before()
   {
-    // redirect /sukima if there is a fraud which between session and cookie
-    //if((Session::get('user_id', null) != null)
-    //  && (Session::get('user_id') != Cookie::get('user_id')
-    //  && (Session::get('noredirect', false) == false))){
-    
-    //$arr = Session::get('user_id');
-    //var_dump($arr);exit;
-
-    if(Session::get('user_id', null) == null && (Session::get('noredirect', false) == false) ){
-      Session::set('noredirect', true);
-      Response::redirect('/sukima');
-    }
-  }
-  */
-
     if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
       Session::set('noredirect', 1);
       Response::redirect('/');
@@ -34,18 +18,14 @@ class Controller_Sukima extends Controller
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-    $user_id = Session::get('user_id', null);
-    if($user_id == null){
-          $user_id = 1;
-    }else{
-   
-   
-   
-      $user_id = floor($user_id) % 4 + 1;
-    }
-    Session::set('user_id', $user_id);
-    Cookie::set('user_id', $user_id);
-
+  //  $user_id = Session::get('user_id', null);
+  //  if($user_id == null){
+  //        $user_id = 1;
+  //  }else{
+  //    $user_id = floor($user_id) % 4 + 1;
+  //  }
+  //  Session::set('user_id', $user_id);
+  //  Cookie::set('user_id', $user_id);
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
@@ -102,16 +82,14 @@ class Controller_Sukima extends Controller
   */
   public function action_timeline()
   {
-   
-   
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
     $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
+    $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
     }
-
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
