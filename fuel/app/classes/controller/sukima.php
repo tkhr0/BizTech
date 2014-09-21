@@ -96,12 +96,16 @@ class Controller_Sukima extends Controller
       $state = 2;
     }
 
+    $containers = self::help_container_message($containers);
+
+
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
     ));
+
     return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
 
@@ -137,12 +141,16 @@ class Controller_Sukima extends Controller
       $state = 2;
     }
 
+    $containers = self::help_container_message($containers);
+
     $datas = array(
         'state'             => $state,
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
     );
+
+
     return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
 
@@ -294,6 +302,29 @@ class Controller_Sukima extends Controller
       }
     }
     return $activeNum; 
+  }
+
+  private function help_container_message(&$containers){
+    foreach($containers as &$container){
+      switch(intval($container['status'])){
+        case Constants::CONTAINER_TYPE_NEW:
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_NEW;
+        break;
+        case Constants::CONTAINER_TYPE_START:
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_START;
+        break;
+        case Constants::CONTAINER_TYPE_FINISH:
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_FINISH;
+        break;
+        case Constants::CONTAINER_TYPE_ACHIEVED:
+          $container['fixed_phrase'] = Constants::CONTAINER_MESSAGE_ACHIEVED;
+        break;
+        default:
+          $container['fixed_phrase'] = '!!';
+          break;
+      }
+    }
+    return $containers;
   }
 
   private function get_page_header_data(){
