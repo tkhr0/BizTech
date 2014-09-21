@@ -12,9 +12,8 @@ class Controller_Twitterlogout extends Controller{
       //$arr = Session::get('user_id');
       //var_dump($arr);exit;
 
-      if(Session::get('user_id', null) == null && (Session::get('noredirect', false) == false) ){
-        Session::set('noredirect', true);
-        Response::redirect('/sukima');
+    if(Session::get('user_id', null) == null){
+        Response::redirect('/');
       }
     }
  
@@ -24,7 +23,7 @@ class Controller_Twitterlogout extends Controller{
         Session::delete('user_id'); 
         Cookie::delete('user_id');
         Session::set('noredirect', false);
-        Response::redirect('sukima/index.tpl');
+        Response::redirect('/');
     }
 }
 

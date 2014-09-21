@@ -15,7 +15,7 @@
     <li><a href="{$header_mypage_url}">マイページ</a></li>
     <li><a href="/sukima/follower">フォロワー</a></li>
     <li><a href="">目標を登録</a></li>
-    <li><a href="">ログアウト</a></li>
+    <li><a href="/twitterlogout">ログアウト</a></li>
   </ul>
 </div><!--/.nav-collapse -->
 </div>

@@ -17,9 +17,9 @@ class Controller_Sukima extends Controller
     //$arr = Session::get('user_id');
     //var_dump($arr);
      //  var_dump(Session::get('noredirect')); exit;
-    if(Session::get('user_id') == NULL && (Session::get('noredirect', false) == FALSE) ){
-      Session::set('noredirect', true);
-      Response::redirect('/sukima');
+    if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
+      Session::set('noredirect', 1);
+      Response::redirect('/');
     } 
     //print("daa");exit; 
   }
@@ -38,7 +38,7 @@ class Controller_Sukima extends Controller
   //  }
   //  Session::set('user_id', $user_id);
   //  Cookie::set('user_id', $user_id);
-    $user_id = Session::set('user_id');
+    $user_id = Session::get('user_id');
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;
