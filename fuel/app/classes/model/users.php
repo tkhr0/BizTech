@@ -21,6 +21,12 @@ class Model_Users extends \Model {
                 }
 	}
  	
+ 	public static function get_descriptipn($user_id){
+		$results = \DB::select('description')->from('users')->where('id', $user_id)->as_assoc()->execute();
+		return $results->as_array()[0]['description'];
+   	
+ 	}
+ 	
 	public static function get_total_cheered($user_id){
 		$results = \DB::select('cheered')->from('users')->where('id', $user_id)->as_assoc()->execute();
 		return $results->as_array()[0]['cheered'];
@@ -50,11 +56,12 @@ class Model_Users extends \Model {
     }
 	}
 
-	public static function set_profile($twitter_id, $name, $thumbnail_path){
+	public static function set_profile($twitter_id, $name, $thumbnail_path, $discription){
     list($insert_id, $rows_affected) = \DB::insert('users')->set(array(
       'twitter_id' => $twitter_id,
       'name' => $name,
       'thumbnail_path' => $thumbnail_path,
+      'discription' => $discription,
       'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
     ))->execute();
 	}

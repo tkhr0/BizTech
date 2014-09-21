@@ -19,6 +19,10 @@ class Model_Follows extends \Model {
     ))->execute();
     return $rows_affected;
 	}
+	
+	public static function remove_follow($to_user_id, $from_user_id){
+  	 return \DB::delete("follows")->table("follows")->where("to_user_id", $to_user_id)->and_where("from_user_id", $from_user_id)->execute();
+	}
 
   /*
     $to_user_id: 相手

@@ -4,7 +4,7 @@
 <body>
 
   <pre>
-    {$user|var_dump}
+  {$containers|var_dump}
   </pre>
         
 </body>

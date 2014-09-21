@@ -6,28 +6,38 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
+  /*
   public function before()
   {
     // redirect /sukima if there is a fraud which between session and cookie
-    if((Session::get('user_id', null) != null)
-      && (Session::get('user_id') != Cookie::get('user_id')
-      && (Session::get('noredirect', false) == false))){
+    //if((Session::get('user_id', null) != null)
+    //  && (Session::get('user_id') != Cookie::get('user_id')
+    //  && (Session::get('noredirect', false) == false))){
+    
+    //$arr = Session::get('user_id');
+    //var_dump($arr);exit;
+
+    if(Session::get('user_id', null) == null && (Session::get('noredirect', false) == false) ){
       Session::set('noredirect', true);
       Response::redirect('/sukima');
     }
   }
+  */
 
   public function action_index()
   {
-    // クッキーに仮のユーザIDを登録する
-    // ここにアクセスするたびにIDが順に1~3にかわる
+  //   クッキーに仮のユーザIDを登録する
+  //   ここにアクセスするたびにIDが順に1~3にかわる
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
     }else{
-            $user_id = floor($user_id) % 4 + 1;
-   }
-   Session::set('user_id', $user_id);
+   
+   
+   
+      $user_id = floor($user_id) % 4 + 1;
+    }
+    Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
 
     $datas = self::get_page_header_data();
@@ -45,6 +55,7 @@ class Controller_Sukima extends Controller
       $user_id = Session::get('user_id');
       Response::redirect("/sukima/mypage/{$user_id}");
     }
+
     // cheerボタンのリダイレクト用
     Session::set('from_uri', "sukima/mypage/$page_user_id");
     // for header
@@ -53,11 +64,8 @@ class Controller_Sukima extends Controller
     $user_id = Session::get('user_id');  // ログイン中のユーザid
 
     // 情報を取得
-    $page_user_info = Model_Users::get_profile($page_user_id); // ページのユーザの情報
-    if(count($page_user_info) < 1){   // redirect to mypage if  faild to find user's info
-      Response::redirect('/sukima/mypage');
-    }
-    $datas['user'] = $page_user_info;
+    $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
+
     $datas['visited_user_id'] = $user_id;
     $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
     $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
@@ -76,11 +84,14 @@ class Controller_Sukima extends Controller
       }
       $goal = array_merge($goal, array('cheering_users' => $cheering_users_data));
       $cheer_num = \Model_Markcheers::cheerable($user_id, $goal['id'], Constants::TYPE_GOAL);
-      $cheerable = "";
-      if($cheer_num>999){ $cheerable = "disabled"; }
-      $goal = array_merge($goal, array('cheerable' => $cheerable));
+      $disable = '';
+      if($user_id == $page_user_id){
+        $disable = -1;
+      }elseif((1000 < $cheer_num)){
+        $disable = "disabled";
+      }
+      $goal = array_merge($goal, array('disable' => $disable));
     }
-
     return Response::forge(View_Smarty::forge('sukima/mypage.tpl', $datas));
   }
 
@@ -89,6 +100,8 @@ class Controller_Sukima extends Controller
   */
   public function action_timeline()
   {
+   
+   
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
     $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
@@ -224,10 +237,22 @@ class Controller_Sukima extends Controller
   {
   }
   
-  /* follow */
-  public function post_follower($user_id, $follow_id)
+  /* set follow */
+  public function action_set_follow($user_id, $follow_id)
   {
-    $success = Model_Follows::follow($user_id, $follow_id);
+    $success = Model_Follows::set_follow($user_id, $follow_id);
+
+    if($success === 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  
+  /* remove follow */
+  public function action_remove_follow($user_id, $follow_id)
+  {
+    $success = Model_Follows::remove_follow($user_id, $follow_id);
 
     if($success === 0){
       return false;
