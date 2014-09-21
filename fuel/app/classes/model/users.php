@@ -72,7 +72,7 @@ class Model_Users extends \Model {
       'twitter_id' => $twitter_id,
       'name' => $name,
       'thumbnail_path' => $thumbnail_path,
-      'discription' => $discription,
+      'description' => $description,
       'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
     ))->execute();
 	}

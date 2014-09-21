@@ -18,10 +18,7 @@ class Controller_Snscallback extends Controller{
      // twitter ログインをキャンセルされた場合の処理     
      if(array_key_exists('denied', $token)){ 
         print "ログインし直してください";
-        //$datas['user_id'] = -1;
-        return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas ); 
-       
-         //return "aa";
+        return Response::redirect('/');      
       }
 
      // セッション保存
@@ -42,7 +39,7 @@ class Controller_Snscallback extends Controller{
      if(array_key_exists('errors', $user_info)){ 
           print "回数制限を超えています";
 	  $datas['user_id'] = -1;
-          return Response::redirect('/sukima/index');
+          return Response::redirect('/');
        }
      $exist = Model_users::check_exist_id($user_info->screen_name);
     if($exist==false){
