@@ -17,7 +17,7 @@ class Controller_Snscallback extends Controller{
      
      // twitter ログインをキャンセルされた場合の処理     
      if(array_key_exists('denied', $token)){ 
-        print "ログインし直してください"; exit;
+        print "ログインし直してください";
         $datas['user_id'] = -1;
         return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas ); 
     }
@@ -36,16 +36,15 @@ class Controller_Snscallback extends Controller{
      
      //ユーザ情報取得  
      $user_info = $connection->get('account/verify_credentials');
-     
          
      if(array_key_exists('errors', $user_info)){ 
           print "回数制限を超えています";
 	  $datas['user_id'] = -1;
-          return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas);
+          return Response::redirect('/sukima/index');
        }
      $exist = Model_users::check_exist_id($user_info->screen_name);
     if($exist==false){
-      Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https);    
+      Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https, $user_info->description);    
      }
 
       // スキマハックのuser id をセッションに保持
