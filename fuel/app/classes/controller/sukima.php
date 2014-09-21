@@ -6,6 +6,7 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
+  /*
   public function before()
   {
     // redirect /sukima if there is a fraud which between session and cookie
@@ -16,6 +17,7 @@ class Controller_Sukima extends Controller
       Response::redirect('/sukima');
     }
   }
+  */
 
   public function action_index()
   {
@@ -25,9 +27,9 @@ class Controller_Sukima extends Controller
     if($user_id == null){
           $user_id = 1;
     }else{
-            $user_id = floor($user_id) % 4 + 1;
-   }
-   Session::set('user_id', $user_id);
+      $user_id = floor($user_id) % 4 + 1;
+    }
+    Session::set('user_id', $user_id);
     Cookie::set('user_id', $user_id);
 
     $datas = self::get_page_header_data();
@@ -45,6 +47,7 @@ class Controller_Sukima extends Controller
       $user_id = Session::get('user_id');
       Response::redirect("/sukima/mypage/{$user_id}");
     }
+
     // cheerボタンのリダイレクト用
     Session::set('from_uri', "sukima/mypage/$page_user_id");
     // for header
@@ -53,11 +56,7 @@ class Controller_Sukima extends Controller
     $user_id = Session::get('user_id');  // ログイン中のユーザid
 
     // 情報を取得
-    $page_user_info = Model_Users::get_profile($page_user_id); // ページのユーザの情報
-    if(count($page_user_info) < 1){   // redirect to mypage if  faild to find user's info
-      Response::redirect('/sukima/mypage');
-    }
-    $datas['user'] = $page_user_info;
+    $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
     $datas['visited_user_id'] = $user_id;
     $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
     $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
