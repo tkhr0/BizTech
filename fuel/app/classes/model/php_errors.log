@@ -1,0 +1,11 @@
+[18-Sep-2014 00:25:39 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:26:25 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:29:51 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:32:30 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:32:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:32:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:36:14 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:37:12 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '(', expecting '{' in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 5
+[18-Sep-2014 00:37:21 Asia/Tokyo] PHP Fatal error:  Class 'DB' not found in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 15
+[18-Sep-2014 00:38:02 Asia/Tokyo] PHP Warning:  The use statement with non-compound name 'DB' has no effect in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 4
+[18-Sep-2014 00:38:02 Asia/Tokyo] PHP Fatal error:  Class 'DB' not found in /var/www/html/sukima/fuel/app/classes/model/hack_end.php on line 16
