@@ -5,7 +5,6 @@ class Model_Users extends \Model {
 		$results = \DB::select('twitter_id')->from('users')->where('id', $user_id)->as_assoc()->execute();
             	return $results->as_array()[0];
 	}
-
               
 	public static function check_exist_id($user_id){          	
 		$results = \DB::select('twitter_id')->from('users')->where('twitter_id', $user_id)->as_assoc()->execute();   
@@ -51,6 +50,7 @@ class Model_Users extends \Model {
       'twitter_id' => $twitter_id,
       'name' => $name,
       'thumbnail_path' => $thumbnail_path,
+      'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
     ))->execute();
 	}
 

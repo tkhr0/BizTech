@@ -42,6 +42,15 @@ class Model_Markcheers extends \Model
     return count($query);
   }
 
+  public static function get_allcount($target_id, $type)
+  {
+    $query = \DB::select()->from('markcheers')
+      ->where('target_id', $target_id)
+      ->where('type', $type)
+      ->execute();
+    return count($query);
+  }
+
   public static function get_target_id($user_id, $type)
   {
     $query = \DB::select('target_id')->from('markcheers')

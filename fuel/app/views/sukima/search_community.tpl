@@ -11,16 +11,17 @@
   login_user_id: {$user_id}
   </p>
   <div class="container">
-    <form class="form-inline" role="form">
+    <form class="form-inline search-form" role="form">
       <div class="form-group">
         <label class="sr-only" for="searchQuery">検索</label>
-        <input type="query" class="form-control" id="searchQuery" placeholder="検索">
+        <input type="text" name="query" class="form-control" id="searchQuery" placeholder="検索">
       </div>
       <button type="submit" class="btn btn-default">検索</button>
     </form>
-  <div class="result">
+  <div id="result">
   </div>
   </div><!--container-->
   {include file='./js_footer.tpl'}
+  {Asset::js('community.js')}
 </body>
 </html>

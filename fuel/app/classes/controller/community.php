@@ -2,7 +2,6 @@
 
 include_once('constants.php');
 
-
 class Controller_Community extends Controller
 {
 
@@ -56,8 +55,9 @@ class Controller_Community extends Controller
   
   public function action_search_communities($query){
     $user_id = Session::get('user_id');
-    $communities = Model_Communities::search_community($query);
-    return json_encode($communities);
+    $datas["communities"] = Model_Communities::search_community($query);
+    $datas["type_community"] = Constants::TYPE_COMMUNITY;
+    return View_Smarty::forge('sukima/community.tpl', $datas);
   }
 
   private function get_page_header_data(){
