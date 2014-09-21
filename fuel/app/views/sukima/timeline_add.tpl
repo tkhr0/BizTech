@@ -11,7 +11,7 @@
            <!--応援している人リスト(アイコン)-->
            <ul class="cheerer_list list-inline">
              {foreach from=$container.cheer_users item=cheer_user}
-               <li><a href="/sukima/mypage/{$cheer_user.user_id}"><img src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>
+               <li><a href="/sukima/mypage/{$cheer_user.user_id}"><img width="20px" src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>
              {/foreach}
            </ul>
            <!--応援している人リスト(アイコン)-->
