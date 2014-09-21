@@ -181,7 +181,7 @@ class Controller_Sukima extends Controller
   {
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view(0);
-    return Response::forge(View_Smarty::forge('sukima/follower', $data));
+    return Response::forge(View_Smarty::forge('sukima/follower.tpl', $data));
   }
 
   public function action_follower_add($offset, $limit)
