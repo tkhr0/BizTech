@@ -62,8 +62,9 @@
           <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
           <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
-        <ul id="select_goals" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-        </ul>
+        <form class="reload-form">
+          <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
+        </form>
      </div><!--yaruzo-->
   </div><!--footer-->
   {include file='./js_footer.tpl'}
