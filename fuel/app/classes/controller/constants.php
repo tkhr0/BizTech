@@ -29,7 +29,6 @@ class Constants
         const ACHIEVE_TRUE  = true;   // tasseizumi
         const ACHIEVE_FALSE = false;  // mitassei
 
-
 }
 
 

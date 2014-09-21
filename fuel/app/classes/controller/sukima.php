@@ -125,10 +125,36 @@ class Controller_Sukima extends Controller
     return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
   
-  public function action_make_community($name, $user_id){
-    
+  public function action_make_community($name){
+    $user_id = Session::get('user_id');
+    $community_id = Model_Communities::set_community($name, $user_id);
+    Model_Belonging::belonging($community_id, $user_id);
+    return 1;
   }
   
+  public function action_belonging_communities(){
+    $user_id = Session::get('user_id');
+    $communities = Model_Communities::get_belonging_communities($user_id);
+    return json_encode($communities);
+  }
+  
+  public function action_belong_community($community_id){
+    $user_id = Session::get('user_id');
+    Model_Belonging::belonging($community_id, $user_id);
+    return 1;
+  }
+
+  public function action_leave_community($community_id){
+    $user_id = Session::get('user_id');
+    Model_Belonging::leaving($community_id, $user_id);
+    return 1;
+  }
+  
+  public function action_search_community($query){
+    $user_id = Session::get('user_id');
+    $communities = Model_Communities::search_community($query);
+    return json_encode($communities);
+  }
 
   /* for ajax */
   public function action_getcontainers($start, $limit=10)
@@ -160,6 +186,10 @@ class Controller_Sukima extends Controller
     Model_Containers::set_container($goal_id, 3);
     Model_Goals::set_unactive($goal_id);
     return 1;
+  }
+
+  public function action_hack_achieved($goal_id){
+    Model_Containers::set_container($goal_id, 4);
   }
   
   public function action_achieve_goal($name, $user_id)
@@ -243,6 +273,13 @@ class Controller_Sukima extends Controller
     $data['header_home_url'] = Uri::create('/sukima/timeline');
     $data['header_mypage_url'] = Uri::create('/sukima/mypage');
     return $data;
+  }
+
+  public function action_to_achieved($user_id){
+    $active_id = self::active_id($user_id);
+    Model_Goals::set_unactive($active_id);
+    Model_Goals::set_achieve($active_id);
+    return $active_id;
   }
 
   /*

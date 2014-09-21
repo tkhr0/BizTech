@@ -11,16 +11,18 @@
 
 new function(){
 	
-	var footerId = "footer";
+	var footerId = "fixfooter";
 	//メイン
 	function footerFixed(){
 		//ドキュメントの高さ
 		var dh = document.getElementsByTagName("body")[0].clientHeight;
+		var dw = document.getElementsByTagName("body")[0].clientHeight;
 		//フッターのtopからの位置
 		document.getElementById(footerId).style.top = "0px";
 		var ft = document.getElementById(footerId).offsetTop;
 		//フッターの高さ
 		var fh = document.getElementById(footerId).offsetHeight;
+		document.getElementById(footerId).style.width = dw;
 		//ウィンドウの高さ
 		if (window.innerHeight){
 			var wh = window.innerHeight;
