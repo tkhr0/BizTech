@@ -46,9 +46,9 @@ var followButtonListner = function(){
   $(".follow-form").submit(function(){
     console.log("following");
     $this = $(this);
-    community_id = $this.find("input[name=target_id]").val();
+    community_id = $this.find("input[name=target-id]").val();
     type = $this.find("input[name=type-id]").val();
-    //following(community_id);
+    following(community_id);
     return false;
   });
 };
