@@ -9,7 +9,17 @@ $(function(){
   // やるぞボタン(hack)をおしたとき
   pushedMainButton();
   reloadButtonListner();
+  //fixFooter();
+  //$('body').modalmanager('loading');
 });
+
+var fixFooter = function(){
+  console.log("fix footer");
+  var footer_id = "fix_footer";
+  var footer = $("#"+footer_id);
+  footer.css("position","absolute");
+  footer.css("bottom","0");
+}
 
 //ボタンの初期状態を設定
 var initCheerButton = function(){
@@ -68,7 +78,7 @@ var pushedCheeringButton = function(){
 };
 //メインボタンが押された時の処理(状態によって分岐)
 var pushedMainButton = function(){
-  $(".hack-form").submit(function(){
+  $(".hack-form").click(function(){
     console.log("pushed main button ->");
     $this = $(this);
     state = $this.find("input[name=state]").val();
@@ -140,7 +150,7 @@ var pushedMainButtonForHackStart = function(form){
       return true;
     }
   };
-  
+
   //活動開始をするための通信
   var ajaxForStartActivity = function(goal_id){
     $.ajax({
@@ -185,7 +195,7 @@ var pushedMainButtonForHackEnd = function(form){
   var goals_select = goals_elem.find("select").eq(0);
   form.find("input[name=hack]").val("やるぞ！");
   form.find("input[name=state]").val(0);
-  
+
   //活動している目標のIDを取得し，その成功後，そのIDでコンテナを生成
   $.ajax({
     type: "POST",
@@ -198,9 +208,9 @@ var pushedMainButtonForHackEnd = function(form){
           success: function(goal_id){
           //終了時処理
           //timelineにリダイレクト
-          $(location).attr("href", "/sukima/timeline");     
+          $(location).attr("href", "/sukima/timeline");
         }
-      });     
+      });
     }
   });
 };
