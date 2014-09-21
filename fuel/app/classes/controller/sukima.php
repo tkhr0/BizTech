@@ -6,9 +6,9 @@ include_once('constants.php');
 class Controller_Sukima extends Controller
 {
 
-  /*
   public function before()
   {
+  /*
     // redirect /sukima if there is a fraud which between session and cookie
     //if((Session::get('user_id', null) != null)
     //  && (Session::get('user_id') != Cookie::get('user_id')

@@ -43,6 +43,7 @@ composer.phar
 
 # morimori add
 /fuel/app/config/config.php
+/fuel/app/config/db.php
 *.swp
 
 # yasu add
