@@ -5,7 +5,7 @@
     </div>
     <div class="col-xs-8">
     <div>{$name}</div>
-    <div>{$description=""}{$description}</div>
+    <div>{$description}</div>
     </div>
   </div><!--row-->
   <!--経歴-->
@@ -22,5 +22,4 @@
     </tr>
   </table>
   <!--経歴-->
-  </div><!--media-->
 </div><!--container-->
