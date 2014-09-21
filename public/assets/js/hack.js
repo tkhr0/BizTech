@@ -2,56 +2,12 @@ USER_ID = $.cookie("user_id");
 RELOAD_NUM = 10;
 console.log("userID: " + USER_ID);
 $(function(){
-  initCheerButton();
   initState();
-  initContainer();
-  // 応援ボタンが押された時の処理
-  cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
   mainButtonListner();
+  // 達成ボタンのリスナー
   achievedButtonListener();
-  reloadButtonListner();
-  autoLoader();
-  //fixFooter();
-  //$('body').modalmanager('loading');
 });
-
-var autoLoader = function(){
-  $(window).bottom({proximity: 0.1});
-  $(window).bind("bottom", function() {
-    var obj = $(this);
-    if (!obj.data("loading")) {
-      obj.data("loading", true);
-
-      //$('#timeline').append('<p>Loading...</p>');
-      var offset = $("#timeline").find(".activity").length;
-      $('#timeline').append('<p>NOW LOADING...</p>');
-      setTimeout(function() {
-        $('#timeline p:last').remove();
-        //タイムラインを追加でリロード
-        reloadAddTimeline(offset, RELOAD_NUM);
-        obj.data("loading", false);
-      }, 1000);
-    }
-  });
-}
-
-var initContainer = function(){
-  $(".activity")
-};
-
-//ボタンの初期状態を設定
-var initCheerButton = function(){
-  console.log("init CheerButton");
-  cheerForms = $(".cheer-form");
-  $.each(cheerForms, function(){
-    $this = $(this);
-    count = $this.find("input[name=cheer-status]").val();
-    if(count > 1000){ // テスト用に制限解除
-      $this.find("input[type=submit]").val("応援しました！！").attr("disabled", "disabled");
-    }
-  });
-};
 
 //ボタン状態の初期化
 var initState = function(){
@@ -74,7 +30,7 @@ var initState = function(){
 
 // 応援ボタンが押された時の処理
 var cheeringButtonListner = function(){
-  $(".cheer-form").unbind().submit(function(){
+  $(".cheer-form").submit(function(){
     $this = $(this);
 
     //hiddenから必要な情報の抽出
@@ -92,17 +48,12 @@ var cheeringButtonListner = function(){
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
-        badge.addClass("background-yellow");
-        setTimeout(function(){
-          badge.removeClass("background-yellow");
-        }, 130);
       }
     });
     //submitのデフォルト機能のキャンセル
     return false;
   });
 };
-
 //メインボタンが押された時の処理(状態によって分岐)
 var mainButtonListner = function(){
   $(".hack-form").submit(function(){
@@ -242,30 +193,6 @@ var pushedMainButtonForHackEnd = function(form){
   });
 };
 
-var reloadAddTimeline = function($offset, $num){
-  $.ajax({
-    type: "POST",
-    url: "/sukima/timeline_add/" + $offset + "/" + $num,
-    success: function(add_timeline){
-      //終了時処理
-      $("#timeline").append(add_timeline);
-      console.log($("#timeline"));
-      cheeringButtonListner();
-    }
-  });
-};
-
-var reloadButtonListner = function(){
-  $(".reload-form").submit(function(){
-    console.log("timeline reload!");
-    //現在あるコンテナの数を取得
-    offset = $("#timeline").find(".activity").length;
-    //タイムラインを追加でリロード
-    reloadAddTimeline(offset, RELOAD_NUM);
-    return false;
-  });
-};
-
 var achievedButtonListener = function(){
   $(".achieve-form").submit(function(){
     console.log("achieved button was pushed");
@@ -295,9 +222,7 @@ var pushedAchievedButton = function(form){
           //timelineにリダイレクト
           $(location).attr("href", "/sukima/timeline");     
         }
-      });     
+      });
     }
   });
-
 };
-
