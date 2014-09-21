@@ -72,7 +72,7 @@ var initState = function(){
 // 応援ボタンが押された時の処理
 var cheeringButtonListner = function(){
   $(".cheer-form").unbind().submit(function(){
-    $this = $(this);
+    var $this = $(this);
 
     //hiddenから必要な情報の抽出
     targetId = $this.find("input[name=target-id]").val();
@@ -91,7 +91,7 @@ var cheeringButtonListner = function(){
         var ret = jQuery.parseJSON(msg);
         var count = ret.count;
         badge.text(count);
-
+	console.log(msg);
                 
         badge.addClass("background-yellow");
         setTimeout(function(){
@@ -100,9 +100,11 @@ var cheeringButtonListner = function(){
 
         var user = ret.user;
         if(user){
+	    console.log("first cheer");
           var path = user.thumbnail;
           var name = user.name;
           var url = user.url;
+	  $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img src='" + path  + "' /></a></li>");
         }
       }
     });
