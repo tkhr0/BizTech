@@ -82,7 +82,7 @@ var cheeringButtonListner = function(){
 };
 //メインボタンが押された時の処理(状態によって分岐)
 var mainButtonListner = function(){
-  $(".hack-form").click(function(){
+  $(".hack-form").submit(function(){
     console.log("pushed main button ->");
     $this = $(this);
     state = $this.find("input[name=state]").val();
