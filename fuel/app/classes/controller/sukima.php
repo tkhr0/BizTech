@@ -103,7 +103,7 @@ class Controller_Sukima extends Controller
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
     ));
-    return View_Smarty::forge('sukima/timeline.tpl', $datas);
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
   }
 
   //タイムラインを追加で取得
@@ -122,8 +122,13 @@ class Controller_Sukima extends Controller
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
     );
-    return Response::forge(View_Smarty::forge('sukima/timeline_add.tpl', $datas));
+    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
+  
+  public function action_make_community($name, $user_id){
+    
+  }
+  
 
   /* for ajax */
   public function action_getcontainers($start, $limit=10)
@@ -187,7 +192,6 @@ class Controller_Sukima extends Controller
     // コンテナを見ているユーザのID
     $cheering_user_id = Session::get('user_id');
     $container_id = -1;
-    return $cheering_user_id;
     if($type == Constants::TYPE_CONTAINER){
       // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
       $container_id = $target_id;
