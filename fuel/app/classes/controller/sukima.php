@@ -9,20 +9,12 @@ class Controller_Sukima extends Controller
   
   public function before()
   {
-    // redirect /sukima if there is a fraud which between session and cookie
-    //if((Session::get('user_id', null) != null)
-    //  && (Session::get('user_id') != Cookie::get('user_id')
-    //  && (Session::get('noredirect', false) == false))){
-    
-    //$arr = Session::get('user_id');
-    //var_dump($arr);
-     //  var_dump(Session::get('noredirect')); exit;
     if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
       Session::set('noredirect', 1);
       Response::redirect('/');
     } 
-    //print("daa");exit; 
   }
+  
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
