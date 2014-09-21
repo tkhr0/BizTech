@@ -15,13 +15,19 @@ class Controller_Snscallback extends Controller{
      //params取得
      $token =Input::get();
      
+     // twitter ログインをキャンセルされた場合の処理     
      if(array_key_exists('denied', $token)){ 
-        print "回数超えています"; exit;
+        print "ログインし直してください"; exit;
         $datas['user_id'] = -1;
         return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas ); 
     }
+
+     // セッション保存
      Session::set('oauth_token', $token['oauth_token'] );   
      Session::set('oauth_verifier', $token['oauth_verifier'] );   
+    
+ 
+     //　コールバック処理
      $callback = new Callback();
      $callback->login(); 
       
@@ -31,34 +37,22 @@ class Controller_Snscallback extends Controller{
      //ユーザ情報取得  
      $user_info = $connection->get('account/verify_credentials');
      
- 
-     //var_dump($user_info);
-     //exit;
-         
          
      if(array_key_exists('errors', $user_info)){ 
           print "回数制限を超えています";
 	  $datas['user_id'] = -1;
-          exit; 
           return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas);
        }
      $exist = Model_users::check_exist_id($user_info->screen_name);
-     //var_dump($exist); exit;
-     if($exist==false){
+    if($exist==false){
       Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https);    
      }
 
-     
-     //print $user_info->name;
-     //print "<br>";
-     //print $user_info->screen_name; 
-     //print "<br>";
-     //print $user_info->profile_image_url_https;
-     //print "<br>";
-     //フレンド情報の取得
-     
-     
-
+      // スキマハックのuser id をセッションに保持
+    $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);    
+    
+    Session::set('user_id', $sukima_huck_id); 
+  
     $cursor = -1;
      
     do{   
@@ -83,29 +77,8 @@ class Controller_Snscallback extends Controller{
       
       }while($cursor != "0");
      
-     //1var_dump($followerprop_ary); exit;    
-     // sukima timelineにリダイレクト
      	
      return Response::redirect('/sukima/timeline');
-   
-        
-    
-     //var_dump($followerprop_ary);
-
-     
-     // if(array_key_exists('', $followerprop_ary)){ 
-     //  print("成功");
-     //  exit;
-     //}else{
-     //  print("失敗"); 
-     //}
-     
-    // foreach($friends->users as $obj){
-    //	print $obj->screen_name;
-    //	print "<br>";
-    // }
-    
-    
     
     }
 
