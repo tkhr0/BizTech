@@ -18,6 +18,7 @@ var pushedFollowingButton = function(){
     userId = $this.find("input[name=user-id]").val();
     followerId = $this.find("input[name=follow-id]").val();
     followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
+    submit = $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
     
     if(followable == 1){
       $.ajax({
@@ -25,7 +26,6 @@ var pushedFollowingButton = function(){
         url: "/sukima/set_follow/" + followerId + "/" + userId,
         success: function(msg){
           console.log("following");
-          $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
           $(".follow-btn").eq(0).find("input[name=followable]").val(0); 
         }
       });     
@@ -87,7 +87,7 @@ var cheerButtonListner = function(){
 	    var path = user.thumbnail;
 	    var name = user.name;
 	    var url = user.url;
-	    $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img src='" + path  + "' /></\
+	    $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img width='20px 'src='" + path  + "' /></\
 a></li>");
 	}
       }

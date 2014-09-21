@@ -104,7 +104,7 @@ var cheeringButtonListner = function(){
           var path = user.thumbnail;
           var name = user.name;
           var url = user.url;
-	  $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img src='" + path  + "' /></a></li>");
+	  $this.parent().find(".cheerer_list").append("<li><a href='" + url + "'><img width='20px' src='" + path  + "' /></a></li>");
         }
       }
     });

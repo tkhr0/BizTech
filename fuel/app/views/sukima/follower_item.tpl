@@ -1,7 +1,7 @@
 <div class="media"><!--media-->
-<a class="pull-left" href="#"><img class="media-object" src="{$thumbnail}" width="100%" alt="..."></a>
+<a class="pull-left" href="{$mypage_url}"><img class="media-object" src="{$thumbnail}" width="100%" alt="..."></a>
 <div class="media-body"><!--media body-->
-<h4 class="media-heading"><span class="badge">{$name}</span></h4>
+<h4 class="media-heading">{$name}</h4>
 </ul>
 <!--経歴-->
 <table class="cheer-table">
@@ -14,8 +14,8 @@
   <tr>
     <td><strong>{$achieved_goals_num}</strong></td>
     <td><strong>{$num}</strong></td>
-    <td><strong>{$user.cheered}</strong></td>
-    <td><strong>{$user.cheering}</strong></td>
+    <td><strong>{$cheered}</strong></td>
+    <td><strong>{$cheering}</strong></td>
   </tr>
 </table>
 <!--経歴-->

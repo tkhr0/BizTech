@@ -47,6 +47,9 @@ class Model_Follows extends \Model {
     }
   }
 
+  public static function unfollow($from_user_id, $to_user_id){
+  }
+
   public static function followable($from_user_id, $to_user_id){
     $results = \DB::select('id')->from('follows')
                                 ->where('to_user_id', $to_user_id)
