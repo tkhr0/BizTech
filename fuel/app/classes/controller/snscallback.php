@@ -18,9 +18,11 @@ class Controller_Snscallback extends Controller{
      // twitter ログインをキャンセルされた場合の処理     
      if(array_key_exists('denied', $token)){ 
         print "ログインし直してください";
-        $datas['user_id'] = -1;
+        //$datas['user_id'] = -1;
         return Response::forge(View_Smarty::forge('sukima/index.tpl'),$datas ); 
-    }
+       
+         //return "aa";
+      }
 
      // セッション保存
      Session::set('oauth_token', $token['oauth_token'] );   
