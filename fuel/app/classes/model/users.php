@@ -39,7 +39,11 @@ class Model_Users extends \Model {
 
 	public static function get_profile($user_id){
 		$results = \DB::select()->from('users')->where('id', $user_id)->as_assoc()->execute();
-		return $results->as_array()[0];	
+    if($results->count() == 0){
+      return array();
+    }else{
+      return $results->as_array()[0];	
+    }
 	}
 
 	public static function set_profile($twitter_id, $name, $thumbnail_path){

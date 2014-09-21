@@ -12,9 +12,9 @@
 </div>
 <div class="navbar-collapse collapse">
   <ul class="nav navbar-nav">
-    <li class="active"><a href="#">Home</a></li>
+    <li class="active"><a href="{$header_home_url}">Home</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="{$header_mypage_url}">Mypage</a></li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
@@ -36,7 +36,3 @@
 </div><!--/.nav-collapse -->
 </div>
 </div>
-
-
-
-

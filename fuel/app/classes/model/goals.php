@@ -1,5 +1,4 @@
 <?php
-
 class Model_Goals extends \Model {
   public static function get_goal_from_id($target_id){
     $results = \DB::select()->from('goals')->where('id', $target_id)->as_assoc()->execute();
@@ -20,14 +19,14 @@ class Model_Goals extends \Model {
     $results = \DB::select('user_id')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
     return $results->as_array()[0]['user_id'];
   }
-	
-	public static function get_goals_from_users($user_ids){
+
+  public static function get_goals_from_users($user_ids){
     $goals = [];
     foreach($user_ids as $user_id){
       $goals = array_merge($goals, Model_Goals::get_goals_from_user($user_id));
     }
     return $goals;
-	}
+  }
 
   public static function set_goal($name, $user_id){
     list($insert_id, $rows_affected) = \DB::insert('goals')->set(array(
@@ -38,6 +37,7 @@ class Model_Goals extends \Model {
           'cheered' => 0,
           'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S")
           ))->execute();
+    return $insert_id;
   }
 
   public static function set_cheered($target_id, $num){
@@ -61,8 +61,8 @@ class Model_Goals extends \Model {
       ->value("achieve", $bool)
       ->where('id', '=', $target_id)
       ->execute();
-    return $result;  	  
-  } 
+    return $result;
+  }
 
   public static function set_achieve($target_id){
     return self::set_whether_achieve($target_id, true);
@@ -83,6 +83,4 @@ class Model_Goals extends \Model {
   public static function increment_cheered($target_id){
     return self::set_cheered($target_id, self::get_cheered($target_id) + 1);
   }
-
-
 }
