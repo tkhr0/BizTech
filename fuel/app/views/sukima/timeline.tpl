@@ -26,7 +26,7 @@
     <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">目標を登録しましょう</h4>
+    <h4 class="modal-title">やることを選びましょう</h4>
     </div><!--modal-header-->
     <div class="modal-body">
       <div class="row">
