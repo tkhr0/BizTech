@@ -52,30 +52,31 @@ class Controller_Snscallback extends Controller{
     $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);
     
     Session::set('user_id', $sukima_huck_id); 
-  
+    $arr = Session::get('user_id');
+ 
     $cursor = -1;
      
-    do{   
-        $friends = $connection->get('friends/list',array('count'=>'200', 'cursor'=> $cursor)); 
-       
-        if(array_key_exists('users', $friends)){ 
+ //   do{   
+ //       $friends = $connection->get('friends/list',array('count'=>'200', 'cursor'=> $cursor)); 
+ //      
+ //       if(array_key_exists('users', $friends)){ 
           
-          foreach($friends->users as $friend){
-              $tmp = array(
-                  "name"        => $friend->name, 
-                  "screen_name" => $friend->screen_name,
-                  "profile_img" => $friend->profile_image_url,
-                    );
+ //         foreach($friends->users as $friend){
+ //             $tmp = array(
+ //                 "name"        => $friend->name, 
+ //                 "screen_name" => $friend->screen_name,
+ //                 "profile_img" => $friend->profile_image_url,
+ //                   );
 
-          $followerprop_ary[] = $tmp;
-          }
-        $cursor = $friends->next_cursor_str;
-        }else{
-           break;
-        }
+  //        $followerprop_ary[] = $tmp;
+ //         }
+ //       $cursor = $friends->next_cursor_str;
+ //       }else{
+ //          break;
+ //       }
          
       
-      }while($cursor != "0");
+//      }while($cursor != "0");
      
      
      return Response::redirect('/sukima/timeline');
