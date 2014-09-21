@@ -7,8 +7,10 @@ $(function(){
   initContainer();
   // 応援ボタンが押された時の処理
   cheeringButtonListner();
-  // 達成ボタン
+  // やるぞボタン(hack)をおしたとき
+  mainButtonListner();
   achievedButtonListener();
+  reloadButtonListner();
   autoLoader();
   //fixFooter();
   //$('body').modalmanager('loading');
@@ -35,16 +37,8 @@ var autoLoader = function(){
 }
 
 var initContainer = function(){
-  
+  $(".activity")
 };
-
-var fixFooter = function(){
-  console.log("fix footer");
-  var footer_id = "fix_footer";
-  var footer = $("#"+footer_id);
-  footer.css("position","absolute");
-  footer.css("bottom","0");
-}
 
 //ボタンの初期状態を設定
 var initCheerButton = function(){
@@ -80,7 +74,7 @@ var initState = function(){
 
 // 応援ボタンが押された時の処理
 var cheeringButtonListner = function(){
-  $(".cheer-form").submit(function(){
+  $(".cheer-form").unbind().submit(function(){
     $this = $(this);
 
     //hiddenから必要な情報の抽出
@@ -301,7 +295,7 @@ var pushedAchievedButton = function(form){
           //timelineにリダイレクト
           $(location).attr("href", "/sukima/timeline");     
         }
-      });
+      });     
     }
   });
 
