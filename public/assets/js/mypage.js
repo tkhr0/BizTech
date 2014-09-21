@@ -15,13 +15,28 @@ var pushedFollowingButton = function(){
     // hiddenから必要な情報の抽出
     userId = $this.find("input[name=user-id]").val();
     followerId = $this.find("input[name=follow-id]").val();
+    followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
+    
+    if(followable == 1){
+      $.ajax({
+        type: "POST",
+        url: "/sukima/set_follow/" + userId + "/" + followerId,
+        success: function(msg){
+          $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
+          $(".follow-btn").eq(0).find("input[name=followable]").val(0); 
+        }
+      });     
+    }else{
+      $this.find("input[type=submit]").val("フォロー").removeClass("label-danger").addClass("label-success");
+      $.ajax({
+        type: "POST",
+        url: "/sukima/remove_follow/" + userId + "/" + followerId,
+        success: function(msg){
+          $(".follow-btn").eq(0).find("input[name=followable]").val(1);
+        }
+      });    
+    }
 
-    $this.find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
-    $.ajax({
-      type: "POST",
-      url: "/sukima/follower/" + userId + "/" + followerId,
-      success: function(msg){}
-    });
     //submitのデフォルト機能のキャンセル
     return false;
   });
@@ -32,7 +47,7 @@ var followButtonInitialize = function(){
   // hiddenから必要な情報の抽出
   var followable = $(".follow-btn").eq(0).find("input[name=followable]").val();
   if(followable == '0'){
-    $(".follow-btn").eq(0).find("input[type=submit]").val("フォロー済み").attr("disabled", "disabled");
+    $this.find("input[type=submit]").val("フォロー解除").removeClass("label-success").addClass("label-danger");
   }
 };
 

@@ -61,6 +61,7 @@
 }
 .cheer-table th {
   font-weight: normal;
+  font-size: xx-small;
 }
 .cheer-table td {
   font-size: 200%;
@@ -73,6 +74,10 @@
 /*フォローフォーム*/
 .follow-form {
   margin: 3px;
+  font-size: xx-large;
+}
+.follow-form input {
+  height: 50px;
 }
 
 #fixfooter {

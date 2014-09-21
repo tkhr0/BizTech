@@ -3,7 +3,7 @@
   $thumbnail :
 *}
 <li class="row">
-  <h3 class="col-xs-8">{$name}</h3>
+  <h3>{$name}</h3>
   <!--応援してくれた人リスト-->
   <!--<div class="col-xs-4 btn btn-xs btn-primary btn-block">応援!</div>-->
   <!--いいねボタン-->

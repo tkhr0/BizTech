@@ -21,7 +21,7 @@
             <div id="user-name"><!--名前-->
               {$user.name}
             </div>
-            <div id="user-description">{$user.description}</div>
+            <div id="user-description">がんばる人を応援するスキマハックを作ってます！</div>
           </div><!--ユーザ紹介-->
         </div><!--ユーザ情報-->
         <!--チアされた数-->
