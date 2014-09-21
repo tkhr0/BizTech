@@ -67,12 +67,12 @@ class Model_Users extends \Model {
     }
 	}
 
-	public static function set_profile($twitter_id, $name, $thumbnail_path, $discription){
+	public static function set_profile($twitter_id, $name, $thumbnail_path, $description){
     list($insert_id, $rows_affected) = \DB::insert('users')->set(array(
       'twitter_id' => $twitter_id,
       'name' => $name,
       'thumbnail_path' => $thumbnail_path,
-      'discription' => $discription,
+      'description' => $description,
       'created_at' => Date::forge()->format("%Y/%m/%d %H:%M:%S"),
     ))->execute();
 	}
