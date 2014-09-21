@@ -15,12 +15,14 @@
     </div><!--タイムライン-->
   </div><!-- /container -->
   <div id="fixfooter">
+    <!--
     <form action="#">
       <input type="hidden" name="state" value="{$state}" />
       <select class="display-none" name="目標を選ぶ">
       </select>
       <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
     </form>
+    -->
     <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -37,15 +39,15 @@
             <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
           </form>
           <form class="achieve-form"><!-- achieve -->
-            <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="ACHIEVE" >
+            <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="目標を達成！" >
           </form>
         </div><!--12-->
       </div><!--row-->
     </div><!--modal-body-->
-    <div class="modal-footer">
-      <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-    </div><!--modal-footer-->
   </div>
+  <form class="state-holder">
+    <input type="hidden" name="state" value="{$state}">
+  </form>
   <div id="hack_btn" class="btn btn-primary btn-xs" data-toggle="modal" href="#responsive"><span class="glyphicon glyphicon-fire"></span></div>
   </div><!--footer-->
   {include file='./js_footer.tpl'}
