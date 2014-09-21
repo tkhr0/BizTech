@@ -1,13 +1,47 @@
 USER_ID = $.cookie("user_id");
 console.log("userID: " + USER_ID);
 $(function(){
-  // 応援ボタンが押された時の処理
   initCheerButton();
   initState();
+  //fixedFooter();
+  //fixedHackBtn();
+  // 応援ボタンが押された時の処理
   pushedCheeringButton();
+  // やるぞボタン(hack)をおしたとき
   pushedMainButton();
 });
 
+var fixedHackBtn = function(){
+  var btn = $("#hack_btn");
+  var pos = btn.position();
+  var height = $(window).height();
+  var width = $(window).width();
+  var xpos = (height - btn.height());
+  var ypos = (width - btn.width())/2.0;
+  btn.css("position","fixed");
+  btn.css("bottom","0");
+};
+var fixedFooter = function(){
+  var footer = $("#footer");
+  var pos = footer.position();
+  var height = $(window).height();
+  var width = $(window).width();
+  height = height - pos.top;
+  height = height - footer.height();
+  width  = width - pos.left;
+  width  = width - footer.width()/2.0;
+  console.log(height);
+  if (height > 0) {
+    footer.css({
+      //'margin-top': height + 'px'
+      'top': height + 'px'
+    });
+    footer.css({
+      //'margin-left': width + 'px'
+      'left': width + 'px'
+    });
+  }
+};
 //ボタンの初期状態を設定
 var initCheerButton = function(){
   console.log("init CheerButton");
@@ -59,13 +93,11 @@ var pushedCheeringButton = function(){
         //バッジに書き込み
         badge.text(msg);
         }
-        });
+      });
     //submitのデフォルト機能のキャンセル
     return false;
   });
 };
-
-
 //メインボタンが押された時の処理(状態によって分岐)
 var pushedMainButton = function(){
   $(".hack-form").submit(function(){
@@ -86,7 +118,6 @@ var pushedMainButton = function(){
   });
 };
 
-
 //ユーザが非アクティブの時のボタン
 var pushedMainButtonForSelect = function(form){
   console.log("pushed main button for select");
@@ -100,7 +131,7 @@ var pushedMainButtonForSelect = function(form){
   form.find("input[name=goal]").removeClass("display-none");
   form.find("input[type=submit]").val("開始");
   form.find("input[name=state]").val(1);
-  
+
   //目標一覧を更新
   $.ajax({
     type: "POST",

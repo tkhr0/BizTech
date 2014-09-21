@@ -27,7 +27,7 @@
         <!--チアされた数-->
         <table class="cheer-table">
           <tr>
-            <th>tasseisitamokuhyou</th>
+            <th>達成した目標数</th>
             <th>応援された回数</th>
             <th>応援した回数</th>
           </tr>
@@ -52,19 +52,16 @@
       </div><!--ユーザ情報-->
       <div class="col-xs-12">
       <!--目標リスト-->
-      <!-- goals -->
       <ul class="yaritai_list">
         <!--やりたいこと-->
         {foreach $goals as $goal}
-          {include file='./goal.tpl' name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users}
+          {include file='./goal.tpl' id=$goal.id name=$goal.name cheered=$goal.cheered cheering_users=$goal.cheering_users disable=$goal.cheerable}
         {/foreach}
       </ul>
       <!--目標リスト-->
       </div>
     </div> <!-- /container -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    {Asset::js('mypage.js')}
-    {Asset::js('bootstrap.min.js')}
+  {include file='./js_footer.tpl'}
   </body>
 </html>
 
