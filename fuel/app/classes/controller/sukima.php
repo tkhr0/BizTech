@@ -98,7 +98,7 @@ class Controller_Sukima extends Controller
         'containers'        => $containers,
         'type_container'    => Constants::TYPE_CONTAINER,
         'user_id'           => $user_id,
-    );
+    ));
     return View_Smarty::forge('sukima/timeline.tpl', $datas);
   }
 
