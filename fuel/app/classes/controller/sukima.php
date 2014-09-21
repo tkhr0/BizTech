@@ -171,6 +171,7 @@ class Controller_Sukima extends Controller
       $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
+      $from_user_data['mypage_url'] = "/sukima/mypage/{$profile['id']}";
       array_push($from_user_datas, $from_user_data);
     }
     return $from_user_datas;
