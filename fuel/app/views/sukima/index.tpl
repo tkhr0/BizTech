@@ -5,7 +5,7 @@
     {include file='./meta_header.tpl'}
   </head>
   <body>
-    {include file='./meta_header.tpl'}
+    {include file='./page_header.tpl'}
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
