@@ -65,7 +65,6 @@ class Controller_Sukima extends Controller
 
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
-    return json_encode($datas);
     $datas['visited_user_id'] = $user_id;
     $datas['achieved_goals_num'] = self::get_achieved_goals_num($page_user_id);
     $datas['followable'] = Model_Follows::followable($user_id, $page_user_id) ? 1:0;
