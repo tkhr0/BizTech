@@ -6,7 +6,7 @@
     {Asset::css('timeline.css')}
   </head>
   <body>
-    {include file='./page_header.tpl'}
+    {include file='./page_header.tpl' header_home_url=$header_home_url header_mypage_url=$header_mypage_url}
     {*
     {assign var=containers value =[
                                   [ 
