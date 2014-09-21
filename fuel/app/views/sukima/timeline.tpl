@@ -66,9 +66,6 @@
         <form class="achieve-form"><!-- achieve -->
           <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="ACHIEVE" >
         </form>
-        <form class="reload-form">
-          <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
-        </form>
       </div><!--12-->
     </div><!--row-->
   </div><!--modal-body-->
