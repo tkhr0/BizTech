@@ -63,6 +63,9 @@
           <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
           <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
         </form>
+        <form class="achieve-form"><!-- achieve -->
+          <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="ACHIEVE" >
+        </form>
         <form class="reload-form">
           <input type="submit" name="reload" class="btn btn-xs btn-primary btn-block" value="リロード" >
         </form>
