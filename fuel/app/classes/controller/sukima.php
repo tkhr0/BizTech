@@ -136,6 +136,50 @@ class Controller_Sukima extends Controller
     return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
 
+  /*
+        全体タイムラインの動作
+  */
+  public function action_all_timeline()
+  {
+    $datas = self::get_page_header_data();
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
+    $containers = self::help_container_fixed_phrase($containers);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+    $datas = array_merge($datas, array(
+				       'state'             => $state,
+				       'containers'        => $containers,
+				       'type_container'    => Constants::TYPE_CONTAINER,
+				       'user_id'           => $user_id,
+				       ));
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+  }
+
+
+  //全体タイムラインを追加で取得
+  public function action_all_timeline_add($offset, $num)
+  {
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $containers = self::help_container_fixed_phrase($containers);
+
+    $datas = array(
+		   'state'             => $state,
+		   'containers'        => $containers,
+		   'type_container'    => Constants::TYPE_CONTAINER,
+		   'user_id'           => $user_id,
+		   );
+    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
+  }
+
   private function help_container_fixed_phrase(&$containers)
   {
     foreach($containers as &$container){
