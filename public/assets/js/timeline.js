@@ -95,6 +95,10 @@ var cheeringButtonListner = function(){
       success: function(msg){
         //バッジに書き込み
         badge.text(msg);
+        badge.addClass("background-yellow");
+        setTimeout(function(){
+          badge.removeClass("background-yellow");
+        }, 130);
       }
     });
     //submitのデフォルト機能のキャンセル
