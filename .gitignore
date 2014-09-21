@@ -33,4 +33,4 @@ desktop.ini
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
 /fuel/app/config/config.php
-
+/fuel/app/tmp/
