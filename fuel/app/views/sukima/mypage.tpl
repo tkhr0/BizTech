@@ -21,7 +21,7 @@
             <div id="user-name"><!--名前-->
               {$user.name}
             </div>
-            <div id="user-description">{$user.description}</div>
+            <div id="user-description">がんばる人を応援するスキマハックを作ってます！</div>
           </div><!--ユーザ紹介-->
         </div><!--ユーザ情報-->
         <!--チアされた数-->
@@ -45,7 +45,7 @@
         <form action="/sukima/follower" class="follow-form" action="post">
           <input type="hidden" name="user-id" value="{$visited_user_id}" />
           <input type="hidden" name="follow-id" value="{$user.id}" />
-          <input type="submit" class="btn btn-xs btn-success btn-block" value="フォロー" />
+          <input type="submit" class="btn btn-xs btn-primary btn-block" value="フォロー" />
         </form>
         {/if}
         </div><!--フォローボタン-->

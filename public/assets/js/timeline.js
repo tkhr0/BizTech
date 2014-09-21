@@ -11,6 +11,8 @@ $(function(){
   achievedButtonListener();
   reloadButtonListner();
   autoLoader();
+  //fixFooter();
+  //$('body').modalmanager('loading');
 });
 
 var autoLoader = function(){
@@ -99,6 +101,7 @@ var cheeringButtonListner = function(){
     return false;
   });
 };
+
 //メインボタンが押された時の処理(状態によって分岐)
 var mainButtonListner = function(){
   $(".hack-form").submit(function(){
