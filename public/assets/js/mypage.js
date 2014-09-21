@@ -3,13 +3,15 @@ $(function(){
   followButtonInitialize();
   // フォローボタンが押された時の処理
   pushedFollowingButton();
+  //応援ボタンのリスナ
+  cheerButtonListner();
 });
 
 // フォローボタンが押された時の処理
 var pushedFollowingButton = function(){
   $('.follow-form').submit(function(){
     $this = $(this);
-
+    console.log("pushed follow button");
     // hiddenから必要な情報の抽出
     userId = $this.find("input[name=user-id]").val();
     followerId = $this.find("input[name=follow-id]").val();
@@ -34,3 +36,26 @@ var followButtonInitialize = function(){
   }
 };
 
+// 応援ボタンのリスナを設定
+var cheerButtonListner = function(){
+  $('.cheer-form').submit(function(){
+    $this = $(this);
+    console.log("pushed cheer button");
+    // hiddenから必要な情報の抽出
+    userId = $this.find("input[name=user-id]").val();
+    targetId = $this.find("input[name=target-id]").val();
+    typeId = $this.find("input[name=type-id]").val();
+    badge = $this.parent().find(".badge");
+
+    $.ajax({
+      type: "POST",
+      url: "/sukima/cheer/" + targetId + "/" + typeId,
+      success: function(msg){
+        console.log("応援！");
+        badge.text(msg);
+      }
+    });
+    //submitのデフォルト機能のキャンセル
+    return false;
+  });  
+}
