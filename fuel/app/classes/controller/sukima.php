@@ -8,26 +8,16 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-    if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-      Session::set('noredirect', 1);
-      Response::redirect('/');
-    } 
+    //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
+    //  Session::set('noredirect', 1);
+    //  Response::redirect('/');
+    //} 
   }
   
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-  //  $user_id = Session::get('user_id', null);
-  //  if($user_id == null){
-  //        $user_id = 1;
-  //  }else{
-  //    $user_id = floor($user_id) % 4 + 1;
-  //  }
-  //  Session::set('user_id', $user_id);
-  //  Cookie::set('user_id', $user_id);
-   
-    
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
@@ -70,7 +60,7 @@ class Controller_Sukima extends Controller
     // 応援した人のデータを取得、追加
     foreach($datas['goals'] as &$goal){
       $cheering_users_data = array();
-      foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
+      foreach(Model_Markcheers::get_user_ids_only_unique($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
         $user_data = array();  // init
         $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
         $user_data['mypage_url'] = '/sukima/mypage/'.$cheering_user_profile['id'];  // idをセット

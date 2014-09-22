@@ -8,12 +8,12 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="/sukima/">{Asset::img('sukimaHackwithoutSub.png',['width' => '100%','alt'=>"すきまハック"])}</a>
+  <a class="navbar-brand" href="/sukima/" style="">{Asset::img('sukimaHackwithoutSub.png',['alt'=>"すきまハック", 'style'=>'height:24px'])}</a>
 </div>
 <div id="register_goal" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title">やる気</h4>
+<h4 class="modal-title">目標を登録しよう！</h4>
 </div><!--modal-header-->
 <div class="modal-body">
 <div class="row">
@@ -21,7 +21,7 @@
 <form action="#" class="hack-form">
   <input type="hidden" name="state" value="1" />
   <input type="text" name="goal" class="form-control" placeholder="目標を新しく作成"/>
-  <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+  <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="登録する" >
 </form>
 </div><!--12-->
 </div><!--row-->
@@ -35,7 +35,7 @@
     <li><a href="/sukima/all_timeline">全体タイムライン</a></li>
     <li><a href="{$header_mypage_url}">マイページ</a></li>
     <li><a href="/sukima/follower">フォロワー</a></li>
-    <li><a href="">目標を登録</a></li>
+    <li><a data-toggle="modal" href="#register_goal">目標を登録</a></li>
     <li><a href="/twitterlogout">ログアウト</a></li>
   </ul>
 </div><!--/.nav-collapse -->
