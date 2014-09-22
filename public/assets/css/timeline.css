@@ -9,3 +9,37 @@
 .background-yellow{
   background: #e4d351;
 }
+
+.goal-select{
+  width: 100%;
+}
+
+.goal-select option{
+  height: 35px;
+  font-size: 20px;
+}
+
+.goal-input{
+  height: 35px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.select-disabled{
+  background-color: #f3f3f3;
+}
+
+.select-disabled option{
+  background-color: #f3f3f3;
+  color: #bbbbbb;
+}
+
+.select-disabled .selected{
+  background-color: #eeeeee;
+  color: #bbbbbb;
+}
+
+.achieve-btn{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

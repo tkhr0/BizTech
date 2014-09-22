@@ -11,6 +11,10 @@ $(function(){
   achievedButtonListener();
   // タイムラインの自動追加読み込み
   autoLoader();
+  // 目標インプットのリスナ
+  goalInputListner();
+  // 目標selecgのリスナ
+  goalSelectListner();
 });
 
 var autoLoader = function(){
@@ -49,18 +53,37 @@ var initCheerButton = function(){
 var initState = function(){
   $this = $(this);
   form = $(".hack-form");
+  var goal_select = form.find("select");
+  var goal_input = form.find("input[name=goal]");
   achieve = $(".achieve-form");
   state = $(".state-holder").find("input[name=state]").val();
   console.log("init button state: " + state);
+
+  //目標一覧を更新
+  $.ajax({
+    type: "POST",
+    url: "/sukima/goals/" + USER_ID + "/",
+    success: function(msg){
+      //jqueryデータを受け取る
+      console.log("select is loaded");
+      var datas = $.parseJSON(msg);
+      for(var i = 0; i < datas.length; i++){
+	  $(".hack-form select").append("<option value=" + datas[i].id + (i == 0 ? " selected" : "") + ">" + datas[i].name + "</option>");
+      }
+    }
+  });
+
+
   if(state == 0){
-    form.find("input[name=hack]").val("やるぞ！");
-    achieve.find("input[name=achieve]").hide();
-  }else if(state == 1){
-    form.find("input[name=hack]").val("やるぞ！");
-    form.find("input[name=state]").val(0);
+    $(".modal-title").text("目標を登録しましょう！");
+    form.find("input[name=hack]").val("開始").attr("disabled", "disabled");
     achieve.find("input[name=achieve]").hide();
   }else if(state == 2){
+    $(".modal-title").text("おめでとうございます！");
     form.find("input[name=hack]").val("やったぞ！");
+    form.find("h4").hide();
+    goal_select.hide();
+    goal_input.hide();
   }
 };
 
@@ -143,18 +166,6 @@ var pushedMainButtonForSelect = function(form){
   form.find("input[name=hack]").val("開始");
   $(".state-holder").find("input[name=state]").val(1);
 
-  //目標一覧を更新
-  $.ajax({
-    type: "POST",
-    url: "/sukima/goals/" + USER_ID + "/",
-    success: function(msg){
-      //jqueryデータを受け取る
-      var datas = $.parseJSON(msg);
-      for(var i = 0; i < datas.length; i++){
-        goals_select.append("<option value=" + datas[i].id + (i == 0 ? " selected" : "") + ">" + datas[i].name + "</option>");
-      }
-    }
-  });
 };
 
 //ユーザが活動を開始するボタン
@@ -169,14 +180,13 @@ var pushedMainButtonForHackStart = function(form){
   $(".state-holder").find("input[name=state]").val(2);
   goalName = form.find("input[name=goal]").val();
 
-  //選択されている目標IDを取得
-  /*
+  選択されている目標IDを取得
+  
   var getSelectedId = function(){
     return form.find("select option:selected").val();
-  }*/
+  }
 
   //新規目標名が入力されているかどうかを判定
-/*
   var isFilledGoalName = function(form, goalName){
     if(goalName == ""){
       return false;
@@ -184,7 +194,6 @@ var pushedMainButtonForHackStart = function(form){
       return true;
     }
   };
-  */
 
   //活動開始をするための通信
   var ajaxForStartActivity = function(goal_id){
@@ -298,3 +307,34 @@ var pushedAchievedButton = function(form){
   });
 };
 
+var goalInputListner = function(){
+  $(".goal-input").focusin(function(){
+    console.log("fucsin");
+    var goalSelect = $(".goal-select");
+    goalSelect.addClass("select-disabled").attr("disabled", "disabled");
+  });
+
+  $(".goal-input").focusout(function(){
+    console.log("fucsout");
+    var goalSelect = $(".goal-select");
+    goalSelect.removeClass("select-disabled").removeAttr("disabled");
+  });
+
+  $(".goal-input").keypress(function(){
+    console.log("keypress");
+    var value = $(this).val();
+    if(value != ""){
+	$(".hack-btn").removeAttr("disabled");
+    }else{
+	$(".hack-btn").attr("disabled", "disabled");
+    }
+    var goalSelect = $(".goal-select");
+    goalSelect.removeClass("select-disabled").removeAttr("disabled");
+  });
+};
+
+var goalSelectListner = function(){
+  $(".goal-select").focus(function(){
+    $(".hack-btn").removeAttr("disabled");
+  });
+};
