@@ -97,12 +97,14 @@ class Controller_Sukima extends Controller
   {
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
+    Cookie::set('user_id', $user_id);
     $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
     $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
     }
+
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
