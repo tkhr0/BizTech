@@ -349,7 +349,7 @@ class Controller_Sukima extends Controller
   {
     // コンテナを見ているユーザのID
     $cheering_user_id = Session::get('user_id');
-    Cookie::set('user_id', $user_id);
+    Cookie::set('user_id', $cheering_user_id);
     $container_id = -1;
     if($type == Constants::TYPE_CONTAINER){
       // コンテナの場合、コンテナIDからコンテナ、目標IDを取得
