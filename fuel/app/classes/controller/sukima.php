@@ -9,9 +9,9 @@ class Controller_Sukima extends Controller
   public function before()
   {
     //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-    //  Session::set('noredirect', 1);
-    //  Response::redirect('/');
-   // } 
+    // Session::set('noredirect', 1);
+    // Response::redirect('/');
+    //} 
   }
   
   public function action_index()
@@ -24,6 +24,8 @@ class Controller_Sukima extends Controller
    // if($user_id != null){
    //   $user_id = Session::get('user_id');
    //   Response::redirect("/sukima/timeline");
+   //}
+   // TODO デバッグ用の処理ここから
     $user_id = Session::get('user_id', null);
     Cookie::set('user_id', $user_id);
     if($user_id == null){
@@ -31,8 +33,7 @@ class Controller_Sukima extends Controller
     }else{
       $user_id = floor($user_id) % 4 + 1;
     }
-
-  
+    //デバッグ処理ここまで
   
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);

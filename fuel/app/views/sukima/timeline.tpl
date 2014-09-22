@@ -15,14 +15,6 @@
     </div><!--タイムライン-->
   </div><!-- /container -->
   <div id="fixfooter">
-    <!--
-    <form action="#">
-      <input type="hidden" name="state" value="{$state}" />
-      <select class="display-none" name="目標を選ぶ">
-      </select>
-      <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
-    </form>
-    -->
     <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
