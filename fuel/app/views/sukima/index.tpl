@@ -5,7 +5,6 @@
     {include file='./meta_header.tpl'}
   </head>
   <body>
-    user_id: {$user_id}
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">

@@ -6,6 +6,12 @@
     <div class="col-xs-8">
     <div>{$name}</div>
     <div>{$description}</div>
+    <div>
+      <form action="/sukima/follower_remove" method="POST">
+            <input type="hidden" name="from_user_id" value="{$user_id}">
+            <button type="submit" class="btn btn-default">フォロー解除</button>
+      </form>
+    </div>
     </div>
   </div><!--row-->
   <!--経歴-->
