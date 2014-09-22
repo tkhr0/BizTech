@@ -12,7 +12,9 @@ $(function(){
   // タイムラインの自動追加読み込み
   autoLoader();
   // 目標インプットのリスナ
-  //goalInputListner();
+  goalInputListner();
+  // 目標selecgのリスナ
+  goalSelectListner();
 });
 
 var autoLoader = function(){
@@ -74,11 +76,12 @@ var initState = function(){
 
   if(state == 0){
     $(".modal-title").text("目標を登録しましょう！");
-    form.find("input[name=hack]").val("開始");
+    form.find("input[name=hack]").val("開始").attr("disabled", "disabled");
     achieve.find("input[name=achieve]").hide();
   }else if(state == 2){
     $(".modal-title").text("おめでとうございます！");
     form.find("input[name=hack]").val("やったぞ！");
+    form.find("h4").hide();
     goal_select.hide();
     goal_input.hide();
   }
@@ -304,6 +307,32 @@ var pushedAchievedButton = function(form){
 
 var goalInputListner = function(){
   $(".goal-input").focusin(function(){
-	  console.log("fucsin");
+    console.log("fucsin");
+    var goalSelect = $(".goal-select");
+    goalSelect.addClass("select-disabled").attr("disabled", "disabled");
   });
-}
+
+  $(".goal-input").focusout(function(){
+    console.log("fucsout");
+    var goalSelect = $(".goal-select");
+    goalSelect.removeClass("select-disabled").removeAttr("disabled");
+  });
+
+  $(".goal-input").keypress(function(){
+    console.log("keypress");
+    var value = $(this).val();
+    if(value != ""){
+	$(".hack-btn").removeAttr("disabled");
+    }else{
+	$(".hack-btn").attr("disabled", "disabled");
+    }
+    var goalSelect = $(".goal-select");
+    goalSelect.removeClass("select-disabled").removeAttr("disabled");
+  });
+};
+
+var goalSelectListner = function(){
+  $(".goal-select").focus(function(){
+    $(".hack-btn").removeAttr("disabled");
+  });
+};
