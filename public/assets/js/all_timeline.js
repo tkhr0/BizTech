@@ -1,3 +1,4 @@
+
 var USER_ID = $.cookie("user_id");
 var RELOAD_NUM = 10;
 console.log("userID: " + USER_ID);
@@ -251,7 +252,7 @@ var pushedMainButtonForHackEnd = function(form){
 var reloadAddTimeline = function($offset, $num){
   $.ajax({
     type: "POST",
-    url: "/sukima/timeline_add/" + $offset + "/" + $num,
+    url: "/sukima/all_timeline_add/" + $offset + "/" + $num,
     success: function(add_timeline){
       //終了時処理
       $("#timeline").append(add_timeline);

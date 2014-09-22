@@ -50,6 +50,6 @@
   <div id="hack_btn" class="btn btn-primary btn-xs" data-toggle="modal" href="#responsive"><span class="glyphicon glyphicon-fire"></span></div>
   </div><!--footer-->
   {include file='./js_footer.tpl'}
-  {Asset::js('timeline.js')}
+  {Asset::js('all_timeline.js')}
 </body>
 </html>

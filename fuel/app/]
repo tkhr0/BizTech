@@ -8,43 +8,31 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-    //var_dump(Session::get('user_id'));
-    if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-      Session::set('noredirect', 1);
-      Response::redirect('/');
-    } 
+    //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
+    //  Session::set('noredirect', 1);
+    //  Response::redirect('/');
+    //} 
   }
-
-  /*
-  public function after($response){
-    $response = parent::after($response);
-    var_dump(Session::get('user_id'));
-    return $response;
-  }
-  */
   
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-  /*
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
     }else{
       $user_id = floor($user_id) % 4 + 1;
     }
-   */
-    //Session::set('user_id', $user_id);
-    //Cookie::set('user_id', $user_id);
-    //$datas = self::get_page_header_data();
-    //$datas['data'] = Model_Users::get_profile($user_id);
-    //$datas['id'] = $user_id;
-    //$datas['user_id'] = $user_id;
+    Session::set('user_id', $user_id);
+    Cookie::set('user_id', $user_id);
+    $datas = self::get_page_header_data();
+    $datas['data'] = Model_Users::get_profile($user_id);
+    $datas['id'] = $user_id;
+    $datas['user_id'] = $user_id;
 
     Session::delete('noredirect');
-    //return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
-    return Response::forge(View_Smarty::forge('sukima/index.tpl'));
+    return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
   }
 
   public function action_mypage($page_user_id=null)
@@ -204,13 +192,14 @@ class Controller_Sukima extends Controller
   }
 
   private function help_follower_view($offset,$limit=10){
-    $user_id = Session::get('user_id');
+    $user_id = Session::get();
     $from_user_ids = Model_Follows::get_friends_with_offset($user_id, $offset, $limit);
+    var_dump($user_id);
+    var_dump($from_user_ids);
 
     $from_user_datas = array();
     foreach($from_user_ids as $from_user_id){
       $profile = Model_Users::get_profile($from_user_id);
-      $from_user_data['user_id'] = $profile['id'];
       $from_user_data['thumbnail'] = $profile['thumbnail_path'];
       $from_user_data['name'] = $profile['name'];
       $from_user_data['twitter_id'] = $profile['twitter_id'];
@@ -227,7 +216,7 @@ class Controller_Sukima extends Controller
 
   public function action_follower()
   {
-    $user = Session::get('user_id');
+    Session::set('user_id', 1);
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view(0);
     return Response::forge(View_Smarty::forge('sukima/follower.tpl', $data));
@@ -238,13 +227,6 @@ class Controller_Sukima extends Controller
     $data = self::get_page_header_data();
     $data['followers_data'] = self::help_follower_view($offset, $limit);
     return View_Smarty::forge('', $data);
-  }
-
-  public function post_follower_remove(){
-    $user_id = Input::post('from_user_id');
-    $from_user_id = Session::get('user_id');
-    Model_Follows::unfollow($from_user_id, $user_id);
-    Response::redirect('/sukima/follower');
   }
 
   public function action_make_community($name){
@@ -312,6 +294,10 @@ class Controller_Sukima extends Controller
 
   public function action_hack_achieved($goal_id){
     Model_Containers::set_container($goal_id, 4);
+  }
+  
+  public function action_achieve_goal($name, $user_id)
+  {
   }
   
   /* set follow */
@@ -434,6 +420,9 @@ class Controller_Sukima extends Controller
       }
     }
     return $count;
+  }
+
+  public function action_unfollow($friend_id){
   }
 
   /**

@@ -48,6 +48,9 @@ class Model_Follows extends \Model {
   }
 
   public static function unfollow($from_user_id, $to_user_id){
+    $query = \DB::delete('follows')->where('to_user_id', $to_user_id)
+                                   ->where('from_user_id', $from_user_id)
+                                   ->execute();
   }
 
   public static function followable($from_user_id, $to_user_id){
