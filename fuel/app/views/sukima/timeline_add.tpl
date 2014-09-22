@@ -5,13 +5,13 @@
     <div class="activity">
       <!--表明-->
       <div class="media">
-         <a class="pull-left" href="#"><img class="media-object" src="{$container.thumbnail}" width="100%" alt="..."></a>
+         <a class="pull-left" href="/sukima/mypage/{$container.user_id}"><img class="media-object" src="{$container.thumbnail}" width="100%" alt="..."></a>
          <div class="media-body">
             <h4 class="media-heading">{$container.goal_name}{$container.fixed_phrase}<span class="badge">{$container.cheer_num}</span></h4>
            <!--応援している人リスト(アイコン)-->
            <ul class="cheerer_list list-inline">
              {foreach from=$container.cheer_users item=cheer_user}
-               <li><a href="/sukima/mypage/{$cheer_user.user_id}"><img src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>
+               <li><a href="/sukima/mypage/{$cheer_user.user_id}"><img width="20px" src="{$cheer_user.thumbnail}" width="100%" alt="..."></a></li>
              {/foreach}
            </ul>
            <!--応援している人リスト(アイコン)-->

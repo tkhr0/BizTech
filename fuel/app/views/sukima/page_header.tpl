@@ -32,6 +32,7 @@
 </div>
 <div class="navbar-collapse collapse">
   <ul class="nav navbar-nav">
+    <li><a href="/sukima/all_timeline">全体タイムライン</a></li>
     <li><a href="{$header_mypage_url}">マイページ</a></li>
     <li><a href="/sukima/follower">フォロワー</a></li>
     <li><a href="">目標を登録</a></li>
@@ -40,4 +41,3 @@
 </div><!--/.nav-collapse -->
 </div>
 </div>
-

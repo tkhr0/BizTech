@@ -32,6 +32,23 @@ class Model_Markcheers extends \Model
     return $res;
   }
 
+  /*ターゲットにcheerしたユーザのid一覧を示すarrayを返す たか作*/
+  public static function get_user_ids_only_unique($target_id, $type)
+  {
+    $res = array();
+    $query_res = \DB::select('user_id')->from('markcheers')
+      ->where('target_id', '=', $target_id)
+      ->where('type', '=', $type)
+      ->distinct(true)
+      ->execute()
+      ->as_array();
+
+    foreach($query_res as $item){
+        array_push($res, $item['user_id']);
+      }
+    return $res;
+  }
+
   public static function get_count($user_id, $target_id, $type)
   {
     $query = \DB::select()->from('markcheers')

@@ -8,40 +8,27 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-    if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-      Session::set('noredirect', 1);
-      Response::redirect('/');
-    } 
+    //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
+    //  Session::set('noredirect', 1);
+    //  Response::redirect('/');
+   // } 
   }
   
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-  //  $user_id = Session::get('user_id', null);
-  //  if($user_id == null){
-  //        $user_id = 1;
-  //  }else{
-  //    $user_id = floor($user_id) % 4 + 1;
-  //  }
-  //  Session::set('user_id', $user_id);
-  //  Cookie::set('user_id', $user_id);
-   
     
-    //$user_id = Session::get('user_id', null);
-    //if($user_id == null){
-    //      $user_id = 1;
-    //}else{
-    //  $user_id = floor($user_id) % 4 + 1;
-   // }
-   // Session::set('user_id', $user_id);
-   // Cookie::set('user_id', $user_id);
-    
-    $user_id = Session::get('user_id');
-   
-     if($user_id != null){
-      $user_id = Session::get('user_id');
-      Response::redirect("/sukima/timeline");
+   // $user_id = Session::get('user_id');
+   // print($user_id);   
+   // if($user_id != null){
+   //   $user_id = Session::get('user_id');
+   //   Response::redirect("/sukima/timeline");
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
+          $user_id = 1;
+    }else{
+      $user_id = floor($user_id) % 4 + 1;
     }
 
   
@@ -80,7 +67,7 @@ class Controller_Sukima extends Controller
     // 応援した人のデータを取得、追加
     foreach($datas['goals'] as &$goal){
       $cheering_users_data = array();
-      foreach(Model_Markcheers::get_user_ids_only($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
+      foreach(Model_Markcheers::get_user_ids_only_unique($goal['id'], Constants::TYPE_GOAL) as $cheering_user_id){
         $user_data = array();  // init
         $cheering_user_profile = Model_Users::get_profile($cheering_user_id);  // プロフール全取得
         $user_data['mypage_url'] = '/sukima/mypage/'.$cheering_user_profile['id'];  // idをセット
@@ -146,6 +133,50 @@ class Controller_Sukima extends Controller
     return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
   }
 
+  /*
+        全体タイムラインの動作
+  */
+  public function action_all_timeline()
+  {
+    $datas = self::get_page_header_data();
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_all_containers_with_offset(0, 10);
+    $containers = self::help_container_fixed_phrase($containers);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+    $datas = array_merge($datas, array(
+				       'state'             => $state,
+				       'containers'        => $containers,
+				       'type_container'    => Constants::TYPE_CONTAINER,
+				       'user_id'           => $user_id,
+				       ));
+    return Response::forge(View_Smarty::forge('sukima/timeline.tpl', $datas));
+  }
+
+
+  //全体タイムラインを追加で取得
+  public function action_all_timeline_add($offset, $num)
+  {
+    $user_id = Session::get('user_id', null);
+    $containers = Model_Timeline::get_all_containers_with_offset($offset, $num);
+    $state = 0;
+    if(self::active_id($user_id) > 0){
+      $state = 2;
+    }
+
+    $containers = self::help_container_fixed_phrase($containers);
+
+    $datas = array(
+		   'state'             => $state,
+		   'containers'        => $containers,
+		   'type_container'    => Constants::TYPE_CONTAINER,
+		   'user_id'           => $user_id,
+		   );
+    return View_Smarty::forge('sukima/timeline_add.tpl', $datas);
+  }
+
   private function help_container_fixed_phrase(&$containers)
   {
     foreach($containers as &$container){
@@ -178,7 +209,7 @@ class Controller_Sukima extends Controller
       $from_user_data['name'] = $profile['name'];
       $from_user_data['twitter_id'] = $profile['twitter_id'];
       $from_user_data['achieve_num'] = Model_Goals::get_achieved_num($from_user_id);
-      $from_user_data['goal_num'] = Model_Goals::get_goals_num($from_user_id);
+      $from_user_data['description'] = $profile['description'];
       $from_user_data['cheering'] = $profile['cheering'];
       $from_user_data['cheered'] = $profile['cheered'];
       $from_user_data['mypage_url'] = "/sukima/mypage/{$profile['id']}";
@@ -395,12 +426,7 @@ class Controller_Sukima extends Controller
     return $count;
   }
 
-  /*
-    応援した人のアイコンを出すAPI
-    渡されたidがすでに応援済みなら空文字を返す
-  */
-  public function action_get_thumbnail($user_id, $target_id, $type){
-
+  public function action_unfollow($friend_id){
   }
 
   /**

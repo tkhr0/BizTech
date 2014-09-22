@@ -4,7 +4,6 @@ console.log("userID: " + USER_ID);
 $(function(){
   initCheerButton();
   initState();
-  initContainer();
   // 応援ボタンが押された時の処理
   cheeringButtonListner();
   // やるぞボタン(hack)をおしたとき
@@ -33,10 +32,6 @@ var autoLoader = function(){
   });
 }
 
-var initContainer = function(){
-  $(".activity");
-};
-
 //ボタンの初期状態を設定
 var initCheerButton = function(){
   console.log("init CheerButton");
@@ -55,7 +50,7 @@ var initState = function(){
   $this = $(this);
   form = $(".hack-form");
   achieve = $(".achieve-form");
-  state = form.find("input[name=state]").val();
+  state = $(".state-holder").find("input[name=state]").val();
   console.log("init button state: " + state);
   if(state == 0){
     form.find("input[name=hack]").val("やるぞ！");
@@ -115,11 +110,12 @@ var cheeringButtonListner = function(){
 
 //メインボタンが押された時の処理(状態によって分岐)
 var mainButtonListner = function(){
+    console.log("mainButtonListner set");
   $(".hack-form").submit(function(){
     console.log("pushed main button ->");
     $this = $(this);
-    state = $this.find("input[name=state]").val();
-
+    state = $(".state-holder").find("input[name=state]").val();
+    console.log(state);
     //ボタンを状態毎に場合分け
     if(state == 0){
       pushedMainButtonForSelect($this);    //やるぞボタン     
@@ -145,7 +141,7 @@ var pushedMainButtonForSelect = function(form){
   form.find("select").removeClass("display-none");
   form.find("input[name=goal]").removeClass("display-none");
   form.find("input[name=hack]").val("開始");
-  form.find("input[name=state]").val(1);
+  $(".state-holder").find("input[name=state]").val(1);
 
   //目標一覧を更新
   $.ajax({
@@ -170,8 +166,8 @@ var pushedMainButtonForHackStart = function(form){
   form.find("select").eq(0);
   form.find("input[name=goal]").addClass("display-none");
   form.find("select").addClass("display-none");
-  form.find("input[name=hack]").val("やったぞ！");
-  form.find("input[name=state]").val(2);
+  //form.find("input[name=hack]").val("やったぞ！");
+  $(".state-holder").find("input[name=state]").val(2);
   goalName = form.find("input[name=goal]").val();
 
   //選択されている目標IDを取得
@@ -230,8 +226,8 @@ var pushedMainButtonForHackEnd = function(form){
   var goals_elem = $("#select_goals");
   goals_elem.css("display","block");
   var goals_select = goals_elem.find("select").eq(0);
-  form.find("input[name=hack]").val("やるぞ！");
-  form.find("input[name=state]").val(0);
+  //form.find("input[name=hack]").val("やるぞ！");
+  $(".state-holder").find("input[name=state]").val(0);
 
   //活動している目標のIDを取得し，その成功後，そのIDでコンテナを生成
   $.ajax({
@@ -283,8 +279,8 @@ var pushedAchievedButton = function(form){
     success: function(goal_id){
         //終了時処理
         console.log("goal_id "+goal_id);
-        form.find("input[name=hack]").val("やるぞ！");
-        form.find("input[name=state]").val(0);
+        //form.find("input[name=hack]").val("やるぞ！");
+        $(".state-holder").find("input[name=state]").val(0);
         $.ajax({
           type: "POST",
           url: "/sukima/hack_achieved/" + goal_id + "/",
@@ -298,6 +294,5 @@ var pushedAchievedButton = function(form){
       });     
     }
   });
-
 };
 
