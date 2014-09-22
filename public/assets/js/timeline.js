@@ -1,4 +1,5 @@
 var USER_ID = $.cookie("user_id");
+console.log(USER_ID);
 var RELOAD_NUM = 10;
 console.log("userID: " + USER_ID);
 $(function(){
@@ -11,10 +12,6 @@ $(function(){
   achievedButtonListener();
   // タイムラインの自動追加読み込み
   autoLoader();
-  // 目標インプットのリスナ
-  goalInputListner();
-  // 目標selecgのリスナ
-  goalSelectListner();
 });
 
 var autoLoader = function(){
@@ -76,12 +73,12 @@ var initState = function(){
 
   if(state == 0){
     $(".modal-title").text("目標を登録しましょう！");
-    form.find("input[name=hack]").val("開始").attr("disabled", "disabled");
+    form.find("input[name=hack]").val("開始");//.attr("disabled", "disabled");
     achieve.find("input[name=achieve]").hide();
   }else if(state == 2){
     $(".modal-title").text("おめでとうございます！");
     form.find("input[name=hack]").val("やったぞ！");
-    form.find("h4").hide();
+    form.find("h4").text("活動終了！");
     goal_select.hide();
     goal_input.hide();
   }
@@ -162,8 +159,8 @@ var pushedMainButtonForSelect = function(form){
   form.find("select").removeClass("display-none");
   form.find("input[name=goal]").removeClass("display-none");
   form.find("input[name=hack]").val("開始");
-  $(".state-holder").find("input[name=state]").val(1);
-
+  //$(".state-holder").find("input[name=state]").val(2);
+  //console.log("status 2 set");
 };
 
 
@@ -187,9 +184,9 @@ var pushedMainButtonForHackStart = function(form){
   //新規目標名が入力されているかどうかを判定
   var isFilledGoalName = function(form, goalName){
     if(goalName == ""){
-      return false;
+	return false;
     }else{
-      return true;
+	return true;
     }
   };
 
@@ -302,37 +299,5 @@ var pushedAchievedButton = function(form){
         }
       });     
     }
-  });
-};
-
-var goalInputListner = function(){
-  $(".goal-input").focusin(function(){
-    console.log("fucsin");
-    var goalSelect = $(".goal-select");
-    goalSelect.addClass("select-disabled").attr("disabled", "disabled");
-  });
-
-  $(".goal-input").focusout(function(){
-    console.log("fucsout");
-    var goalSelect = $(".goal-select");
-    goalSelect.removeClass("select-disabled").removeAttr("disabled");
-  });
-
-  $(".goal-input").keypress(function(){
-    console.log("keypress");
-    var value = $(this).val();
-    if(value != ""){
-	$(".hack-btn").removeAttr("disabled");
-    }else{
-	$(".hack-btn").attr("disabled", "disabled");
-    }
-    var goalSelect = $(".goal-select");
-    goalSelect.removeClass("select-disabled").removeAttr("disabled");
-  });
-};
-
-var goalSelectListner = function(){
-  $(".goal-select").focus(function(){
-    $(".hack-btn").removeAttr("disabled");
   });
 };

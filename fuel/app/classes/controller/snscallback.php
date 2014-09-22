@@ -7,8 +7,7 @@ require_once APPPATH.'vendor/twitter/twitteroauth/twitteroauth.php';
 
 
 class Controller_Snscallback extends Controller{
-    
-    
+     
    
    public function action_twitter(){
      $data['user_id'] = -1;
@@ -49,8 +48,8 @@ class Controller_Snscallback extends Controller{
 
       // スキマハックのuser id をセッションに保持
     $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);
-    
     Session::set('user_id', $sukima_huck_id); 
+    
     
  
 //    $cursor = -1;
@@ -77,10 +76,13 @@ class Controller_Snscallback extends Controller{
       
 //      }while($cursor != "0");
      
-     
-     return Response::redirect('/sukima/timeline');
     
-    }
-
- 
+    $arr = Model_follows::get_friends($sukima_huck_id);
+    
+    if(count($arr) == 0){
+       return Response::redirect('/sukima/all_timeline');
+     }else{
+    return Response::redirect('/sukima/timeline');
+    } 
+  }
 }
