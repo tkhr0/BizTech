@@ -33,10 +33,11 @@
         <div class="col-xs-12">
           <form action="#" class="hack-form">
             <input type="hidden" name="state" value="{$state}" />
-            <select class="display-none" name="目標を選ぶ">
+	    <h4>目標を選択</h4>
+            <select class="goal-select well" name="目標を選ぶ" size="5">
             </select>
-            <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
-            <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+            <input type="text" name="goal" class="form-control" placeholder="目標を新しく作成"/>
+            <input type="submit" name="hack" class="btn btn-xm btn-primary btn-block" value="やるぞ！！" >
           </form>
           <form class="achieve-form"><!-- achieve -->
             <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="目標を達成！" >

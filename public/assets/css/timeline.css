@@ -9,3 +9,12 @@
 .background-yellow{
   background: #e4d351;
 }
+
+.goal-select{
+  width: 100%;
+}
+
+.goal-select option{
+  height: 40px;
+  font-size: 20px;
+}
