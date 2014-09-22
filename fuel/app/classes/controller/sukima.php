@@ -24,13 +24,16 @@ class Controller_Sukima extends Controller
    // if($user_id != null){
    //   $user_id = Session::get('user_id');
    //   Response::redirect("/sukima/timeline");
+   //}
+   // TODO デバッグ用の処理ここから
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
     }else{
       $user_id = floor($user_id) % 4 + 1;
     }
-
+    Session::set('user_id', $user_id);
+    //デバッグ処理ここまで
   
   
     $datas = self::get_page_header_data();
