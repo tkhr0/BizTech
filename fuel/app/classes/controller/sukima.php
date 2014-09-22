@@ -8,42 +8,25 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-    //var_dump(Session::get('user_id'));
     if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
       Session::set('noredirect', 1);
       Response::redirect('/');
     } 
   }
 
-  /*
-  public function after($response){
-    $response = parent::after($response);
-    var_dump(Session::get('user_id'));
-    return $response;
-  }
-  */
-  
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
-  /*
-    $user_id = Session::get('user_id', null);
-    if($user_id == null){
-          $user_id = 1;
-    }else{
-      $user_id = floor($user_id) % 4 + 1;
+    
+    $user_id = Session::get('user_id');
+    if($user_id != null){
+      $user_id = Session::get('user_id');
+      Response::redirect("/sukima/timeline");
     }
-   */
-    //Session::set('user_id', $user_id);
-    //Cookie::set('user_id', $user_id);
-    //$datas = self::get_page_header_data();
-    //$datas['data'] = Model_Users::get_profile($user_id);
-    //$datas['id'] = $user_id;
-    //$datas['user_id'] = $user_id;
 
     Session::delete('noredirect');
-    //return Response::forge(View_Smarty::forge('sukima/index.tpl', $datas));
+
     return Response::forge(View_Smarty::forge('sukima/index.tpl'));
   }
 
@@ -51,6 +34,7 @@ class Controller_Sukima extends Controller
   {
     if($page_user_id == null){
       $user_id = Session::get('user_id');
+      Cookie::set('user_id', $user_id);
       Response::redirect("/sukima/mypage/{$user_id}");
     }
 
@@ -60,6 +44,7 @@ class Controller_Sukima extends Controller
     $datas = self::get_page_header_data();
 
     $user_id = Session::get('user_id');  // ログイン中のユーザid
+    Cookie::set('user_id', $user_id);
 
     // 情報を取得
     $datas['user'] = Model_Users::get_profile($page_user_id); // ページのユーザの情報
@@ -102,12 +87,14 @@ class Controller_Sukima extends Controller
   {
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
+    Cookie::set('user_id', $user_id);
     $containers = Model_Timeline::get_containers_with_offset($user_id, 0, 10);
     $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
     if(self::active_id($user_id) > 0){
       $state = 2;
     }
+
     $datas = array_merge($datas, array(
         'state'             => $state,
         'containers'        => $containers,
@@ -121,6 +108,7 @@ class Controller_Sukima extends Controller
   public function action_timeline_add($offset, $num)
   {
     $user_id = Session::get('user_id', null);
+    Cookie::set('user_id', $user_id);
     $containers = Model_Timeline::get_containers_with_offset($user_id, $offset, $num);
     $state = 0;
     if(self::active_id($user_id) > 0){
@@ -145,6 +133,7 @@ class Controller_Sukima extends Controller
   {
     $datas = self::get_page_header_data();
     $user_id = Session::get('user_id', null);
+    Cookie::set('user_id', $user_id);
     $containers = Model_Timeline::get_all_containers_with_offset($user_id, 0, 10);
     $containers = self::help_container_fixed_phrase($containers);
     $state = 0;
@@ -165,6 +154,7 @@ class Controller_Sukima extends Controller
   public function action_all_timeline_add($offset, $num)
   {
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $containers = Model_Timeline::get_all_containers_with_offset($user_id, $offset, $num);
     $state = 0;
     if(self::active_id($user_id) > 0){
@@ -205,6 +195,7 @@ class Controller_Sukima extends Controller
 
   private function help_follower_view($offset,$limit=10){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $from_user_ids = Model_Follows::get_friends_with_offset($user_id, $offset, $limit);
 
     $from_user_datas = array();
@@ -249,6 +240,7 @@ class Controller_Sukima extends Controller
 
   public function action_make_community($name){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $community_id = Model_Communities::set_community($name, $user_id);
     Model_Belonging::belonging($community_id, $user_id);
     return 1;
@@ -256,24 +248,28 @@ class Controller_Sukima extends Controller
   
   public function action_belonging_communities(){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $communities = Model_Communities::get_belonging_communities($user_id);
     return json_encode($communities);
   }
   
   public function action_belong_community($community_id){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     Model_Belonging::belonging($community_id, $user_id);
     return 1;
   }
 
   public function action_leave_community($community_id){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     Model_Belonging::leaving($community_id, $user_id);
     return 1;
   }
   
   public function action_search_community($query){
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $communities = Model_Communities::search_community($query);
     return json_encode($communities);
   }
@@ -282,6 +278,7 @@ class Controller_Sukima extends Controller
   public function action_getcontainers($start, $limit=10)
   {
     $user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $data = Model_Timeline::get_containers_with_offset($user_id, intval($start), intval($limit));
     return Format::forge($data)->to_json();
   }
@@ -312,6 +309,7 @@ class Controller_Sukima extends Controller
 
   public function action_hack_achieved($goal_id){
     Model_Containers::set_container($goal_id, 4);
+    Model_Goals::set_achieve($goal_id);   
   }
   
   /* set follow */
@@ -343,7 +341,7 @@ class Controller_Sukima extends Controller
   }
     
   public function action_goals($user_id){
-    $goals = Model_Goals::get_goals_from_user($user_id);
+    $goals = Model_Goals::get_goals_from_user_unachieve($user_id);
     return json_encode($goals);
   }
   
@@ -351,6 +349,7 @@ class Controller_Sukima extends Controller
   {
     // コンテナを見ているユーザのID
     $cheering_user_id = Session::get('user_id');
+    Cookie::set('user_id', $user_id);
     $container_id = -1;
     if($type == Constants::TYPE_CONTAINER){
       // コンテナの場合、コンテナIDからコンテナ、目標IDを取得

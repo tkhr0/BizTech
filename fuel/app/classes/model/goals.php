@@ -10,6 +10,11 @@ class Model_Goals extends \Model {
     return $results->as_array();
   }
 
+  public static function get_goals_from_user_unachieve($user_id){
+    $results = \DB::select()->from('goals')->where('user_id', $user_id)->and_where("achieve", 0)->as_assoc()->execute();
+    return $results->as_array();
+  }
+
   public static function get_cheered($goals_id){
     $results = \DB::select('cheered')->from('goals')->where('id', $goals_id)->as_assoc()->distinct(true)->execute();
     return $results->as_array()[0]['cheered'];

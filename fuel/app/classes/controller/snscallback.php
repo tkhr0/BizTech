@@ -7,8 +7,7 @@ require_once APPPATH.'vendor/twitter/twitteroauth/twitteroauth.php';
 
 
 class Controller_Snscallback extends Controller{
-    
-    
+     
    
    public function action_twitter(){
      $data['user_id'] = -1;
@@ -41,20 +40,20 @@ class Controller_Snscallback extends Controller{
 	  $datas['user_id'] = -1;
           return Response::redirect('/');
        }
-     $exist = Model_users::check_exist_id($user_info->screen_name);
+    //既にuserテーブルに登録してあるかを調べる 
+    $exist = Model_users::check_exist_id($user_info->screen_name);
     if($exist==false){
       Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https, $user_info->description);    
      }
 
       // スキマハックのuser id をセッションに保持
     $sukima_huck_id = Model_users::get_user_id($user_info->screen_name);
-    
     Session::set('user_id', $sukima_huck_id); 
     
-    $arr = Session::get('user_id');
+    
  
-    $cursor = -1;
-     
+//    $cursor = -1;
+ //    
  //   do{   
  //       $friends = $connection->get('friends/list',array('count'=>'200', 'cursor'=> $cursor)); 
  //      
@@ -77,10 +76,13 @@ class Controller_Snscallback extends Controller{
       
 //      }while($cursor != "0");
      
-     
-     return Response::redirect('/sukima/timeline');
     
-    }
-
- 
+    $arr = Model_follows::get_friends($sukima_huck_id);
+    
+    if(count($arr) == 0){
+       return Response::redirect('/sukima/all_timeline');
+     }else{
+    return Response::redirect('/sukima/timeline');
+    } 
+  }
 }
