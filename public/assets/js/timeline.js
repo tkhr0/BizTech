@@ -120,7 +120,7 @@ var mainButtonListner = function(){
     if(state == 0){
       pushedMainButtonForSelect($this);    //やるぞボタン     
     }else if(state == 1){
-      pushedMainButtonForHackStart($this); //開始ボタン #timelineにリダイレクト
+      pushedainButtonForHackStart($this); //開始ボタン #timelineにリダイレクト
     }else if(state == 2){
       pushedMainButtonForHackEnd($this);   //やったぞボタン
     }
@@ -157,7 +157,6 @@ var pushedMainButtonForSelect = function(form){
   });
 };
 
-
 //ユーザが活動を開始するボタン
 var pushedMainButtonForHackStart = function(form){
   console.log("pushed main button for hack start");
@@ -171,11 +170,13 @@ var pushedMainButtonForHackStart = function(form){
   goalName = form.find("input[name=goal]").val();
 
   //選択されている目標IDを取得
+  /*
   var getSelectedId = function(){
     return form.find("select option:selected").val();
-  }
+  }*/
 
   //新規目標名が入力されているかどうかを判定
+/*
   var isFilledGoalName = function(form, goalName){
     if(goalName == ""){
       return false;
@@ -183,6 +184,7 @@ var pushedMainButtonForHackStart = function(form){
       return true;
     }
   };
+  */
 
   //活動開始をするための通信
   var ajaxForStartActivity = function(goal_id){
@@ -291,7 +293,7 @@ var pushedAchievedButton = function(form){
           //timelineにリダイレクト
           $(location).attr("href", "/sukima/timeline");     
         }
-      });     
+      });
     }
   });
 };

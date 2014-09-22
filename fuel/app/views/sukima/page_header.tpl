@@ -18,7 +18,7 @@
 <div class="modal-body">
 <div class="row">
 <div class="col-xs-12">
-<form action="#" class="hack-form">
+<form action="#" class="hack-reg-form">
   <input type="hidden" name="state" value="1" />
   <input type="text" name="goal" class="form-control" placeholder="目標を新しく作成"/>
   <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="登録する" >
