@@ -26,20 +26,21 @@
     <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">目標を登録しましょう</h4>
+    <h4 class="modal-title">やることを選びましょう</h4>
     </div><!--modal-header-->
     <div class="modal-body">
       <div class="row">
         <div class="col-xs-12">
           <form action="#" class="hack-form">
             <input type="hidden" name="state" value="{$state}" />
-            <select class="display-none" name="目標を選ぶ">
+	    <h4>目標を選択</h4>
+            <select class="goal-select well" name="目標を選ぶ" size="5">
             </select>
-            <input type="text" name="goal" class="form-control display-none" placeholder="目標を新しく作成"/>
-            <input type="submit" name="hack" class="btn btn-xs btn-primary btn-block" value="やるぞ！！" >
+            <input type="text" name="goal" class="form-control goal-input" placeholder="目標を新しく作成"/>
+            <input type="submit" name="hack" class="hack-btn btn btn-lg btn-primary btn-block" value="やるぞ！！" >
           </form>
           <form class="achieve-form"><!-- achieve -->
-            <input type="submit" name="achieve" class="btn btn-xs btn-primary btn-block" value="目標を達成！" >
+            <input type="submit" name="achieve" class="achieve-btn btn btn-lg btn-warning btn-block" value="目標を達成！" >
           </form>
         </div><!--12-->
       </div><!--row-->

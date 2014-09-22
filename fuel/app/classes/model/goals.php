@@ -11,7 +11,7 @@ class Model_Goals extends \Model {
   }
 
   public static function get_cheered($goals_id){
-    $results = \DB::select('cheered')->from('goals')->where('id', $goals_id)->as_assoc()->execute();
+    $results = \DB::select('cheered')->from('goals')->where('id', $goals_id)->as_assoc()->distinct(true)->execute();
     return $results->as_array()[0]['cheered'];
   }
 
