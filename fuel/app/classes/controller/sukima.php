@@ -314,6 +314,7 @@ class Controller_Sukima extends Controller
 
   public function action_hack_achieved($goal_id){
     Model_Containers::set_container($goal_id, 4);
+    Model_Goals::set_achieve($goal_id);   
   }
   
   public function action_achieve_goal($name, $user_id)
@@ -349,7 +350,7 @@ class Controller_Sukima extends Controller
   }
     
   public function action_goals($user_id){
-    $goals = Model_Goals::get_goals_from_user($user_id);
+    $goals = Model_Goals::get_goals_from_user_unachieve($user_id);
     return json_encode($goals);
   }
   
