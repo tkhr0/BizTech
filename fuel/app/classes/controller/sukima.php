@@ -11,21 +11,28 @@ class Controller_Sukima extends Controller
     //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
     //  Session::set('noredirect', 1);
     //  Response::redirect('/');
-    //} 
+   // } 
   }
   
   public function action_index()
   {
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
+    
+   // $user_id = Session::get('user_id');
+   // print($user_id);   
+   // if($user_id != null){
+   //   $user_id = Session::get('user_id');
+   //   Response::redirect("/sukima/timeline");
     $user_id = Session::get('user_id', null);
     if($user_id == null){
           $user_id = 1;
     }else{
       $user_id = floor($user_id) % 4 + 1;
     }
-    Session::set('user_id', $user_id);
-    Cookie::set('user_id', $user_id);
+
+  
+  
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
     $datas['id'] = $user_id;

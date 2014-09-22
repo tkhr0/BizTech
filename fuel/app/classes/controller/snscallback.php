@@ -41,7 +41,8 @@ class Controller_Snscallback extends Controller{
 	  $datas['user_id'] = -1;
           return Response::redirect('/');
        }
-     $exist = Model_users::check_exist_id($user_info->screen_name);
+    //既にuserテーブルに登録してあるかを調べる 
+    $exist = Model_users::check_exist_id($user_info->screen_name);
     if($exist==false){
       Model_users::set_profile($user_info->screen_name, $user_info->name, $user_info->profile_image_url_https, $user_info->description);    
      }
@@ -51,10 +52,9 @@ class Controller_Snscallback extends Controller{
     
     Session::set('user_id', $sukima_huck_id); 
     
-    $arr = Session::get('user_id');
  
-    $cursor = -1;
-     
+//    $cursor = -1;
+ //    
  //   do{   
  //       $friends = $connection->get('friends/list',array('count'=>'200', 'cursor'=> $cursor)); 
  //      
