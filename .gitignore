@@ -45,5 +45,5 @@ composer.phar
 /fuel/app/config/config.php
 /fuel/app/config/db.php
 *.swp
-
+/fuel/app/config/production/db.php
 # yasu add
