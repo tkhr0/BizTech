@@ -9,9 +9,9 @@ class Controller_Sukima extends Controller
   public function before()
   {
     //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-    //  Session::set('noredirect', 1);
-    //  Response::redirect('/');
-   // } 
+    // Session::set('noredirect', 1);
+    // Response::redirect('/');
+    //} 
   }
   
   public function action_index()
@@ -32,9 +32,7 @@ class Controller_Sukima extends Controller
     }else{
       $user_id = floor($user_id) % 4 + 1;
     }
-    Session::set('user_id', $user_id);
     //デバッグ処理ここまで
-  
   
     $datas = self::get_page_header_data();
     $datas['data'] = Model_Users::get_profile($user_id);
