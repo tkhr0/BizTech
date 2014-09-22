@@ -2,8 +2,9 @@
   $mypage_url : このユーザのマイページURL
   $thumbnail :
 *}
-<li class="row">
-  <h3>{$name}</h3>
+<li class="row"> 
+    <h3>{$name}</h3>
+    <span class="badge">{$cheered}</span>
   <!--応援してくれた人リスト-->
   <!--<div class="col-xs-4 btn btn-xs btn-primary btn-block">応援!</div>-->
   <!--いいねボタン-->
@@ -17,7 +18,6 @@
   </form>
   <!--いいねボタン-->
   <!--cheerボタン-->
-  <span class="badge">{$cheered}</span>
   <ul class="cheerer_list">
     {foreach $cheering_users as $cheer_user}
       <li><a href="{$cheer_user.mypage_url}"><img src="{$cheer_user.thumbnail}" alt="{$cheer_user.name}" width="100%"></a></li>

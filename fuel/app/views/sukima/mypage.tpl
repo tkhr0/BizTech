@@ -16,7 +16,7 @@
       <div class="user_info"><!--ユーザ情報-->
         <div class="row">
           <div class="col-xs-4"> 
-            <img src="{$user.thumbnail_path}" class="img-thumbnail" alt="{$user.name}" width="100%" />
+            <img width="100px" src="{$user.thumbnail_path}" class="img-thumbnail" alt="{$user.name}" />
           </div>
           <div class="col-xs-8"><!--ユーザ紹介-->
             <div id="user-name"><!--名前-->
