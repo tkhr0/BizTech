@@ -36,7 +36,7 @@
 	    <h4>目標を選択</h4>
             <select class="goal-select well" name="目標を選ぶ" size="5">
             </select>
-            <input type="text" name="goal" class="form-control" placeholder="目標を新しく作成"/>
+            <input type="text" name="goal" class="form-control goal-input" placeholder="目標を新しく作成"/>
             <input type="submit" name="hack" class="btn btn-xm btn-primary btn-block" value="やるぞ！！" >
           </form>
           <form class="achieve-form"><!-- achieve -->

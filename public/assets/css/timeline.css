@@ -15,6 +15,12 @@
 }
 
 .goal-select option{
-  height: 40px;
+  height: 35px;
   font-size: 20px;
+}
+
+.goal-input{
+  height: 35px;
+  font-size: 15px;
+  margin-bottom: 10px;
 }

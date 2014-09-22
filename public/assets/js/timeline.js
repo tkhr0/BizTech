@@ -11,6 +11,8 @@ $(function(){
   achievedButtonListener();
   // タイムラインの自動追加読み込み
   autoLoader();
+  // 目標インプットのリスナ
+  //goalInputListner();
 });
 
 var autoLoader = function(){
@@ -300,3 +302,8 @@ var pushedAchievedButton = function(form){
   });
 };
 
+var goalInputListner = function(){
+  $(".goal-input").focusin(function(){
+	  console.log("fucsin");
+  });
+}
