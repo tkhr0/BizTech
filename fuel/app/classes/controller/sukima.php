@@ -8,10 +8,10 @@ class Controller_Sukima extends Controller
 
   public function before()
   {
-    if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
-     Session::set('noredirect', 1);
-     Response::redirect('/');
-    } 
+    //if(Session::get('user_id') == NULL && (Session::get('noredirect', 0) == 0) ){
+    // Session::set('noredirect', 1);
+    // Response::redirect('/');
+    //} 
   }
   
   public function action_index()
@@ -19,16 +19,16 @@ class Controller_Sukima extends Controller
   //   クッキーに仮のユーザIDを登録する
   //   ここにアクセスするたびにIDが順に1~3にかわる
     
-    $user_id = Session::get('user_id');
-    print($user_id);   
-    if($user_id != null){
-      $user_id = Session::get('user_id');
-      Response::redirect("/sukima/timeline");
-   // $user_id = Session::get('user_id', null);
-   // if($user_id == null){
-   //       $user_id = 1;
-   // }else{
-    //  $user_id = floor($user_id) % 4 + 1;
+   // $user_id = Session::get('user_id');
+   // print($user_id);   
+   // if($user_id != null){
+   //   $user_id = Session::get('user_id');
+    //  Response::redirect("/sukima/timeline");
+    $user_id = Session::get('user_id', null);
+    if($user_id == null){
+          $user_id = 1;
+    }else{
+      $user_id = floor($user_id) % 4 + 1;
     }
   
     $datas = self::get_page_header_data();
